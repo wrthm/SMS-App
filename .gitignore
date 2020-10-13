@@ -2,3 +2,5 @@ node_modules/
 dist/
 
 .env
+
+config_sql-ts.json

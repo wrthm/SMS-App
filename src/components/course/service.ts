@@ -1,17 +1,14 @@
-import { QueryResult } from 'pg'
 import db from '../../database/index'
+import { course } from '../../database/models'
 
 const CourseService = {
-    get: async () => {
-        let result: QueryResult = await db.query("SELECT NOW() as now", [])
-        console.log(JSON.stringify(result.rows))
-        return JSON.stringify(result.rows)
+    findAll: async () => {
+        let result: course[] = await db.courses.findAll()
+        return JSON.stringify(result)
     },
 
     create: async () => {
-        let result: QueryResult = await db.query("SELECT NOW() as now", [])
-        console.log(JSON.stringify(result.rows))
-        return result.rows
+        throw("Not implemented")
     }
 }
 

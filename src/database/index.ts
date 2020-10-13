@@ -1,23 +1,21 @@
-import { Pool } from 'pg'
+import pgPromise, { IDatabase, IInitOptions, IMain } from 'pg-promise'
+import { IExtensions, CoursesRepository } from './repo'
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+type ExtendedProtocol = IDatabase<IExtensions> & IExtensions
+
+const initOptions: IInitOptions<ExtendedProtocol> = {
+    extend(obj: ExtendedProtocol, dc: any) {
+        obj.courses = new CoursesRepository(obj, pgp)
+    }
+}
+
+const pgp: IMain = pgPromise(initOptions)
+const db: ExtendedProtocol = pgp({
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 })
 
-export default {
-  async query(text: string, params: any) {
-    const start = Date.now()
-    const res = await pool.query(text, params)
-    const duration = Date.now() - start
-    console.log('executed query', { text, duration, rows: res.rowCount })
-    return res
-  },
-  async getClient() {
-    const client = await pool.connect()
-    return client
-  }
-}
+export default db
