@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts",
-    "prod": "tsc && node ./dist/index.js"
+    "build": "tsc && copyfiles -u 1 src/**/*.sql dist/",
+    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "prod": "npm run build && node ./dist/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@rmp135/sql-ts": "^1.5.2",
+    "copyfiles": "^2.4.0",
     "ts-node-dev": "^1.0.0-pre.63"
   }
 }
