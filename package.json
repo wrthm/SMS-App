@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && copyfiles -u 1 src/**/*.sql dist/",
-    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts",
     "prod": "npm run build && node ./dist/index.js"
   },
   "author": "",
