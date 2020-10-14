@@ -3,7 +3,10 @@ import {QueryFile, IQueryFileOptions} from 'pg-promise';
 const {join: joinPath} = require('path');
 
 export const course = {
-    findAll: sql('courses/findAll.sql')
+    findByID: sql('courses/findByID.sql'),
+    findByName: sql('courses/findByName.sql'),
+    findAll: sql('courses/findAll.sql'),
+    add: sql('courses/add.sql'),
 }
 
 function sql(file: string): QueryFile {
