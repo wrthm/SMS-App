@@ -1,4 +1,4 @@
 INSERT INTO courses (name)
-VALUES (${data.name})
+VALUES (${name})
 RETURNING id
 ;

@@ -1,4 +1,4 @@
 SELECT *
-FROM courses
+FROM ${_table:name}
 WHERE id = ${id}
 ;

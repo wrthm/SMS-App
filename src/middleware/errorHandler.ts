@@ -1,11 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
-import { APIException } from '../exceptions/APIException'
+import { ValidationError } from 'express-validation';
+import { APIException } from '../exceptions/'
 import { logger } from '../utils/logger'
 
-export const errorHandler = (err: APIException, req:Request, res:Response, next:NextFunction) => {
+// TODO: separate logging and response to different middlewares
+export const errorHandler = (err: any, req:Request, res:Response, next:NextFunction) => {
+    if(err instanceof ValidationError) {
+        const details = err.details.body || err.details.params || err.details.query
+        const message: string = typeof details !== 'undefined' ? details[0].message : err.message
+
+        logger.error(`${message} (${req.originalUrl})`)
+
+        return res.status(err.statusCode).send(
+        {
+            "status": err.statusCode,
+            "message": message
+        })
+    }
     const status = err.status || 500
     const message = err.message || 'An error has occured in the server'
-    process.env.NODE_ENV === 'development' ? logger.error(err.stack) : logger.error(err)
+    if (!(err instanceof APIException))
+        process.env.NODE_ENV === 'development' && err.stack ? logger.error(err.stack) : logger.error(err)
     res.status(status).send({
         status,
         message,

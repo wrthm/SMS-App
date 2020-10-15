@@ -1,5 +1,6 @@
 import db from '../../database/index'
 import { course } from '../../database/models'
+import { NotFoundException } from '../../exceptions'
 import { checkIfNull } from '../../utils/validationUtils'
 
 const CourseService = {
@@ -9,7 +10,7 @@ const CourseService = {
         return result as course
     },
     findByName: async (name: string) => {
-        let result: course[] | null= await db.courses.findByName('%' + name + '%')
+        let result: course[] | null= await db.courses.findByName(`%${name}%`)
         checkIfNull(result)
         return result as course[]
     },
@@ -21,6 +22,16 @@ const CourseService = {
     add: async (data: course) => {
         let result: course = await db.courses.add(data)
         return {"id": result.id}
+    },
+
+    update: async (data: course) => {
+        if (!await db.courses.update(data)) 
+            throw new NotFoundException('Course does not exist')
+    },
+    
+    delete: async (data: course) => {
+        if (!await db.courses.delete(data)) 
+            throw new NotFoundException('Course does not exist')
     }
 }
 

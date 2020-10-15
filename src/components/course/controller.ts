@@ -2,14 +2,12 @@ import { NextFunction, Request, Response } from 'express'
 import { CourseService } from './service'
 import { course } from '../../database/models'
 import { InvalidArgumentException } from '../../exceptions'
-import { isValidUUID, validateCourse } from '../../utils/validationUtils'
 
 const CourseController = {
     find: async (req: Request, res: Response, next: NextFunction) => {
         let result: course | course[]
         try {
             if (req.params.id) {
-                isValidUUID(req.params.id)
                 result = await CourseService.findByID(req.params.id)
             } else if (req.params.name) {
                 result = await CourseService.findByName(req.params.name)
@@ -24,7 +22,7 @@ const CourseController = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            let result = await CourseService.findAll()
+            const result = await CourseService.findAll()
             res.send(result)
         }
         catch (err) {
@@ -32,9 +30,8 @@ const CourseController = {
         }
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
-        let course = req.body
+        const course = req.body
         try {
-            if (!validateCourse(course)) throw new InvalidArgumentException()
             let result = await CourseService.add(course)
             res.send(result)
         }
@@ -44,13 +41,27 @@ const CourseController = {
         
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
-        let result = await CourseService.findAll()
-        res.send(result)
+        const data: course = req.body
+        data.id = req.params.id
+        try {
+            await CourseService.update(data)
+            res.send({"status": 200,"message": "Course updated successfully"})
+        } catch (err) {
+            next(err)
+        }
     },
     delete: async (req: Request, res: Response, next: NextFunction) => {
-        let result = await CourseService.findAll()
-        res.send(result)
+        const data: course = req.body
+        data.id = req.params.id
+        try {
+            await CourseService.delete(data)
+            res.send({"status": 200,"message": "Course deleted successfully"})
+        } catch (err) {
+            next(err)
+        }
     }
 }
+
+
 
 export { CourseController }

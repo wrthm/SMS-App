@@ -3,6 +3,7 @@ import { createLogger, format, Logger, transports } from 'winston'
 // TODO: add a separate file logger transport for errors
 const logger: Logger = createLogger({
     format: format.combine(
+        format.padLevels(),
         format.colorize(),
         format.splat(),
         format.simple()
