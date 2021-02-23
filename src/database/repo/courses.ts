@@ -34,21 +34,14 @@ export class CoursesRepository {
 
     // TODO: move this to outside, maybe in utils?
     async checkIfIDExistsThenQuery(data: any, table: string, thenQueryFile: QueryFile) {
-      const result = await this.db.task(t => {
+      return await this.db.task(async t => {
         data._table = table
-        return t.one(common.exists, data)
-                .then((row: any) => {
-                  const exists = row.exists
-                  if (exists) {
-                    return t.none(thenQueryFile, data)
-                            .then( () => {
-                              return exists
-                            })
-                  }
-                  return exists
-                })
+        const row = await t.one(common.exists, data)
+          if (row.exists) {
+            await t.none(thenQueryFile, data)
+          }
+          return row.exists
       })
-      return result
     }
     
     
