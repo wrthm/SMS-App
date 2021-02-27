@@ -1,0 +1,102 @@
+openapi: '3.0.2'
+info:
+  title: Student Management System API
+  version: '1.0'
+# servers:
+#   - url: https://api.server.test/v1
+paths:
+  /search/course:
+    get:
+      tags:
+        - Course
+      summary: Find courses that match the query.
+      responses:
+        '200':
+          description: OK
+  /courses:
+    get:
+      tags:
+       - Course
+      summary: Get list of courses. (50 entries by default)
+      responses:
+        '200':
+          description: OK
+  /course/{courseID}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The entry's unique identifier
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - Course
+      summary: Get data of a course from its ID.
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+        - Course
+      summary: Update an existing course.
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Course
+      summary: Delete an existing course.
+      responses:
+        '200':
+          description: OK
+  /course/:
+    post:
+      tags:
+        - Course
+      summary: Inserts a new course from the form.
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    course:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        department_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    department:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+  responses:
+    IncompleteInput:
+      description: Missing required fields from input.
