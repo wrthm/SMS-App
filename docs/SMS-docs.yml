@@ -1,18 +1,28 @@
 openapi: '3.0.2'
 info:
   title: Student Management System API
-  version: '1.0'
+  version: '0.1'
 # servers:
 #   - url: https://api.server.test/v1
 paths:
-  /search/course:
+  /search/course/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying courses.
+        example: Science
+        schema:
+          type: string
     get:
       tags:
         - Course
-      summary: Find courses that match the query.
+      operationId: searchForCourse
+      summary: Search for courses.
       responses:
         '200':
-          description: OK
+          description: The course entries returned that match the query
+          # todo: figure proper return value's schema
   /courses:
     get:
       tags:
@@ -20,7 +30,8 @@ paths:
       summary: Get list of courses. (50 entries by default)
       responses:
         '200':
-          description: OK
+          description: Operation completed successfully
+          # todo: figure proper return value's schema
   /course/{courseID}:
     parameters:
       - name: id
@@ -37,33 +48,76 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/course"
+              example:
+                id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                department_id: uuid here
+                name: Bachelor of Science in Computer Science
+                is_hidden: false
+                created_at: "2020-02-27T10:24:24.466Z"
+                updated_at: "2021-05-12T9:50:04.034Z"
     patch:
       tags:
         - Course
       summary: Update an existing course.
       responses:
         '200':
-          description: OK
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
     delete:
       tags:
         - Course
       summary: Delete an existing course.
       responses:
         '200':
-          description: OK
-  /course/:
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /course:
     post:
       tags:
         - Course
-      summary: Inserts a new course from the form.
+      summary: Insert a new course entry.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/course"
+            example:
+              department_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              name: "Bachelor of Science in Computer Engineering"
+
       responses:
         '200':
-          description: OK
+          $ref: "#/components/responses/Success"
+        '441': # todo: find proper response code
+          $ref: "#/components/responses/IncompleteInput"
+
+  # /search/department/{name}:
+  #   get:
+  #     tags:
+  #       - Department
+  #     summary: Search for departments.
 
 components:
   schemas:
+    response:
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+
     course:
       type: object
+      required:
+        - department_id
+        - name
       properties:
         id:
           type: string
@@ -98,5 +152,32 @@ components:
           format: date-time
 
   responses:
+    Success:
+      description: Operation completed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/response"
+          example:
+            code: 200
+            description: Operation completed successfully.
+
     IncompleteInput:
-      description: Missing required fields from input.
+      description: Missing required fields from input
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/response"
+          example:
+            code: 40 # determine actual response code
+            description: Missing required fields from input.
+      
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/response"
+          example:
+            code: 404
+            description: Record not found
