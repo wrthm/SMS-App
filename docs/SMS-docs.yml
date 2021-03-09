@@ -5,6 +5,7 @@ info:
 # servers:
 #   - url: https://api.server.test/v1
 paths:
+  ############ COURSES ############
   /search/course/{name}:
     parameters:
       - name: name
@@ -22,7 +23,12 @@ paths:
       responses:
         '200':
           description: The course entries returned that match the query
-          # todo: figure proper return value's schema
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course"
   /courses:
     get:
       tags:
@@ -31,7 +37,12 @@ paths:
       responses:
         '200':
           description: Operation completed successfully
-          # todo: figure proper return value's schema
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course"
   /course/{courseID}:
     parameters:
       - name: id
@@ -59,13 +70,8 @@ paths:
                 is_hidden: false
                 created_at: "2020-02-27T10:24:24.466Z"
                 updated_at: "2021-05-12T9:50:04.034Z"
-    patch:
-      tags:
-        - Course
-      summary: Update an existing course.
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
     delete:
@@ -75,13 +81,15 @@ paths:
       responses:
         '200':
           $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
   /course:
     post:
       tags:
         - Course
-      summary: Insert a new course entry.
+      summary: Add a new course.
       requestBody:
         content:
           application/json:
@@ -90,18 +98,239 @@ paths:
             example:
               department_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
               name: "Bachelor of Science in Computer Engineering"
-
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Course
+      summary: Update an existing course.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/course"
       responses:
         '200':
           $ref: "#/components/responses/Success"
-        '441': # todo: find proper response code
-          $ref: "#/components/responses/IncompleteInput"
+        '404':
+          $ref: "#/components/responses/NotFound"
 
-  # /search/department/{name}:
-  #   get:
-  #     tags:
-  #       - Department
-  #     summary: Search for departments.
+
+  ############ DEPARTMENTS ############
+  /search/department/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying departments.
+        example: Education
+        schema:
+          type: string
+    get:
+      tags:
+        - Department
+      operationId: searchForDepartment
+      summary: Search for departments.
+      responses:
+        '200':
+          description: The department entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/department"
+  /departments:
+    get:
+      tags:
+       - Department
+      summary: Get list of department. (50 entries by default)
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/department"
+  /department/{departmentID}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The entry's unique identifier
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - Department
+      summary: Get a department from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/department"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Department
+      summary: Delete an existing department.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /department:
+    post:
+      tags:
+        - Department
+      summary: Adds a new department.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/department"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Department
+      summary: Update an existing department.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/department"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
+
+  ############ ACADEMIC_TERMS ############
+  /search/academic_terms/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying academic terms.
+        example: S/Y 2018
+        schema:
+          type: string
+    get:
+      tags:
+        - Academic Term
+      operationId: searchForAcademicTerms
+      summary: Search for academic terms.
+      responses:
+        '200':
+          description: The academic terms entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/academic_terms"
+  /academic_terms:
+    get:
+      tags:
+       - Academic Term
+      summary: Get list of all academic terms. (50 entries by default)
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/academic_terms"
+  /academic_term/{academicTermID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Academic Term
+      summary: Get an academic term from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/academic_terms"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Academic Term
+      summary: Delete an existing academic term.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /academic_term:
+    post:
+      tags:
+        - Academic Term
+      summary: Adds a new academic term.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/academic_terms"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Academic Term
+      summary: Update an existing department.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/academic_terms"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
+  ############ STUDENTS ############
+  ############ SUBJECTS ############
+  ############ GRADES ############
+  ############ PROFESSORS ############
+  ############ ENROLLMENTS ############
+  ############ COURSE_SCHEDULES ############
+  ############ COURSE_SCHEDULES_CONTENTS ############
+  ############ SCHEDULES ############
+  ############ ATTENDANCES ############
+  ############ GUARDIANS ############
+
 
 components:
   schemas:
@@ -110,7 +339,7 @@ components:
       properties:
         code:
           type: integer
-        description:
+        message:
           type: string
 
     course:
@@ -150,6 +379,31 @@ components:
         updated_at:
           type: string
           format: date-time
+    
+    academic_terms:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+  parameters:
+    ID:
+      name: id
+      in: path
+      required: true
+      description: The entry's unique identifier
+      schema:
+        type: string
+        format: uuid
 
   responses:
     Success:
@@ -160,7 +414,17 @@ components:
             $ref: "#/components/schemas/response"
           example:
             code: 200
-            description: Operation completed successfully.
+            message: Operation completed successfully.
+
+    Success201:
+      description: Operation completed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/response"
+          example:
+            code: 201
+            message: Operation completed successfully.
 
     IncompleteInput:
       description: Missing required fields from input
@@ -169,8 +433,18 @@ components:
           schema:
             $ref: "#/components/schemas/response"
           example:
-            code: 40 # determine actual response code
-            description: Missing required fields from input.
+            code: 400
+            message: Missing required fields from input.
+
+    InvalidID:
+      description: Invalid ID supplied
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/response"
+          example:
+            code: 400
+            message: Invalid ID supplied.
       
     NotFound:
       description: Record not found
@@ -180,4 +454,10 @@ components:
             $ref: "#/components/schemas/response"
           example:
             code: 404
-            description: Record not found
+            message: Record not found.
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: k
+      in: header
