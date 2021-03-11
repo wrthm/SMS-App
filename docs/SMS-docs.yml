@@ -246,7 +246,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/academic_terms"
+                  $ref: "#/components/schemas/academic_term"
   /academic_terms:
     get:
       tags:
@@ -260,7 +260,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/academic_terms"
+                  $ref: "#/components/schemas/academic_term"
   /academic_term/{academicTermID}:
     parameters:
       - $ref: "#/components/parameters/ID"
@@ -274,7 +274,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/academic_terms"
+                $ref: "#/components/schemas/academic_term"
         '400':
           $ref: "#/components/responses/InvalidID"
         '404':
@@ -299,7 +299,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref:  "#/components/schemas/academic_terms"
+              $ref:  "#/components/schemas/academic_term"
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -313,7 +313,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref:  "#/components/schemas/academic_terms"
+              $ref:  "#/components/schemas/academic_term"
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -334,6 +334,7 @@ paths:
 
 components:
   schemas:
+  # TODO: ADD REQUIRED FIELDS
     response:
       type: object
       properties:
@@ -373,6 +374,8 @@ components:
           format: uuid
         name:
           type: string
+        is_hidden:
+          type: boolean
         created_at:
           type: string
           format: date-time
@@ -380,7 +383,7 @@ components:
           type: string
           format: date-time
     
-    academic_terms:
+    academic_term:
       type: object
       properties:
         id:
@@ -388,12 +391,268 @@ components:
           format: uuid
         name:
           type: string
+        is_hidden:
+          type: boolean
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
+
+    student:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        school_id:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        address:
+          type: string
+        sex:
+          type: string
+        birth_date:
+          type: string
+          format: date
+        phone_number:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        is_currently_enrolled:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    subject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        name:
+          type: string
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    grade:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        enrollment_id:
+          type: string
+          format: uuid
+        subject_id:
+          type: string
+          format: uuid
+        grade:
+          type: number
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    professor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        department_id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    enrollment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        academic_term_id:
+          type: string
+          format: uuid
+        student_id:
+          type: string
+          format: uuid
+        course_id:
+          type: string
+          format: uuid
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    course_schedule:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        course_id:
+          type: string
+          format: uuid
+        academic_term_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    course_schedule_content:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        course_schedule_id:
+          type: string
+          format: uuid
+        schedule_id:
+          type: string
+          format: uuid
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    schedule:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        professor_id:
+          type: string
+          format: uuid
+        subject_id:
+          type: string
+          format: uuid
+        room:
+          type: string
+        class:
+          type: string
+        time_start:
+          type: string
+          format: time
+        time_duration:
+          type: string
+          format: interval
+        days:
+          type: integer
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    
+    attendance:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        device_id:
+          type: string
+          format: uuid
+        academic_term_id:
+          type: string
+          format: uuid
+        enrollment_id:
+          type: string
+          format: uuid
+        check_type:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+
+    guardian:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        student_id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+
 
   parameters:
     ID:
