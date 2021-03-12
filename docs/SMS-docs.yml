@@ -91,6 +91,7 @@ paths:
         - Course
       summary: Add a new course.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -108,6 +109,7 @@ paths:
         - Course
       summary: Update an existing course.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -198,6 +200,7 @@ paths:
         - Department
       summary: Adds a new department.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -296,6 +299,7 @@ paths:
         - Academic Term
       summary: Adds a new academic term.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -310,6 +314,7 @@ paths:
         - Academic Term
       summary: Update an existing academic term.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -393,6 +398,7 @@ paths:
         - Student
       summary: Adds a new student.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -407,6 +413,7 @@ paths:
         - Student
       summary: Update an existing student.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
