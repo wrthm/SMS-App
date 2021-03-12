@@ -308,7 +308,7 @@ paths:
     put:
       tags:
         - Academic Term
-      summary: Update an existing department.
+      summary: Update an existing academic term.
       requestBody:
         content:
           application/json:
@@ -321,6 +321,102 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   ############ STUDENTS ############
+  /search/students/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying students.
+        example: Nolla
+        schema:
+          type: string
+    get:
+      tags:
+        - Student
+      operationId: searchForStudents
+      summary: Search for students.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+  /students:
+    get:
+      tags:
+       - Student
+      summary: Get list of all students. (50 entries per page by default)
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+  /student/{studentID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Student
+      summary: Get a student from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/student"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Student
+      summary: Delete an existing student.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /student:
+    post:
+      tags:
+        - Student
+      summary: Adds a new student.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/student"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Student
+      summary: Update an existing student.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/student"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
   ############ SUBJECTS ############
   ############ GRADES ############
   ############ PROFESSORS ############
