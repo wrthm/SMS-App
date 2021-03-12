@@ -471,6 +471,8 @@ components:
 
     department:
       type: object
+      required:
+        - name
       properties:
         id:
           type: string
@@ -488,6 +490,8 @@ components:
     
     academic_term:
       type: object
+      required:
+        - name
       properties:
         id:
           type: string
@@ -505,6 +509,15 @@ components:
 
     student:
       type: object
+      required:
+        - school_id
+        - first_name
+        - middle_name
+        - last_name
+        - address
+        - sex
+        - birth_date
+        - phone_number
       properties:
         id:
           type: string
@@ -541,6 +554,9 @@ components:
 
     subject:
       type: object
+      required:
+        - code
+        - name
       properties:
         id:
           type: string
@@ -560,6 +576,10 @@ components:
 
     grade:
       type: object
+      required:
+        - enrollment_id
+        - subject_id
+        - grade
       properties:
         id:
           type: string
@@ -583,6 +603,11 @@ components:
 
     professor:
       type: object
+      required:
+        - department_id
+        - first_name
+        - middle_name
+        - last_name
       properties:
         id:
           type: string
@@ -609,6 +634,10 @@ components:
 
     enrollment:
       type: object
+      required:
+        - academic_term_id
+        - student_id
+        - course_id
       properties:
         id:
           type: string
@@ -633,6 +662,10 @@ components:
 
     course_schedule:
       type: object
+      required:
+        - course_id
+        - academic_term_id
+        - name
       properties:
         id:
           type: string
@@ -656,6 +689,9 @@ components:
 
     course_schedule_content:
       type: object
+      required:
+        - course_schedule_id
+        - schedule_id
       properties:
         id:
           type: string
@@ -677,6 +713,14 @@ components:
 
     schedule:
       type: object
+      required:
+        - professor_id
+        - subject_id
+        - room
+        - class
+        - time_start
+        - time_duration
+        - days
       properties:
         id:
           type: string
@@ -710,6 +754,10 @@ components:
     
     attendance:
       type: object
+      required:
+        - device_id
+        - enrollment_id
+        - check_type
       properties:
         id:
           type: string
@@ -731,6 +779,12 @@ components:
 
     guardian:
       type: object
+      required:
+        - student_id
+        - first_name
+        - middle_name
+        - last_name
+        - phone_number
       properties:
         id:
           type: string
