@@ -5,6 +5,9 @@ info:
 # servers:
 #   - url: https://api.server.test/v1
 paths:
+  ## TODO ##
+  ## Add examples for POST and PUT on each schema
+
   ############ COURSES ############
   /search/course/{name}:
     parameters:
@@ -17,6 +20,7 @@ paths:
           type: string
     get:
       tags:
+        - Search
         - Course
       operationId: searchForCourse
       summary: Search for courses.
@@ -33,7 +37,7 @@ paths:
     get:
       tags:
        - Course
-      summary: Get list of courses. (50 entries by default)
+      summary: Get list of courses. (50 entries per page by default)
       responses:
         '200':
           description: Operation completed successfully
@@ -133,6 +137,7 @@ paths:
           type: string
     get:
       tags:
+        - Search
         - Department
       operationId: searchForDepartment
       summary: Search for departments.
@@ -149,7 +154,7 @@ paths:
     get:
       tags:
        - Department
-      summary: Get list of department. (50 entries by default)
+      summary: Get list of department. (50 entries per page by default)
       responses:
         '200':
           description: Operation completed successfully
@@ -238,6 +243,7 @@ paths:
           type: string
     get:
       tags:
+        - Search
         - Academic Term
       operationId: searchForAcademicTerms
       summary: Search for academic terms.
@@ -254,7 +260,7 @@ paths:
     get:
       tags:
        - Academic Term
-      summary: Get list of all academic terms. (50 entries by default)
+      summary: Get list of all academic terms. (50 entries per page by default)
       responses:
         '200':
           description: Operation completed successfully
@@ -337,6 +343,7 @@ paths:
           type: string
     get:
       tags:
+        - Search
         - Student
       operationId: searchForStudents
       summary: Search for students.
@@ -425,19 +432,435 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   ############ SUBJECTS ############
+  /search/subjects/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying subjects.
+        example: Software Engineering
+        schema:
+          type: string
+    get:
+      tags:
+        - Search
+        - Subject
+      operationId: searchForSubjects
+      summary: Search for subjects.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/subject"
+  /subjects:
+    get:
+      tags:
+       - Subject
+      summary: Get list of all subjects. (50 entries per page by default)
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/subject"
+  /subject/{subjectID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Subject
+      summary: Get a subject from its ID.
+      operationId: getSubject
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/subject"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Subject
+      summary: Delete an existing subject.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /subject:
+    post:
+      tags:
+        - Subject
+      summary: Adds a new subject.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/subject"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Subject
+      summary: Update an existing subject.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/subject"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
   ############ GRADES ############
+  /grades:
+    get:
+      tags:
+       - Grades
+      summary: Get list of all grades of every student. (50 entries per page by default)
+      operationId: getGrades
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/grade"
+  ##############################################
+  # TODO 
+  # add 'view all grades flag' optional paramater
+  #############################################
+  /grades/{enrollmentID}:
+    parameters:
+      - name: enrollmentID
+        in: path
+        required: true
+        description: The ID of the student's enrollment.
+        example: addd3001-210e-4ada-999d-a295b02a384d
+        schema:
+          type: string
+    get:
+      tags:
+       - Grades
+      summary: Get all grades of a student, filtered by the enrollment's academic term by default.
+      operationId: getGradesOfStudent
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/grade"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /grade/{enrollmentID}/{subjectID}:
+    parameters:
+      - name: enrollmentID
+        in: path
+        required: true
+        description: The ID of the student's enrollment.
+        example: addd3001-210e-4ada-999d-a295b02a384d
+        schema:
+          type: string
+      - name: subjectID
+        in: path
+        required: true
+        description: The subject ID.
+        example: 95ee1ca3-9011-4916-a574-5962bb661fec
+        schema:
+          type: string
+    get:
+      tags:
+        - Grades
+      summary: Get a grade from its IDs.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/grade"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Grades
+      summary: Delete an existing grade.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /grade:
+    post:
+      tags:
+        - Grades
+      summary: Adds a new grade for a student.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/grade"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Grades
+      summary: Update an existing grade.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/grade"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
+
   ############ PROFESSORS ############
+  /search/professors/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying professor's name.
+        example: Lany
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - Search
+        - Professor
+      operationId: searchForProfessors
+      summary: Search for professors.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/professor"
+  /professors:
+    get:
+      tags:
+       - Professor
+      summary: Get list of every professors. (50 entries per page by default)
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/professor"
+  /professor/{professorID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Professor
+      summary: Get the data of a professor from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/professor"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Professor
+      summary: Delete an existing professor entry.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /professor:
+    post:
+      tags:
+        - Professor
+      summary: Adds a new professor entry.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/professor"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Professor
+      summary: Update the data of an existing professor.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/professor"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
   ############ ENROLLMENTS ############
+  /enrollments:
+    get:
+      tags:
+       - Enrollment
+      summary: Get list of all enrollments of every student. (50 entries per page by default)
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/enrollment"
+  /enrollments/{studentID}:
+    parameters:
+      - name: studentID
+        in: path
+        required: true
+        description: The student's unique identifier.
+        example: addd3001-210e-4ada-999d-a295b02a384d
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+       - Enrollment
+      summary: Get all enrollments of a student.
+      operationId: getEnrollmentsOfStudent
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/enrollment"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /enrollment/{enrollmentID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Enrollment
+      summary: Get the data of an enrollment from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/enrollment"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Enrollment
+      summary: Void an existing enrollment.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /enrollment:
+    post:
+      tags:
+        - Enrollment
+      summary: Enroll a student.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/enrollment"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+
   ############ COURSE_SCHEDULES ############
+
+
   ############ COURSE_SCHEDULES_CONTENTS ############
+
+
   ############ SCHEDULES ############
+
+
   ############ ATTENDANCES ############
+
+
   ############ GUARDIANS ############
 
 
 components:
   schemas:
-  # TODO: ADD REQUIRED FIELDS
     response:
       type: object
       properties:
@@ -581,9 +1004,6 @@ components:
         - subject_id
         - grade
       properties:
-        id:
-          type: string
-          format: uuid
         enrollment_id:
           type: string
           format: uuid
