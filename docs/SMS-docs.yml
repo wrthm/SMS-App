@@ -38,6 +38,9 @@ paths:
       tags:
        - Course
       summary: Get list of courses. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       responses:
         '200':
           description: Operation completed successfully
@@ -155,6 +158,9 @@ paths:
       tags:
        - Department
       summary: Get list of department. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       responses:
         '200':
           description: Operation completed successfully
@@ -261,6 +267,9 @@ paths:
       tags:
        - Academic Term
       summary: Get list of all academic terms. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       responses:
         '200':
           description: Operation completed successfully
@@ -361,6 +370,9 @@ paths:
       tags:
        - Student
       summary: Get list of all students. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       responses:
         '200':
           description: Operation completed successfully
@@ -461,6 +473,9 @@ paths:
       tags:
        - Subject
       summary: Get list of all subjects. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       responses:
         '200':
           description: Operation completed successfully
@@ -538,6 +553,9 @@ paths:
       tags:
        - Grades
       summary: Get list of all grades of every student. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       operationId: getGrades
       responses:
         '200':
@@ -548,10 +566,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/grade"
-  ##############################################
-  # TODO 
-  # add 'view all grades flag' optional paramater
-  #############################################
   /grades/{enrollmentID}:
     parameters:
       - name: enrollmentID
@@ -664,7 +678,6 @@ paths:
         example: Lany
         schema:
           type: string
-          format: uuid
     get:
       tags:
         - Search
@@ -685,6 +698,9 @@ paths:
       tags:
        - Professor
       summary: Get list of every professors. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       responses:
         '200':
           description: Operation completed successfully
@@ -761,6 +777,9 @@ paths:
       tags:
        - Enrollment
       summary: Get list of all enrollments of every student. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
       responses:
         '200':
           description: Operation completed successfully
@@ -846,18 +865,564 @@ paths:
 
   ############ COURSE_SCHEDULES ############
 
+  /search/course_schedules/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying course schedules.
+        example: BSCS 3C
+        schema:
+          type: string
+    get:
+      tags:
+        - Search
+        - Course Schedule
+      operationId: searchForCourseSchedules
+      summary: Search for course schedules.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course_schedule"
+  /course_schedules:
+    get:
+      tags:
+       - Course Schedule
+      summary: Get list of every course schedule. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course_schedule"
+  /course_schedule/{courseScheduleID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Course Schedule
+      summary: Get data of a course schedule (not including the contents) from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/course_schedule"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Course Schedule
+      summary: Delete an existing course schedule and its contents.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /course_schedule:
+    post:
+      tags:
+        - Course Schedule
+      summary: Adds a new course schedule.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/course_schedule"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Course Schedule
+      summary: Update an existing course schedule.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/course_schedule"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
 
   ############ COURSE_SCHEDULES_CONTENTS ############
 
+  /course_schedule_contents/{courseScheduleID}:
+    get:
+      tags:
+       - Course Schedule
+      summary: Get the contents of a course schedule.
+      parameters:
+        - name: courseScheduleID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course_schedule_content"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /course_schedule_content/{courseScheduleContentID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Course Schedule
+      summary: Get data of a course schedule's content from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/course_schedule_content"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Course Schedule
+      summary: Delete an existing course schedule content.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /course_schedule_content:
+    post:
+      tags:
+        - Course Schedule
+      summary: Add a new course schedule content.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/course_schedule_content"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Course Schedule
+      summary: Update an existing course schedule content.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/course_schedule_content"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
+  ############ COURSE_SCHEDULE + COURSE_SCHEDULE_CONTENT ###########
+  /course_schedule_and_contents/{courseScheduleID}:
+    get:
+      summary: Get the data of a course schedule and its contents.
+      tags:
+       - Course Schedule
+      parameters:
+        - name: courseScheduleID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/course_schedule_and_content"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /course_schedule_and_contents:
+    post:
+      summary: Add entry of a course schedule and its contents.
+      tags:
+       - Course Schedule
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/course_schedule_and_content"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
 
   ############ SCHEDULES ############
+  /search/schedules/{subjectName}:
+    parameters:
+      - name: subjectName
+        in: path
+        required: true
+        description: The subject name used for querying schedule.
+        example: Soft Eng
+        schema:
+          type: string
+    get:
+      tags:
+        - Search
+        - Schedule
+      operationId: searchForSchedules
+      summary: Search for schedules by its subject name.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/schedule"
+  /schedules:
+    get:
+      tags:
+       - Schedule
+      summary: Get list of every schedule. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/schedule"
+  /schedule/{scheduleID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Schedule
+      summary: Get the data of a schedule from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/schedule"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Schedule
+      summary: Delete an existing schedule.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /schedule:
+    post:
+      tags:
+        - Schedule
+      summary: Adds a new schedule.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/schedule"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Schedule
+      summary: Update the data of an existing schedule.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/schedule"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
 
 
   ############ ATTENDANCES ############
-
+  /attendances:
+    get:
+      tags:
+       - Attendance
+      summary: Get list of every attendance. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/attendance"
+  /attendances/{studentID}:
+    get:
+      summary: Get all the attendances of a student across academic terms.
+      tags:
+       - Attendance
+      parameters:
+        - name: studentID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/attendance"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /attendances/{studentID}/{academicTermID}:
+    get:
+      summary: Get all the attendances of a student within a specific academic term.
+      tags:
+       - Attendance
+      parameters:
+        - name: studentID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: academicTermID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/attendance"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /attendance/{attendanceID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Attendance
+      summary: Get an attendance from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/attendance"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Attendance
+      summary: Voids an attendance entry.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /attendance:
+    post:
+      tags:
+        - Attendance
+      summary: Checks in/out an attendance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/attendance"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
 
   ############ GUARDIANS ############
-
+  /search/guardians/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The name used for querying guardians.
+        example: Capuss
+        schema:
+          type: string
+    get:
+      tags:
+        - Search
+        - Guardian
+      operationId: searchForGuardians
+      summary: Search for guardians.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/guardian"
+  /guardians:
+    get:
+      tags:
+       - Guardian
+      summary: Get list of every guardian. (50 entries per page by default)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/guardian"
+  /guardian/{guardianID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Guardian
+      summary: Get a guardian from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/guardian"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Guardian
+      summary: Delete an existing guardian.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /guardian:
+    post:
+      tags:
+        - Guardian
+      summary: Adds a new guardian.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/guardian"
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+    put:
+      tags:
+        - Guardian
+      summary: Update an existing guardian.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/guardian"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
 
 components:
   schemas:
@@ -1131,6 +1696,16 @@ components:
           type: string
           format: date-time
 
+    course_schedule_and_content:
+      allOf:
+        - $ref: "#/components/schemas/course_schedule"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/course_schedule_content"
+
     schedule:
       type: object
       required:
@@ -1188,7 +1763,7 @@ components:
         academic_term_id:
           type: string
           format: uuid
-        enrollment_id:
+        student_id:
           type: string
           format: uuid
         check_type:
@@ -1206,9 +1781,6 @@ components:
         - last_name
         - phone_number
       properties:
-        id:
-          type: string
-          format: uuid
         student_id:
           type: string
           format: uuid
@@ -1229,8 +1801,6 @@ components:
           type: string
           format: date-time
 
-
-
   parameters:
     ID:
       name: id
@@ -1240,6 +1810,27 @@ components:
       schema:
         type: string
         format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    page:
+      name: page
+      in: query
+      required: false
+      description: The number of items to skip = (page - 1) * limit
+      schema:
+        type: integer
+        default: 1
+
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: The number of items to return
+      schema:
+        type: integer
+        minimum: 25
+        maximum: 500
+        default: 50
 
   responses:
     Success:
