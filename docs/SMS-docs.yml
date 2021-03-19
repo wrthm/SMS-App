@@ -8,6 +8,74 @@ paths:
   ## TODO ##
   ## Add examples for POST and PUT on each schema
 
+  ############ LOGIN ############
+  /login/s:
+    post:
+      tags:
+        - Login
+      summary: Signs in a student.
+      requestBody:
+        description: The entered login credentials of a student
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string    
+      responses:
+        '200':
+          description: Returns the ID of the matching student & the session token of the client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  token:
+                    type: string
+                    format: uuid
+        '400':
+          description: Invalid username or password
+  /login/fa:
+    post:
+      tags:
+        - Login
+      summary: Signs in a faculty or administrator.
+      requestBody:
+        description: The entered login credentials of a faculty/administrator
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string    
+      responses:
+        '200':
+          description: Returns the ID & privilege level of the matching faculty/administrator & the session token of the client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  privilege:
+                    type: integer
+                  token:
+                    type: string
+                    format: uuid
+        '400':
+          description: Invalid username or password
+
   ############ COURSES ############
   /search/course/{name}:
     parameters:
@@ -105,7 +173,7 @@ paths:
               $ref:  "#/components/schemas/course"
             example:
               department_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-              name: "Bachelor of Science in Computer Engineering"
+              name: "Bachelor of Science in Computer Science"
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -216,6 +284,8 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/department"
+            example:
+              name: College of Science
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -230,6 +300,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/department"
+            example:
+              id: 87597643-3b07-4b4f-a78e-708a6615c8a6
+              name: College of Education
+              is_hidden: false
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -319,6 +393,8 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/academic_term"
+            example:
+              name: S/Y 2020-2021 2nd Semester
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -334,6 +410,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/academic_term"
+            example:
+              id: fe3580c2-bdf4-4cd5-bd73-183dc3029b60
+              name: S/Y 2021-2022 1st Semester
+              is_hidden: false
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -422,6 +502,15 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/student"
+            example:
+              school_id: 2021-CS-1002000
+              first_name: McGnobbin
+              middle_name: Aoen
+              last_name: McGnobbers
+              address: Legazpi City
+              sex: Male
+              birth_date: 04/01/2000
+              phone_number: 09299990
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -437,6 +526,18 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/student"
+            example:
+              id: 993109d7-9096-4383-add0-c712421bb8f8
+              school_id: 2021-CS-1002000
+              first_name: McGnobbin
+              middle_name: Aoen
+              last_name: McGnobbers
+              address: Legazpi City
+              sex: Male
+              birth_date: 04/01/2000
+              phone_number: 09299990
+              username: 2021-CS-1002000
+              password: hunter2
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -526,6 +627,9 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/subject"
+            example:
+              code: CS 116
+              name: Software Engineering
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -541,6 +645,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/subject"
+            example:
+              id: 642e8f50-2e73-4070-a3c0-d173e2e7453a
+              code: CS 116
+              name: Software Engineering
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -646,6 +754,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/grade"
+            example:
+              enrollment_id: 558ae929-b80f-402a-934b-a9a07c201f72
+              subject_id: a64da858-0cce-408a-aa01-b89356a15c16
+              grade: 3
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -661,6 +773,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/grade"
+            example:
+              enrollment_id: 558ae929-b80f-402a-934b-a9a07c201f72
+              subject_id: a64da858-0cce-408a-aa01-b89356a15c16
+              grade: 2
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -750,6 +866,12 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/professor"
+            example:
+              department_id: 0bfdc55e-88cd-4cbc-a773-d29da94b26b5
+              first_name: Lany
+              middle_name: L
+              last_name: Maceda
+              phone_number: 0999999999
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -765,6 +887,13 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/professor"
+            example:
+              id: b8bfb56f-59ed-40b2-b763-5eee3b1be23c
+              department_id: 0bfdc55e-88cd-4cbc-a773-d29da94b26b5
+              first_name: Lany
+              middle_name: L
+              last_name: Maceda
+              phone_number: 0999999999
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -857,6 +986,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/enrollment"
+            example:
+              academic_term_id: 22297dec-9bb3-463a-bac8-c9fb2372982b
+              student_id: d7f9a296-f5fa-43de-a039-164b5eca806f
+              course_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -946,6 +1079,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/course_schedule"
+            example:
+              course_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
+              academic_term_id: 22297dec-9bb3-463a-bac8-c9fb2372982b
+              name: BSCS 3 - Block C
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -961,6 +1098,11 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/course_schedule"
+            example:
+              id: 790a4ae2-f559-40b9-999f-9f3e640c837e
+              course_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
+              academic_term_id: 22297dec-9bb3-463a-bac8-c9fb2372982b
+              name: BSCS 3 - Block C
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1035,6 +1177,9 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/course_schedule_content"
+            example:
+              course_schedule_id: 790a4ae2-f559-40b9-999f-9f3e640c837e
+              schedule_id: c6bbd7d5-f007-4ded-873c-902a6d9ada7a
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1050,6 +1195,10 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/course_schedule_content"
+            example:
+              id: 6fd1ca86-237e-4a4e-97b9-fc834c8ea49f
+              course_schedule_id: 790a4ae2-f559-40b9-999f-9f3e640c837e
+              schedule_id: c6bbd7d5-f007-4ded-873c-902a6d9ada7a
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1092,6 +1241,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/course_schedule_and_content"
+              example:
+                course_id: 18ada21b-e343-4179-8c0a-3ac2fb9d087e
+                academic_term_id: 4d84cf53-b379-488a-a259-5ce2151a508c
+                name: BSCS 4 - Block C
+                content:
+                  type: array
+                  items:
+                    subject_id: 8bd74895-aac8-4ff7-8fb3-4e770a2b5beb
         '400':
           $ref: "#/components/responses/InvalidID"
         '404':
@@ -1179,6 +1336,15 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/schedule"
+            example:
+              professor_id: 38fe95f6-e7aa-4b04-9848-ee2d5fb6f94e
+              subject_id: 75850f7e-81a9-4441-845b-51d9afa7b7cb
+              room: CS-02-101
+              class: BSCS-3C
+              capacity: 40
+              time_start: 09:00
+              time_duration: 03:00
+              days: 8
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1194,6 +1360,16 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/schedule"
+            example:
+              id: 34ac4863-2c53-44ca-b571-80d2c33f3e15
+              professor_id: 38fe95f6-e7aa-4b04-9848-ee2d5fb6f94e
+              subject_id: 75850f7e-81a9-4441-845b-51d9afa7b7cb
+              room: CS-02-101
+              class: BSCS-3C
+              capacity: 40
+              time_start: 09:00
+              time_duration: 03:00
+              days: 8
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1315,6 +1491,11 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/attendance"
+            example:
+              device_id: 23c7dace-9da7-435f-9404-c2f23681b38d
+              academic_term_id: 0eaea5cd-16dc-47e1-ba0f-1bf57903d3e9
+              student_id: 4d9486a8-d24e-4564-a1be-a5bdf2fe31c6
+              check_type: 1
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1403,6 +1584,12 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/guardian"
+            example:
+              student_id: d886d8ef-e718-4514-8421-de408a775bb0
+              first_name: Creekt
+              middle_name: Mondst
+              last_name: Gouste
+              phone_number: 0999992999
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1418,6 +1605,12 @@ paths:
           application/json:
             schema:
               $ref:  "#/components/schemas/guardian"
+            example:
+              student_id: d886d8ef-e718-4514-8421-de408a775bb0
+              first_name: Creekt
+              middle_name: Mondst
+              last_name: Gouste
+              phone_number: 0999992999
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1713,6 +1906,7 @@ components:
         - subject_id
         - room
         - class
+        - capacity
         - time_start
         - time_duration
         - days
@@ -1730,6 +1924,9 @@ components:
           type: string
         class:
           type: string
+        capacity:
+          type: integer
+          minimum: 1
         time_start:
           type: string
           format: time
@@ -1751,7 +1948,8 @@ components:
       type: object
       required:
         - device_id
-        - enrollment_id
+        - academic_term_id
+        - student_id
         - check_type
       properties:
         id:
@@ -1887,4 +2085,9 @@ components:
     api_key:
       type: apiKey
       name: k
+      in: header
+
+    token:
+      type: apiKey
+      name: t
       in: header
