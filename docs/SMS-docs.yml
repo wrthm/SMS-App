@@ -2000,6 +2000,9 @@ components:
         student_id:
           type: string
           format: uuid
+        rfid_tag:
+          type: string
+          format: uuid
         check_type:
           type: integer
         created_at:
