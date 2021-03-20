@@ -488,6 +488,46 @@ paths:
           $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
+  /student/{studentID}/rfid/new:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Student
+      summary: Generates a new RFID tag identifier for the student.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rfid_tag:
+                    type: string
+        '400':
+          description: RFID Tag is already generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/response"
+              example:
+                code: 400
+                message: RFID Tag is already generated. Revoke RFID first if you wish to generate another RFID Tag identifier.
+        '404':
+          $ref: "#/components/responses/NotFound"
+  /student/{studentID}/rfid/revoke:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+    get:
+      tags:
+        - Student
+      summary: Revokes the RFID tag identifier currently assigned to the student.
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
   /student:
     post:
       tags:
@@ -1487,11 +1527,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref:  "#/components/schemas/attendance"
+              $ref:  "#/components/schemas/attendance_swipe_card"
             example:
               device_id: 23c7dace-9da7-435f-9404-c2f23681b38d
-              academic_term_id: 0eaea5cd-16dc-47e1-ba0f-1bf57903d3e9
-              student_id: 4d9486a8-d24e-4564-a1be-a5bdf2fe31c6
+              rfid_tag: 0eaea5cd-16dc-47e1-ba0f-1bf57903d3e9
               check_type: 1
       responses:
         '201':
@@ -1966,6 +2005,21 @@ components:
         created_at:
           type: string
           format: date-time
+
+    attendance_swipe_card:
+      type: object
+      required:
+        - device_id
+        - rfid_tag
+      properties:
+        device_id:
+          type: string
+          format: uuid
+        rfid_tag:
+          type: string
+          format: uuid
+        check_type:
+          type: integer
 
     guardian:
       type: object
