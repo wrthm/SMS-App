@@ -1,9 +1,18 @@
 openapi: '3.0.2'
 info:
   title: Student Management System API
+  description: |-
+    # How do I use/consume this API?
+    You may [read this article.](https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/)
+
+    # Authentication
+    All endpoints below will require both the API key and sesion token (k and t in HTTP headers, respectively) unless stated otherwise.
+
+    ## Important note
+    For now, the Application Server itself is still in the works. This means that you can't consume this API just yet.
   version: '0.1'
 # servers:
-#   - url: https://api.server.test/v1
+#   - url: https://softeng.jbtabz.com/
 paths:
   ############ LOGIN ############
   /login/s:
@@ -11,6 +20,7 @@ paths:
       tags:
         - Login
       summary: Signs in a student.
+      description: Does not require the session token in the HTTP header.
       requestBody:
         description: The entered login credentials of a student
         content:
@@ -43,6 +53,7 @@ paths:
       tags:
         - Login
       summary: Signs in a faculty or administrator.
+      description: Does not require the session token in the HTTP header.
       requestBody:
         description: The entered login credentials of a faculty/administrator
         content:
@@ -1517,26 +1528,25 @@ paths:
           $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
-  /attendance:
-    post:
-      tags:
-        - Attendance
-      summary: Checks in/out an attendance.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref:  "#/components/schemas/attendance_swipe_card"
-            example:
-              device_id: 23c7dace-9da7-435f-9404-c2f23681b38d
-              rfid_tag: 0eaea5cd-16dc-47e1-ba0f-1bf57903d3e9
-              check_type: 1
-      responses:
-        '201':
-          $ref: "#/components/responses/Success201"
-        '400':
-          $ref: "#/components/responses/IncompleteInput"
+  # /attendance:
+  #   post:
+  #     tags:
+  #       - Attendance
+  #     summary: Checks in/out an attendance.
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref:  "#/components/schemas/attendance_swipe_card"
+  #           example:
+  #             device_id: 23c7dace-9da7-435f-9404-c2f23681b38d
+  #             rfid_tag: 0eaea5cd-16dc-47e1-ba0f-1bf57903d3e9
+  #     responses:
+  #       '201':
+  #         $ref: "#/components/responses/Success201"
+  #       '400':
+  #         $ref: "#/components/responses/IncompleteInput"
 
   ############ GUARDIANS ############
   /search/guardians/{name}:
@@ -1986,7 +1996,7 @@ components:
         - device_id
         - academic_term_id
         - student_id
-        - check_type
+        - rfid_tag
       properties:
         id:
           type: string
@@ -2003,26 +2013,25 @@ components:
         rfid_tag:
           type: string
           format: uuid
-        check_type:
-          type: integer
-        created_at:
+        login_time:
+          type: string
+          format: date-time
+        logout_time:
           type: string
           format: date-time
 
-    attendance_swipe_card:
-      type: object
-      required:
-        - device_id
-        - rfid_tag
-      properties:
-        device_id:
-          type: string
-          format: uuid
-        rfid_tag:
-          type: string
-          format: uuid
-        check_type:
-          type: integer
+    # attendance_swipe_card:
+    #   type: object
+    #   required:
+    #     - device_id
+    #     - rfid_tag
+    #   properties:
+    #     device_id:
+    #       type: string
+    #       format: uuid
+    #     rfid_tag:
+    #       type: string
+    #       format: uuid
 
     guardian:
       type: object
