@@ -1282,11 +1282,10 @@ paths:
       summary: Add entry of a course schedule and its contents.
       tags:
        - Course Schedule
-      responses:
-        '200':
-          description: Operation completed successfully
-          content:
-            application/json:
+      requestBody:
+        required: true
+        content:
+          application/json:
               schema:
                 $ref: "#/components/schemas/course_schedule_and_content"
               example:
@@ -1294,9 +1293,15 @@ paths:
                 academic_term_id: 4d84cf53-b379-488a-a259-5ce2151a508c
                 name: BSCS 4 - Block C
                 content:
-                  type: array
-                  items:
-                    subject_id: 8bd74895-aac8-4ff7-8fb3-4e770a2b5beb
+                  - ba0870ee-8d8c-4e27-a1ee-cb5e60ff288f
+                  - 8bd74895-aac8-4ff7-8fb3-4e770a2b5beb
+                  - 56261296-a02b-4954-9999-21f30ec64e1e
+                  - 7aab4222-dd1c-4728-90e3-8c141a9d9ea7
+                  - 9b95675b-d589-4046-ae8c-d3ce33e231bd
+                  - 05ed5a05-9c87-482c-86da-adcb8567f88f
+      responses:
+        '201':
+          $ref: "#/components/responses/Success201"
         '400':
           $ref: "#/components/responses/InvalidID"
         '404':
@@ -2105,14 +2110,21 @@ components:
             message: Operation completed successfully.
 
     Success201:
-      description: Operation completed successfully
+      description: OK; Returns the generated ID
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/response"
+            allOf:
+              - $ref: "#/components/schemas/response"
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
           example:
             code: 201
             message: Operation completed successfully.
+            id: 18dc7d7c-cab3-46d5-88bc-fea08ff18157
 
     IncompleteInput:
       description: Missing required fields from input
