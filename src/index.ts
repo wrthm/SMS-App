@@ -1,13 +1,7 @@
-import dotenv from 'dotenv'
 import Express from 'express'
 import ip from 'ip'
 import Routes from './components/routes'
 import { logger } from './utils/logger'
-
-const env_config = dotenv.config()
-if (env_config.error) {
-    throw env_config.error
-}
 
 const app = Express()
 const port = 8080

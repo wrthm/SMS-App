@@ -1,5 +1,6 @@
 import pgPromise, { IDatabase, IInitOptions, IMain } from 'pg-promise'
 import { IExtensions, CoursesRepository } from './repo'
+import { DatabaseConfig } from '../config'
 
 type ExtendedProtocol = IDatabase<IExtensions> & IExtensions
 
@@ -10,12 +11,6 @@ const initOptions: IInitOptions<ExtendedProtocol> = {
 }
 
 const pgp: IMain = pgPromise(initOptions)
-const db: ExtendedProtocol = pgp({
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-})
+const db: ExtendedProtocol = pgp(DatabaseConfig)
 
 export default db

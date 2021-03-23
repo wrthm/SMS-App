@@ -1,6 +1,5 @@
 node_modules/
 dist/
 
-.env
-
+src/config/index.ts
 config_sql-ts.json
