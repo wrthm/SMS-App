@@ -1,5 +1,5 @@
 import { IDatabase, IMain, QueryFile } from "pg-promise";
-import { course as Course } from '../models'
+import { courses as Course } from '../models'
 import { course as sql, common} from '../sql'
 
 export class CoursesRepository {
