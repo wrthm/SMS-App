@@ -4,14 +4,18 @@ export const CourseValidator = {
     id: {
         params: Joi.object({
             id: Joi.string()
-                .uuid()
-                .required()
+                   .uuid()
+                   .required()
         })
     },
     model: {
         body: Joi.object({
-            name: Joi.string()
-            .required()
+            department_id: Joi.string()
+                              .uuid()
+                              .required(),
+                     name: Joi.string()
+                              .required(),
+                is_hidden: Joi.bool()
         })
     }
 }
