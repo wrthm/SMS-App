@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { CourseService } from './service'
-import { course } from '../../database/models'
+import { courses as course } from '../../database/models'
 import { InvalidArgumentException } from '../../exceptions'
 
 const CourseController = {
@@ -22,7 +22,7 @@ const CourseController = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result = await CourseService.findAll()
+            const result = await CourseService.listAll()
             res.send(result)
         }
         catch (err) {
@@ -33,6 +33,7 @@ const CourseController = {
         const course = req.body
         try {
             let result = await CourseService.add(course)
+            res.statusCode = 201
             res.send(result)
         }
         catch (err) {

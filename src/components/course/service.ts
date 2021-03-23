@@ -1,5 +1,5 @@
 import db from '../../database/index'
-import { course } from '../../database/models'
+import { courses as course } from '../../database/models'
 import { NotFoundException } from '../../exceptions'
 import { checkIfNull } from '../../utils/validationUtils'
 
@@ -14,10 +14,12 @@ const CourseService = {
         checkIfNull(result)
         return result as course[]
     },
-    findAll: async () => {
+    listAll: async () => {
         let result: course[] = await db.courses.findAll()
         return JSON.stringify(result)
     },
+
+    //listAllLimited
 
     add: async (data: course) => {
         let result: course = await db.courses.add(data)
