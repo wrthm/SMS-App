@@ -6,7 +6,7 @@ info:
     You may [read this article.](https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/)
 
     # Authentication
-    All endpoints below will require both the API key and sesion token (k and t in HTTP headers, respectively) unless stated otherwise.
+    All endpoints below will require both the API key and session token (k and t in HTTP headers, respectively) unless stated otherwise.
 
     ## Important note
     For now, the Application Server itself is still in the works. This means that you can't consume this API just yet.
