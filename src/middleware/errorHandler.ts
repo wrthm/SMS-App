@@ -18,8 +18,8 @@ export const errorHandler = (err: any, req:Request, res:Response, next:NextFunct
         })
     }
     const status = err.status || 500
-    const message = err.message || 'An error has occured in the server'
-    if (!(err instanceof APIException))
+    const message = (status !== 500) ? err.message : 'An error has occured in the server'
+    if (!(err instanceof APIException) && status !== 404)
         process.env.NODE_ENV === 'development' && err.stack ? logger.error(err.stack) : logger.error(err)
     res.status(status).send({
         status,
