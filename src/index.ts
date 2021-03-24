@@ -2,9 +2,10 @@ import Express from 'express'
 import ip from 'ip'
 import Routes from './components/routes'
 import { logger } from './utils/logger'
+import { AppServerConfig } from './config'
 
 const app = Express()
-const port = 8080
+const port = AppServerConfig.APIPort
 
 Routes(app)
 

@@ -1,3 +1,8 @@
+const AppServerConfig = {
+    APIPort: 80,
+    RFIDPort: 81,
+}
+
 const DatabaseConfig = {
     host: "127.0.0.1",
     port: 5432,
@@ -7,4 +12,4 @@ const DatabaseConfig = {
     max: 64,
 }
 
-export { DatabaseConfig }
+export { AppServerConfig, DatabaseConfig }

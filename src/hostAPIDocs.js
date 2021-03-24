@@ -2,13 +2,14 @@ const ip = require('ip')
 const express = require('express')
 const swaggerUi = require('swagger-ui-express')
 const yaml = require('yamljs')
+const config = require('./config/docsConfig')
 
 
 const app = express()
 const swaggerDocument = yaml.load('./docs/SMS-docs.yml')
 
 
-const port = 8082
+const port = config.APIDocsPort
 
 var options = {
     customCss: '.swagger-ui .topbar { display: none }'
