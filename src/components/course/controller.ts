@@ -3,7 +3,7 @@ import { CourseService } from './service'
 import { courses as course } from '../../database/models'
 import { InvalidArgumentException } from '../../exceptions'
 
-const CourseController = {
+const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
         let result: course | course[]
         try {
@@ -65,4 +65,4 @@ const CourseController = {
 
 
 
-export { CourseController }
+export { Controller as CourseController }

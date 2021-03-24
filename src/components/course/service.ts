@@ -3,7 +3,7 @@ import { courses as course } from '../../database/models'
 import { NotFoundException } from '../../exceptions'
 import { checkIfNull } from '../../utils/validationUtils'
 
-const CourseService = {
+const Service = {
     findByID: async (id: string) => {
         let result: course | null = await db.courses.findByID(id)
         checkIfNull(result)
@@ -37,4 +37,4 @@ const CourseService = {
     }
 }
 
-export { CourseService }
+export { Service as CourseService }
