@@ -1,3 +1,5 @@
+import { CommonValidator } from './common'
 import { CourseValidator } from './course'
+import { RFIDValidator } from './rfid'
 
-export { CourseValidator }
+export { CommonValidator, CourseValidator, RFIDValidator }
