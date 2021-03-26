@@ -1,5 +1,6 @@
 import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { courses as Course } from '../models'
+import { pagination_args } from '../modelsCustom'
 import { course as sql, common} from '../sql'
 
 export class CoursesRepository {
@@ -8,27 +9,23 @@ export class CoursesRepository {
     }
 
     async findByID(id: string): Promise<Course | null> {
-      return this.db.oneOrNone(common.findByID, {_table: 'courses' ,id})
+      return await this.db.oneOrNone(common.findByID, {_table: 'courses', id})
     }
 
     async findByName(name: string): Promise<Course[] | null> {
-      return this.db.manyOrNone(sql.findByName, {name})
-    }
-
-    async findAll(): Promise<Course[]> {
-      return this.db.manyOrNone(sql.findAll)
+      return await this.db.manyOrNone(sql.findByName, {name})
     }
     
     async add(data: Course) {
-      return this.db.one(sql.add, data)
+      return await this.db.one(sql.add, data)
     }
 
     async update(data: Course) {
-      return await this.checkIfIDExistsThenQuery(data, 'courses', sql.update)
+      return await this.db.result(sql.update, data)
     }
 
-    async delete(data: Course) {
-      return await this.checkIfIDExistsThenQuery(data, 'courses', sql.delete)
+    async delete(id: String) {
+      return await this.db.result(sql.delete, {id})
     }
 
 
@@ -46,6 +43,6 @@ export class CoursesRepository {
     
     
     async exists(id: string) {
-      return this.db.one(common.exists, {table: 'courses', id: id})
+      return await this.db.one(common.exists, {table: 'courses', id: id})
     }
 }

@@ -1,4 +1,5 @@
-UPDATE ${_table:name}
+UPDATE courses
 SET is_hidden = true
-WHERE id = ${id}
+WHERE id = ${id} AND is_hidden = false
+
 ;

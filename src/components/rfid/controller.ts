@@ -1,14 +1,13 @@
 import { NextFunction, Request, Response } from 'express'
-import { RFIDService } from './service'
 import { attendances as attendance } from '../../database/models'
-import { InvalidArgumentException } from '../../exceptions'
+import { NotImplementedException } from '../../exceptions'
 
 const Controller = {
     add: async (req: Request, res: Response, next: NextFunction) => {
         const rfid: attendance = req.body
         try {
             // call service that performs student lookup from the rfid tag first
-            let result = await RFIDService.studentLookup(rfid.rfid_tag)
+            throw new NotImplementedException()
 
             // then do logic for attendance
             

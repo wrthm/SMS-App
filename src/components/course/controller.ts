@@ -1,20 +1,23 @@
+import DatabaseService from '../../database'
+import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { CourseService } from './service'
 import { courses as course } from '../../database/models'
-import { InvalidArgumentException } from '../../exceptions'
+import { InvalidArgumentException, NotFoundException } from '../../exceptions'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
-        let result: course | course[]
+        let result: course | course[] | null
+        let { id, name } = req.params
         try {
-            if (req.params.id) {
-                result = await CourseService.findByID(req.params.id)
+            if (id) {
+                result = await DatabaseService.courses.findByID(id)
             } else if (req.params.name) {
-                result = await CourseService.findByName(req.params.name)
+                result = await DatabaseService.courses.findByName(`%${name}%`)
             } else {
-                throw new InvalidArgumentException()
+                return next(new InvalidArgumentException())
             }
-            res.send(result)
+            checkIfNull(result)
+            return res.send(result)
         }
         catch (err) {
             next(err)
@@ -22,8 +25,8 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result = await CourseService.listAll()
-            res.send(result)
+            const result = await DatabaseService.common.listAll(req.query, 'courses')
+            return res.send(JSON.stringify(result))
         }
         catch (err) {
             next(err)
@@ -32,9 +35,9 @@ const Controller = {
     add: async (req: Request, res: Response, next: NextFunction) => {
         const course = req.body
         try {
-            let result = await CourseService.add(course)
+            let result = await DatabaseService.courses.add(course)
             res.statusCode = 201
-            res.send(result)
+            return res.send({"status": 201, "message": "Entry added successfuly", "id": result.id})
         }
         catch (err) {
             next(err)
@@ -43,20 +46,27 @@ const Controller = {
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
         const data: course = req.body
-        data.id = req.params.id
         try {
-            await CourseService.update(data)
-            res.send({"status": 200,"message": "Course updated successfully"})
+            if ((await DatabaseService.courses.update(data)).rowCount !== 0) {
+                return res.send({"status": 200,"message": "Course updated successfully"})
+            }
+            else {
+                return next(new NotFoundException('Course does not exist'))
+            }
+            
         } catch (err) {
             next(err)
         }
     },
     delete: async (req: Request, res: Response, next: NextFunction) => {
-        const data: course = req.body
-        data.id = req.params.id
+        const { id } = req.params
         try {
-            await CourseService.delete(data)
-            res.send({"status": 200,"message": "Course deleted successfully"})
+            if ((await DatabaseService.courses.delete(id)).rowCount !== 0) {
+                return res.send({"status": 200,"message": "Course deleted successfully"})
+            }
+            else {
+                return next(new NotFoundException('Course does not exist'))
+            }
         } catch (err) {
             next(err)
         }
