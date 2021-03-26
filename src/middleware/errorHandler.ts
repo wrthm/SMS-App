@@ -9,7 +9,7 @@ export const errorHandler = (err: any, req:Request, res:Response, next:NextFunct
         const details = err.details.body || err.details.params || err.details.query
         const message: string = typeof details !== 'undefined' ? details[0].message : err.message
 
-        logger.error(`${message} (${req.originalUrl})`)
+        // logger.error(`${message} (${req.originalUrl})`)
 
         return res.status(err.statusCode).send(
         {
@@ -17,9 +17,16 @@ export const errorHandler = (err: any, req:Request, res:Response, next:NextFunct
             "message": message
         })
     }
+
+    const foreignKeyCheck = err.message.match(/(?<=violates foreign key constraint )(".+?")/)
+    if (foreignKeyCheck) {
+        err.status = 400
+        err.message = `The entered foreign key ID(s) did not match any existing entry, thus violating the foreign key ${foreignKeyCheck[0]}.`
+    }
+
     const status = err.status || 500
     const message = (status !== 500) ? err.message : 'An error has occured in the server'
-    if (!(err instanceof APIException) && (status !== 404 && status !== 400 && status !== 501))
+    if (!(err instanceof APIException) && status !== 400)
         process.env.NODE_ENV === 'development' && err.stack ? logger.error(err.stack) : logger.error(err)
     res.status(status).send({
         status,
