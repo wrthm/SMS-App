@@ -16,4 +16,4 @@ const model = {
     })
 }
 
-export const DepartmentValidator = { model, postModel }
+export const AcademicTermValidator = { postModel, model }

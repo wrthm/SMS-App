@@ -1,26 +1,23 @@
 import { Joi } from 'express-validation'
 
-export const CourseValidator = {
-    model: {
-        body: Joi.object({
-                       id: Joi.string()
-                              .uuid()
-                              .required(),
-            department_id: Joi.string()
-                              .uuid()
-                              .required(),
-                     name: Joi.string()
-                              .required(),
-                is_hidden: Joi.bool(),
-        })
-    },
-    postModel: {
-        body: Joi.object({
-            department_id: Joi.string()
-                              .uuid()
-                              .required(),
-                     name: Joi.string()
-                              .required(),
-        })
-    }
+const postModel = {
+    body: Joi.object({
+        department_id: Joi.string()
+                          .uuid()
+                          .required(),
+                 name: Joi.string()
+                          .required(),
+    })
 }
+
+const model = {
+    body: postModel.body.append({
+               id: Joi.string()
+                      .uuid()
+                      .required(),
+        is_hidden: Joi.bool(),
+    })
+}
+
+
+export const CourseValidator = { postModel, model }
