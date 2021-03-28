@@ -1,6 +1,5 @@
 const AppServerConfig = {
     APIPort: 80,
-    RFIDPort: 81,
 }
 
 const DatabaseConfig = {
