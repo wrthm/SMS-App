@@ -3,17 +3,24 @@ import { logger } from '../../utils/logger';
 
 const {join: joinPath} = require('path');
 
-export const course = {
-    findByName: sql('courses/findByName.sql'),
-    add: sql('courses/add.sql'),
-    update: sql('courses/update.sql'),
-    delete: sql('./courses/delete.sql'),
-}
-
 export const common = {
     findByID: sql('./findByID.sql'),
     listAll: sql('./listAll.sql'),
     exists: sql('./exists.sql'),
+}
+
+export const course = {
+    findByName: sql('courses/findByName.sql'),
+    add: sql('courses/add.sql'),
+    update: sql('courses/update.sql'),
+    delete: sql('courses/delete.sql'),
+}
+
+export const department = {
+    findByName: sql('departments/findByName.sql'),
+    add: sql('departments/add.sql'),
+    update: sql('departments/update.sql'),
+    delete: sql('departments/delete.sql'),
 }
 
 function sql(file: string): QueryFile {

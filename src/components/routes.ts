@@ -10,6 +10,7 @@ export default function(app: Application) {
 
     app.use(
         require('./course/route'),
+        require('./department/route'),
         require('./rfid/route'),
     )
 

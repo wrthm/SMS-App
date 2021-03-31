@@ -1,6 +1,5 @@
 import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { courses as Course } from '../models'
-import { pagination_args } from '../modelsCustom'
 import { course as sql, common} from '../sql'
 
 export class CoursesRepository {
@@ -9,7 +8,7 @@ export class CoursesRepository {
     }
 
     async findByID(id: string): Promise<Course | null> {
-      return await this.db.oneOrNone(common.findByID, {_table: 'courses', id})
+      return await this.db.oneOrNone(common.findByID, {tableName: 'courses', id})
     }
 
     async findByName(name: string): Promise<Course[] | null> {
@@ -43,6 +42,6 @@ export class CoursesRepository {
     
     
     async exists(id: string) {
-      return await this.db.one(common.exists, {table: 'courses', id: id})
+      return await this.db.one(common.exists, {tableName: 'courses', id: id})
     }
 }

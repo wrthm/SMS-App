@@ -1,6 +1,6 @@
 SELECT EXISTS(
     SELECT 1 
-    FROM ${_table:name} 
+    FROM ${tableName:name} 
     WHERE id = ${id}
 )
 ;
