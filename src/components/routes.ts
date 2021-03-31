@@ -11,6 +11,7 @@ export default function(app: Application) {
     app.use(
         require('./course/route'),
         require('./department/route'),
+        require('./academic_term/route'),
         require('./rfid/route'),
     )
 

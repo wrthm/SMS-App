@@ -23,6 +23,13 @@ export const department = {
     delete: sql('departments/delete.sql'),
 }
 
+export const academic_term = {
+    findByName: sql('academic_terms/findByName.sql'),
+    add: sql('academic_terms/add.sql'),
+    update: sql('academic_terms/update.sql'),
+    delete: sql('academic_terms/delete.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);
