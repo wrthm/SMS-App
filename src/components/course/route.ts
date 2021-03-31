@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { CourseController as Controller} from './controller'
 import { validate } from 'express-validation'
 import { CourseValidator as SchemaValidator, CommonValidator } from '../../utils/validator'
+import { CourseController as Controller} from './controller'
 
 const CourseRouter : Router = Router()
 

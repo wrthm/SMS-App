@@ -13,7 +13,7 @@ export const errorHandler = (err: any, req:Request, res:Response, next:NextFunct
 
         return res.status(err.statusCode).send(
         {
-            "status": err.statusCode,
+            "code": err.statusCode,
             "message": message
         })
     }
@@ -24,12 +24,12 @@ export const errorHandler = (err: any, req:Request, res:Response, next:NextFunct
         err.message = `The entered foreign key ID(s) did not match any existing entry, thus violating the foreign key ${foreignKeyCheck[0]}.`
     }
 
-    const status = err.status || 500
-    const message = (status !== 500) ? err.message : 'An error has occured in the server'
-    if (!(err instanceof APIException) && status !== 400)
+    const code = err.status || 500
+    const message = (code !== 500) ? err.message : 'An error has occured in the server'
+    if (!(err instanceof APIException) && code !== 400)
         process.env.NODE_ENV === 'development' && err.stack ? logger.error(err.stack) : logger.error(err)
-    res.status(status).send({
-        status,
+    res.status(code).send({
+        code,
         message,
     })
 }

@@ -37,7 +37,7 @@ const Controller = {
         try {
             let result = await DatabaseService.courses.add(course)
             res.statusCode = 201
-            return res.send({"status": 201, "message": "Entry added successfuly", "id": result.id})
+            return res.send({"code": 201, "message": "Entry added successfuly", "id": result.id})
         }
         catch (err) {
             next(err)
@@ -48,7 +48,7 @@ const Controller = {
         const data: course = req.body
         try {
             if ((await DatabaseService.courses.update(data)).rowCount !== 0) {
-                return res.send({"status": 200,"message": "Course updated successfully"})
+                return res.send({"code": 200,"message": "Course updated successfully"})
             }
             else {
                 return next(new NotFoundException('Course does not exist'))
@@ -62,7 +62,7 @@ const Controller = {
         const { id } = req.params
         try {
             if ((await DatabaseService.courses.delete(id)).rowCount !== 0) {
-                return res.send({"status": 200,"message": "Course deleted successfully"})
+                return res.send({"code": 200,"message": "Course deleted successfully"})
             }
             else {
                 return next(new NotFoundException('Course does not exist'))
