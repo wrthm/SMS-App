@@ -33,9 +33,9 @@ const Controller = {
         }
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
-        const course = req.body
+        const data: department = req.body
         try {
-            let result = await DatabaseService.departments.add(course)
+            let result = await DatabaseService.departments.add(data)
             res.statusCode = 201
             return res.send({"code": 201, "message": "Entry added successfuly", "id": result.id})
         }
