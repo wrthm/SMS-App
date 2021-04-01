@@ -1,11 +1,19 @@
 import { Application, json, Response, Request, NextFunction } from 'express';
 import { NotFoundException } from '../exceptions';
 import { errorHandler } from '../middleware/errorHandler'
+import { logger } from 'express-winston'
+import { logger as loggerInstance } from '../utils/logger';
 
 export default function(app: Application) {
     app.use(
         json(),
-        require('express-log-url')
+        logger({
+            winstonInstance: loggerInstance,
+            expressFormat: true,
+            colorize: true,
+            meta: false,
+            msg: "HTTP {{req.method}} {{req.url}}",
+        })
     )
 
     app.use(
