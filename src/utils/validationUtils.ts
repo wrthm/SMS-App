@@ -6,3 +6,12 @@ export const checkIfNull = (x: any, message?: string) => {
         throw err
     }
 }
+
+export const propTrimOrNull = (str: string | undefined | null) => {
+    if (str) {
+        return str.trim()
+    }
+    else {
+        return null
+    }
+}

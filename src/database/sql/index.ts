@@ -30,6 +30,17 @@ export const academic_term = {
     delete: sql('academic_terms/delete.sql'),
 }
 
+export const student = {
+    findByNameOR: sql('students/findByNameOR.sql'),
+    findByNameAND: sql('students/findByNameAND.sql'),
+    add: sql('students/add.sql'),
+    update: sql('students/update.sql'),
+    delete: sql('students/delete.sql'),
+    enroll: sql('students/enroll.sql'),
+    unenroll: sql('students/unenroll.sql'),
+    unenrollAll: sql('students/unenrollAll.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

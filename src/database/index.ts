@@ -11,6 +11,7 @@ const initOptions: IInitOptions<ExtendedProtocol> = {
         obj.courses = new Repos.CoursesRepository(obj, pgp)
         obj.departments = new Repos.DepartmentsRepository(obj, pgp)
         obj.academic_terms = new Repos.AcademicTermsRepository(obj, pgp)
+        obj.students = new Repos.StudentsRepository(obj, pgp)
     }
 }
 

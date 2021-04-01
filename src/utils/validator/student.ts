@@ -1,9 +1,10 @@
 import { Joi } from 'express-validation'
+import { CommonValidator } from './common'
 
 const postModel = {
     body: Joi.object({
             school_id: Joi.string()
-                          .required(),
+                          .trim(),
            first_name: Joi.string()
                           .trim()
                           .required(),
@@ -20,6 +21,7 @@ const postModel = {
                           .trim()
                           .required(),
            birth_date: Joi.date()
+                          .iso()
                           .required(),
          phone_number: Joi.string()
                           .min(11)
@@ -34,7 +36,7 @@ const postModel = {
 }
 
 const searchGranularModel = {
-    query: Joi.object({
+    query: CommonValidator.pagination.query.append({
         fname: Joi.string(),
         mname: Joi.string(),
         lname: Joi.string(),
@@ -50,4 +52,4 @@ const model = {
     })
 }
 
-export const StudentValidator = { postModel, model }
+export const StudentValidator = { postModel, model, searchGranularModel }
