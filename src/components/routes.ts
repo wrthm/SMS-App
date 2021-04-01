@@ -12,7 +12,6 @@ export default function(app: Application) {
             expressFormat: true,
             colorize: true,
             meta: false,
-            msg: "HTTP {{req.method}} {{req.url}}",
         })
     )
 
