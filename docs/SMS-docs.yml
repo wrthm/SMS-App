@@ -85,7 +85,7 @@ paths:
           description: Invalid username or password
 
   ############ COURSES ############
-  /search/course/{name}:
+  /search/courses/{name}:
     parameters:
       - name: name
         in: path
@@ -205,7 +205,7 @@ paths:
 
 
   ############ DEPARTMENTS ############
-  /search/department/{name}:
+  /search/departments/{name}:
     parameters:
       - name: name
         in: path
