@@ -34,10 +34,11 @@ const Controller = {
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
         const data: course = req.body
+        data.name = data.name.trim()
         try {
             let result = await DatabaseService.courses.add(data)
             res.statusCode = 201
-            return res.send({"code": 201, "message": "Entry added successfuly", "id": result.id})
+            return res.send({"code": 201, "message": "Entry added successfully", "id": result.id})
         }
         catch (err) {
             next(err)
