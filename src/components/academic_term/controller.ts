@@ -2,7 +2,9 @@ import DatabaseService from '../../database'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
 import { academic_terms as academic_term} from '../../database/models'
+import { pagination_args } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
+import { parsePagination } from '../../utils/parsePagination'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
@@ -12,7 +14,7 @@ const Controller = {
             if (id) {
                 result = await DatabaseService.academic_terms.findByID(id)
             } else if (name) {
-                result = await DatabaseService.academic_terms.findByName(`%${name}%`)
+                result = await DatabaseService.academic_terms.findByName(`%${name}%`, req.query)
             } else {
                 return next(new InvalidArgumentException())
             }

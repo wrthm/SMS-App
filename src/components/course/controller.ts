@@ -12,7 +12,7 @@ const Controller = {
             if (id) {
                 result = await DatabaseService.courses.findByID(id)
             } else if (name) {
-                result = await DatabaseService.courses.findByName(`%${name}%`)
+                result = await DatabaseService.courses.findByName(`%${name}%`, req.query)
             } else {
                 return next(new InvalidArgumentException())
             }

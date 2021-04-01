@@ -16,7 +16,7 @@ const Controller = {
             } else if (name) {
                 let searchArgs: search_student_args
                 searchArgs = {fname: `%${name}%`, mname: `%${name}%`, lname: `%${name}%`}
-                result = await DatabaseService.students.findByNameOR(searchArgs)
+                result = await DatabaseService.students.findByNameOR(searchArgs, req.query)
             } else if (fname || mname || lname) {
                 if (fname) {
                     fname = `%${fname}%`
@@ -38,7 +38,7 @@ const Controller = {
                     mname: mname as string,
                     lname: lname as string,
                 }
-                result = await DatabaseService.students.findByNameAND(searchArgs)
+                result = await DatabaseService.students.findByNameAND(searchArgs, req.query)
             }
             else {
                 return next(new InvalidArgumentException())

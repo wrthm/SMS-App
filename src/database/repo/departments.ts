@@ -1,5 +1,7 @@
 import { IDatabase, IMain, QueryFile } from "pg-promise";
+import { parsePagination } from "../../utils/parsePagination";
 import { departments as Department } from '../models'
+import { pagination_args } from "../modelsCustom";
 import { department as sql, common} from '../sql'
 
 export class DepartmentsRepository {
@@ -11,8 +13,10 @@ export class DepartmentsRepository {
       return await this.db.oneOrNone(common.findByID, {tableName: 'departments', id})
     }
 
-    async findByName(name: string): Promise<Department[] | null> {
-      return await this.db.manyOrNone(sql.findByName, {name})
+    async findByName(name: string, args: pagination_args): Promise<Department[] | null> {
+      const pgArgs = parsePagination(args)
+      const {limit, offset} = pgArgs
+      return await this.db.manyOrNone(sql.findByName, {name, limit, offset})
     }
     
     async add(data: Department) {

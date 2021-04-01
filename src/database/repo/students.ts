@@ -1,6 +1,7 @@
 import { IDatabase, IMain, QueryFile } from "pg-promise";
+import { parsePagination } from "../../utils/parsePagination";
 import { students as Student } from '../models'
-import { search_student_args } from '../modelsCustom'
+import { pagination_args, search_student_args } from '../modelsCustom'
 import { student as sql, common} from '../sql'
 
 export class StudentsRepository {
@@ -12,12 +13,14 @@ export class StudentsRepository {
       return await this.db.oneOrNone(common.findByID, {tableName: 'students', id})
     }
 
-    async findByNameOR(name: search_student_args): Promise<Student[] | null> {
-      return await this.db.manyOrNone(sql.findByNameOR, name)
+    async findByNameOR(name: search_student_args, args: pagination_args): Promise<Student[] | null> {
+      const pgArgs = parsePagination(args)
+      return await this.db.manyOrNone(sql.findByNameOR, {name, pgArgs})
     }
 
-    async findByNameAND(name: search_student_args): Promise<Student[] | null> {
-      return await this.db.manyOrNone(sql.findByNameAND, name)
+    async findByNameAND(name: search_student_args, args: pagination_args): Promise<Student[] | null> {
+      const pgArgs = parsePagination(args)
+      return await this.db.manyOrNone(sql.findByNameAND, {name, pgArgs})
     }
     
     async add(data: Student) {
