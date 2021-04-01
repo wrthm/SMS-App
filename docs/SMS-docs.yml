@@ -1780,6 +1780,8 @@ components:
           type: string
         is_currently_enrolled:
           type: boolean
+        is_hidden:
+          type: boolean
         created_at:
           type: string
           format: date-time
@@ -1883,7 +1885,7 @@ components:
         course_id:
           type: string
           format: uuid
-        is_hidden:
+        is_revoked:
           type: boolean
         created_at:
           type: string
