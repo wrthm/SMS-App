@@ -9,8 +9,10 @@ const postModel = {
                           .uuid()
                           .required(),
                  room: Joi.string()
+                          .trim()
                           .required(),
                 class: Joi.string()
+                          .trim()
                           .required(),
              capacity: Joi.number()
                           .min(1)

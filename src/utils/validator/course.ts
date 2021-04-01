@@ -6,6 +6,7 @@ const postModel = {
                           .uuid()
                           .required(),
                  name: Joi.string()
+                          .trim()
                           .required(),
     })
 }

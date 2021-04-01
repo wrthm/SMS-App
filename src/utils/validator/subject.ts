@@ -3,8 +3,10 @@ import { Joi } from 'express-validation'
 const postModel = {
     body: Joi.object({
         code: Joi.string()
+                 .trim()
                  .required(),
         name: Joi.string()
+                 .trim()
                  .required(),
     })
 }

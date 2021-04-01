@@ -9,6 +9,7 @@ const postModel = {
                              .uuid()
                              .required(),
                     name: Joi.string()
+                             .trim()
                              .required(),
                  content: Joi.array()
                              .items(
