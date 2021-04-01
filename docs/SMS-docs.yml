@@ -453,6 +453,45 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/student"
+  /search/students?fname=&mname=&lname=:
+    parameters:
+      - name: fname
+        in: query
+        required: false
+        description: Student's first name
+        example: Morton
+        schema:
+          type: string
+      - name: mname
+        in: query
+        required: false
+        description: Student's middle name
+        example: Allison
+        schema:
+          type: string
+      - name: lname
+        in: query
+        required: false
+        description: Student's last name
+        example: Daubney
+        schema:
+          type: string
+    get:
+      tags:
+        - Search
+        - Student
+      operationId: searchForStudentsGranular
+      summary: Search for students by first, middle, and/or last name.
+      description: Empty arguments will not be included in the name filtering, but there must be at least one argument in the query.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
   /students:
     get:
       tags:
