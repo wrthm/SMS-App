@@ -1,5 +1,6 @@
 const AppServerConfig = {
     APIPort: 80,
+    PaginationDefaultLimit: 50,
 }
 
 const DatabaseConfig = {

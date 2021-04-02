@@ -1,4 +1,5 @@
 import { pagination_args } from '../database/modelsCustom'
+import { AppServerConfig } from '../config'
 
 export function parsePagination(pgArgs: pagination_args) {
     let { page, limit } = pgArgs
@@ -9,7 +10,7 @@ export function parsePagination(pgArgs: pagination_args) {
         page = Number(page)
     }
     if (!limit) {
-        limit = 50
+        limit = AppServerConfig.PaginationDefaultLimit
     } else {
         limit = Number(limit)
     }
