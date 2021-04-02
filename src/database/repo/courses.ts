@@ -30,22 +30,4 @@ export class CoursesRepository {
     async delete(id: String) {
       return await this.db.result(sql.delete, {id})
     }
-
-
-    // TODO: move this to outside, maybe in utils?
-    async checkIfIDExistsThenQuery(data: any, table: string, thenQueryFile: QueryFile) {
-      return await this.db.task(async t => {
-        data._table = table
-        const row = await t.one(common.exists, data)
-          if (row.exists) {
-            await t.none(thenQueryFile, data)
-          }
-          return row.exists
-      })
-    }
-    
-    
-    async exists(id: string) {
-      return await this.db.one(common.exists, {tableName: 'courses', id: id})
-    }
 }

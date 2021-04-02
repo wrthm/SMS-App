@@ -14,4 +14,20 @@ export class CommonRepository {
         return await this.db.manyOrNone(common.listAll, {tableName, limit, offset})
     }
 
+    async checkIfIDExistsThenQuery(data: any, table: string, thenQueryFile: QueryFile) {
+        return await this.db.task(async t => {
+          data._table = table
+          const row = await t.one(common.exists, data)
+            if (row.exists) {
+              await t.none(thenQueryFile, data)
+            }
+            return row.exists
+        })
+    }
+      
+      
+    async exists(id: string, tableName: string) {
+        return await this.db.one(common.exists, {id, tableName})
+    }
+
 }
