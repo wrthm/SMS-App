@@ -39,6 +39,7 @@ export const student = {
     enroll: sql('students/enroll.sql'),
     unenroll: sql('students/unenroll.sql'),
     unenrollAll: sql('students/unenrollAll.sql'),
+    isEnrolled: sql('students/isEnrolled.sql'),
 }
 
 export const subject = {
@@ -46,6 +47,15 @@ export const subject = {
     add: sql('subjects/add.sql'),
     update: sql('subjects/update.sql'),
     delete: sql('subjects/delete.sql'),
+}
+
+export const enrollment = {
+    add: sql('enrollments/add.sql'),
+    delete: sql('enrollments/delete.sql'),
+    listByStudentID: sql('enrollments/listByStudentID.sql'),
+    listAll: sql('enrollments/listAll.sql'),
+    findByID: sql('enrollments/findByID.sql'),
+    getStudentID: sql('enrollments/getStudentID.sql'),
 }
 
 function sql(file: string): QueryFile {

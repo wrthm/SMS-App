@@ -2,15 +2,15 @@ import { Joi } from 'express-validation'
 
 const postModel = {
     body: Joi.object({
-        department_id: Joi.string()
-                          .uuid()
-                          .required(),
-           student_id: Joi.string()
-                          .uuid()
-                          .required(),
-            course_id: Joi.string()
-                          .uuid()
-                          .required(),
+        academic_term_id: Joi.string()
+                             .uuid()
+                             .required(),
+              student_id: Joi.string()
+                             .uuid()
+                             .required(),
+               course_id: Joi.string()
+                             .uuid()
+                             .required(),
     })
 }
 
@@ -23,5 +23,12 @@ const model = {
     })
 }
 
+const listByStudentIDModel = {
+    params: Joi.object({
+        student_id: Joi.string()
+                       .uuid()
+                       .required(),
+    })
+}
 
-export const EnrollmentValidator = { postModel, model }
+export const EnrollmentValidator = { postModel, model, listByStudentIDModel }

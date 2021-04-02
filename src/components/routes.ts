@@ -21,12 +21,13 @@ export default function(app: Application) {
         require('./academic_term/route'),
         require('./student/route'),
         require('./subject/route'),
+        require('./enrollment/route'),
         require('./rfid/route'),
     )
 
     // 404 error
     app.all('*', (req:Request, res:Response, next: NextFunction) => {
-        throw(new NotFoundException('API endpoint does not exist'))
+        next(new NotFoundException('API endpoint does not exist'))
     })
 
 

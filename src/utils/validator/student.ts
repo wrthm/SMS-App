@@ -45,10 +45,10 @@ const searchGranularModel = {
 
 const model = {
     body: postModel.body.append({
-                           id: Joi.string()
-                                  .uuid()
-                                  .required(),
-        is_currently_enrolled: Joi.bool(),
+               id: Joi.string()
+                      .uuid()
+                      .required(),
+        is_hidden: Joi.bool(),
     })
 }
 
