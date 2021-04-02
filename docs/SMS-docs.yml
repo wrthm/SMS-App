@@ -94,6 +94,8 @@ paths:
         example: Science
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -214,6 +216,8 @@ paths:
         example: Education
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -329,6 +333,8 @@ paths:
         example: S/Y 2018
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -438,6 +444,8 @@ paths:
         example: Nolla
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -476,6 +484,8 @@ paths:
         example: Daubney
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -641,6 +651,8 @@ paths:
         example: Software Engineering
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -881,6 +893,8 @@ paths:
         example: Lany
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -1094,6 +1108,8 @@ paths:
         example: BSCS 3C
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -1356,6 +1372,8 @@ paths:
         example: Soft Eng
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -1602,6 +1620,8 @@ paths:
         example: Capuss
         schema:
           type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
     get:
       tags:
         - Search
@@ -1781,7 +1801,6 @@ components:
     student:
       type: object
       required:
-        - school_id
         - first_name
         - middle_name
         - last_name
