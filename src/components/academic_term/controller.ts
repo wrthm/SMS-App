@@ -49,6 +49,7 @@ const Controller = {
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
         const data: academic_term = req.body
+        data.name = data.name.trim()
         try {
             if ((await DatabaseService.academic_terms.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry updated successfully"})

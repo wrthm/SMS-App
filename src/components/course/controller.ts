@@ -47,6 +47,7 @@ const Controller = {
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
         const data: course = req.body
+        data.name = data.name.trim()
         try {
             if ((await DatabaseService.courses.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Course updated successfully"})
