@@ -20,6 +20,7 @@ export default function(app: Application) {
         require('./department/route'),
         require('./academic_term/route'),
         require('./student/route'),
+        require('./subject/route'),
         require('./rfid/route'),
     )
 

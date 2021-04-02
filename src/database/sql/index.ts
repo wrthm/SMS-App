@@ -41,6 +41,13 @@ export const student = {
     unenrollAll: sql('students/unenrollAll.sql'),
 }
 
+export const subject = {
+    findByName: sql('subjects/findByName.sql'),
+    add: sql('subjects/add.sql'),
+    update: sql('subjects/update.sql'),
+    delete: sql('subjects/delete.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);
