@@ -19,9 +19,9 @@ export const errorHandler = (err: any, req:Request, res:Response, next:NextFunct
     }
 
     const foreignKeyCheck = err.message.match(/(?<=violates foreign key constraint )(".+?")/)
-    if (foreignKeyCheck) {
+    const duplicateKeyCheck = err.message.match(/(?<=violates unique constraint )(".+?")/)
+    if (foreignKeyCheck || duplicateKeyCheck) {
         err.status = 400
-        err.message = `The entered foreign key ID(s) did not match any existing entry, thus violating the foreign key ${foreignKeyCheck[0]}.`
     }
 
     const code = err.status || 500

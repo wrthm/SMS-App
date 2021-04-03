@@ -58,6 +58,14 @@ export const enrollment = {
     getStudentID: sql('enrollments/getStudentID.sql'),
 }
 
+export const grade = {
+    add: sql('grades/add.sql'),
+    update: sql('grades/update.sql'),
+    findByIDs: sql('grades/findByIDs.sql'),
+    listAll: sql('grades/listAll.sql'),
+    listByEnrollmentID: sql('grades/listByEnrollmentID.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

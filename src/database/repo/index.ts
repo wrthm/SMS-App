@@ -5,6 +5,7 @@ import { AcademicTermsRepository } from './academic_terms'
 import { StudentsRepository } from './students'
 import { SubjectsRepository } from './subjects'
 import { EnrollmentsRepository } from './enrollments'
+import { GradesRepository } from './grades'
 
 interface IExtensions {
     common: CommonRepository,
@@ -14,6 +15,7 @@ interface IExtensions {
     students: StudentsRepository,
     subjects: SubjectsRepository,
     enrollments: EnrollmentsRepository,
+    grades: GradesRepository,
 }
 
 export {
@@ -25,4 +27,5 @@ export {
     StudentsRepository,
     SubjectsRepository,
     EnrollmentsRepository,
+    GradesRepository,
 }

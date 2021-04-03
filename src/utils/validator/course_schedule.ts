@@ -14,6 +14,15 @@ const postModel = {
     })
 }
 
+const putModel = {
+      id: Joi.string()
+             .uuid()
+             .required(),
+    name: Joi.string()
+             .trim()
+             .required()
+}
+
 const model = {
     body: postModel.body.append({
                id: Joi.string()
@@ -24,4 +33,4 @@ const model = {
 }
 
 
-export const CourseScheduleValidator = { postModel, model }
+export const CourseScheduleValidator = { postModel, putModel, model }
