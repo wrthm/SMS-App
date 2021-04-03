@@ -1194,7 +1194,8 @@ paths:
     put:
       tags:
         - Course Schedule
-      summary: Update an existing course schedule.
+      summary: Update an existing course schedule's name.
+      description: Attempting to change the course schedule's assigned course and/or academic term will only return an error.
       requestBody:
         required: true
         content:
@@ -1203,8 +1204,6 @@ paths:
               $ref:  "#/components/schemas/course_schedule"
             example:
               id: 790a4ae2-f559-40b9-999f-9f3e640c837e
-              course_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
-              academic_term_id: 22297dec-9bb3-463a-bac8-c9fb2372982b
               name: BSCS 3 - Block C
       responses:
         '200':
@@ -1288,25 +1287,6 @@ paths:
           $ref: "#/components/responses/Success201"
         '400':
           $ref: "#/components/responses/IncompleteInput"
-    put:
-      tags:
-        - Course Schedule
-      summary: Update an existing course schedule content.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref:  "#/components/schemas/course_schedule_content"
-            example:
-              id: 6fd1ca86-237e-4a4e-97b9-fc834c8ea49f
-              course_schedule_id: 790a4ae2-f559-40b9-999f-9f3e640c837e
-              schedule_id: c6bbd7d5-f007-4ded-873c-902a6d9ada7a
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
-        '404':
-          $ref: "#/components/responses/NotFound"
 
   ############ COURSE_SCHEDULE + COURSE_SCHEDULE_CONTENT ###########
   /course_schedule_and_contents/{courseScheduleID}:
@@ -1886,9 +1866,6 @@ components:
           type: number
         is_hidden:
           type: boolean
-        created_at:
-          type: string
-          format: date-time
         updated_at:
           type: string
           format: date-time
