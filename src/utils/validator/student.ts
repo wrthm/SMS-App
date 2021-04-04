@@ -32,8 +32,6 @@ const postModel = {
         email_address: Joi.string()
                           .trim()
                           .email(),
-             username: Joi.string(),
-             password: Joi.string(),
     })
 }
 

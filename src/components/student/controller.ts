@@ -68,9 +68,7 @@ const Controller = {
         data.address = data.address.trim()
         data.sex = data.sex.trim()
         data.email_address = propTrimOrNull(data.email_address)
-        data.username = propTrimOrNull(data.username)
-        data.password = propTrimOrNull(data.password)
-        // TODO: hash the password
+        data.phone_number = propTrimOrNull(data.phone_number)
         try {
             let result = await DatabaseService.students.add(data)
             res.statusCode = 201
@@ -90,9 +88,7 @@ const Controller = {
         data.address = data.address.trim()
         data.sex = data.sex.trim()
         data.email_address = propTrimOrNull(data.email_address)
-        data.username = propTrimOrNull(data.username)
-        data.password = propTrimOrNull(data.password)
-        // TODO: hash the password
+        data.phone_number = propTrimOrNull(data.phone_number)
         try {
             if ((await DatabaseService.students.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry updated successfully"})
