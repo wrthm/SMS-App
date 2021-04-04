@@ -2,7 +2,7 @@ import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { parsePagination } from "../../utils/parsePagination";
 import { academic_terms as AcademicTerms } from '../models'
 import { pagination_args } from "../modelsCustom";
-import { academic_term as sql, common} from '../sql'
+import { academic_terms as sql, common} from '../sql'
 
 export class AcademicTermsRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {

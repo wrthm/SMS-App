@@ -9,28 +9,28 @@ export const common = {
     exists: sql('./exists.sql'),
 }
 
-export const course = {
+export const courses = {
     findByName: sql('courses/findByName.sql'),
     add: sql('courses/add.sql'),
     update: sql('courses/update.sql'),
     delete: sql('courses/delete.sql'),
 }
 
-export const department = {
+export const departments = {
     findByName: sql('departments/findByName.sql'),
     add: sql('departments/add.sql'),
     update: sql('departments/update.sql'),
     delete: sql('departments/delete.sql'),
 }
 
-export const academic_term = {
+export const academic_terms = {
     findByName: sql('academic_terms/findByName.sql'),
     add: sql('academic_terms/add.sql'),
     update: sql('academic_terms/update.sql'),
     delete: sql('academic_terms/delete.sql'),
 }
 
-export const student = {
+export const students = {
     findByNameOR: sql('students/findByNameOR.sql'),
     findByNameAND: sql('students/findByNameAND.sql'),
     add: sql('students/add.sql'),
@@ -42,14 +42,14 @@ export const student = {
     isEnrolled: sql('students/isEnrolled.sql'),
 }
 
-export const subject = {
+export const subjects = {
     findByName: sql('subjects/findByName.sql'),
     add: sql('subjects/add.sql'),
     update: sql('subjects/update.sql'),
     delete: sql('subjects/delete.sql'),
 }
 
-export const enrollment = {
+export const enrollments = {
     add: sql('enrollments/add.sql'),
     delete: sql('enrollments/delete.sql'),
     listByStudentID: sql('enrollments/listByStudentID.sql'),
@@ -58,7 +58,7 @@ export const enrollment = {
     getStudentID: sql('enrollments/getStudentID.sql'),
 }
 
-export const grade = {
+export const grades = {
     add: sql('grades/add.sql'),
     update: sql('grades/update.sql'),
     findByIDs: sql('grades/findByIDs.sql'),

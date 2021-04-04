@@ -2,7 +2,7 @@ import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { parsePagination } from "../../utils/parsePagination";
 import { grades as Grade } from '../models'
 import { pagination_args } from "../modelsCustom";
-import { grade as sql} from '../sql'
+import { grades as sql} from '../sql'
 
 export class GradesRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {

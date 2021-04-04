@@ -2,7 +2,7 @@ import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { parsePagination } from "../../utils/parsePagination";
 import { subjects as Subject } from '../models'
 import { pagination_args } from "../modelsCustom";
-import { subject as sql, common} from '../sql'
+import { subjects as sql, common} from '../sql'
 
 export class SubjectsRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {

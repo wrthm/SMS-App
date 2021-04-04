@@ -2,7 +2,7 @@ import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { parsePagination } from "../../utils/parsePagination";
 import { enrollments as Enrollment } from '../models'
 import { pagination_args } from "../modelsCustom";
-import { enrollment as sql, common, student } from '../sql'
+import { enrollments as sql, common, students } from '../sql'
 
 export class EnrollmentsRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
@@ -31,10 +31,10 @@ export class EnrollmentsRepository {
         const row = await t.oneOrNone(common.exists, {tableName: 'students', id: student_id})
         if (row.exists) {
           // check if student is already enrolled
-          const enrollCheck = await t.oneOrNone(student.isEnrolled, {id: student_id})
+          const enrollCheck = await t.oneOrNone(students.isEnrolled, {id: student_id})
           if (!enrollCheck.exists) {
             const result = await this.db.one(sql.add, data)
-            await this.db.none(student.enroll, {id: student_id})
+            await this.db.none(students.enroll, {id: student_id})
             return {success: true, result}
           } else {
             return {success: false, message: "Student is already enrolled"}
@@ -52,7 +52,7 @@ export class EnrollmentsRepository {
         if (row.exists) {
           // get the value of student_id from the enrollment
           const data = await t.one(sql.getStudentID, {id})
-          await this.db.none(student.unenroll, {id: data.student_id})
+          await this.db.none(students.unenroll, {id: data.student_id})
           await this.db.result(sql.delete, {id})
           return {success: true}
         } else {
