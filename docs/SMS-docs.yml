@@ -633,8 +633,6 @@ paths:
               sex: Male
               birth_date: 04/01/2000
               phone_number: 09299990
-              username: 2021-CS-1002000
-              password: hunter2
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1812,10 +1810,6 @@ components:
         email_address:
           type: string
           format: email
-        username:
-          type: string
-        password:
-          type: string
         is_currently_enrolled:
           type: boolean
         is_hidden:
