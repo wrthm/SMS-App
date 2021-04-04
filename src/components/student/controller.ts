@@ -9,14 +9,14 @@ const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
         let result: student | student[] | null
         let { id, name } = req.params
-        let { fname, mname, lname } = req.query
+        let { fname, mname, lname, ...paginationArgs } = req.query
         try {
             if (id) {
                 result = await DatabaseService.students.findByID(id)
             } else if (name) {
                 let searchArgs: search_name_args
                 searchArgs = {fname: `%${name}%`, mname: `%${name}%`, lname: `%${name}%`}
-                result = await DatabaseService.students.findByNameOR(searchArgs, req.query)
+                result = await DatabaseService.students.findByNameOR(searchArgs, paginationArgs)
             } else if (fname || mname || lname) {
                 if (fname) {
                     fname = `%${fname}%`
@@ -38,7 +38,7 @@ const Controller = {
                     mname: mname as string,
                     lname: lname as string,
                 }
-                result = await DatabaseService.students.findByNameAND(searchArgs, req.query)
+                result = await DatabaseService.students.findByNameAND(searchArgs, paginationArgs)
             }
             else {
                 return next(new InvalidArgumentException())
