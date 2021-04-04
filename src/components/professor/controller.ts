@@ -1,22 +1,22 @@
 import DatabaseService from '../../database'
 import { checkIfNull, propTrimOrNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { students as student} from '../../database/models'
+import { professors as professor} from '../../database/models'
 import { search_name_args } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
-        let result: student | student[] | null
+        let result: professor | professor[] | null
         let { id, name } = req.params
         let { fname, mname, lname } = req.query
         try {
             if (id) {
-                result = await DatabaseService.students.findByID(id)
+                result = await DatabaseService.professors.findByID(id)
             } else if (name) {
                 let searchArgs: search_name_args
                 searchArgs = {fname: `%${name}%`, mname: `%${name}%`, lname: `%${name}%`}
-                result = await DatabaseService.students.findByNameOR(searchArgs, req.query)
+                result = await DatabaseService.professors.findByNameOR(searchArgs, req.query)
             } else if (fname || mname || lname) {
                 if (fname) {
                     fname = `%${fname}%`
@@ -38,7 +38,7 @@ const Controller = {
                     mname: mname as string,
                     lname: lname as string,
                 }
-                result = await DatabaseService.students.findByNameAND(searchArgs, req.query)
+                result = await DatabaseService.professors.findByNameAND(searchArgs, req.query)
             }
             else {
                 return next(new InvalidArgumentException())
@@ -52,7 +52,7 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result = await DatabaseService.common.listAll(req.query, 'students')
+            const result = await DatabaseService.common.listAll(req.query, 'professors')
             return res.send(result)
         }
         catch (err) {
@@ -60,19 +60,13 @@ const Controller = {
         }
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
-        const data: student = req.body
-        data.school_id = propTrimOrNull(data.school_id)
+        const data: professor = req.body
         data.first_name = data.first_name.trim()
         data.middle_name = data.middle_name.trim()
         data.last_name = data.last_name.trim()
-        data.address = data.address.trim()
-        data.sex = data.sex.trim()
-        data.email_address = propTrimOrNull(data.email_address)
-        data.username = propTrimOrNull(data.username)
-        data.password = propTrimOrNull(data.password)
-        // TODO: hash the password
+        data.phone_number = propTrimOrNull(data.phone_number)
         try {
-            let result = await DatabaseService.students.add(data)
+            let result = await DatabaseService.professors.add(data)
             res.statusCode = 201
             return res.send({"code": 201, "message": "Entry added successfully", "id": result.id})
         }
@@ -82,19 +76,13 @@ const Controller = {
         
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
-        const data: student = req.body
-        data.school_id = propTrimOrNull(data.school_id)
+        const data: professor = req.body
         data.first_name = data.first_name.trim()
         data.middle_name = data.middle_name.trim()
         data.last_name = data.last_name.trim()
-        data.address = data.address.trim()
-        data.sex = data.sex.trim()
-        data.email_address = propTrimOrNull(data.email_address)
-        data.username = propTrimOrNull(data.username)
-        data.password = propTrimOrNull(data.password)
-        // TODO: hash the password
+        data.phone_number = propTrimOrNull(data.phone_number)
         try {
-            if ((await DatabaseService.students.update(data)).rowCount !== 0) {
+            if ((await DatabaseService.professors.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry updated successfully"})
             }
             else {
@@ -108,7 +96,7 @@ const Controller = {
     delete: async (req: Request, res: Response, next: NextFunction) => {
         const { id } = req.params
         try {
-            if ((await DatabaseService.students.delete(id)).rowCount !== 0) {
+            if ((await DatabaseService.professors.delete(id)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry deleted successfully"})
             }
             else {
@@ -122,4 +110,4 @@ const Controller = {
 
 
 
-export { Controller as StudentController }
+export { Controller as ProfessorController }

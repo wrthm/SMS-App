@@ -24,23 +24,17 @@ const postModel = {
                           .iso()
                           .required(),
          phone_number: Joi.string()
+                          .trim()
                           .min(11)
                           .max(13)
                           .regex(/^(\d{11}|\d{12}|\+\d{12})$/)
                           .required(),
         email_address: Joi.string()
+                          .trim()
                           .email(),
              username: Joi.string(),
              password: Joi.string(),
     })
-}
-
-const searchGranularModel = {
-    query: CommonValidator.pagination.query.append({
-        fname: Joi.string(),
-        mname: Joi.string(),
-        lname: Joi.string(),
-    }).min(1)
 }
 
 const model = {
@@ -52,4 +46,4 @@ const model = {
     })
 }
 
-export const StudentValidator = { postModel, model, searchGranularModel }
+export const StudentValidator = { postModel, model }

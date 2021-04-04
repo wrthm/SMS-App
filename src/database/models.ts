@@ -5,7 +5,7 @@
 export interface academic_terms {
   "id"?: string 
   "name": string 
-  "is_hidden": boolean 
+  "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
 }
@@ -61,7 +61,7 @@ export interface enrollments {
   "academic_term_id": string 
   "student_id": string 
   "course_id": string 
-  "is_hidden": boolean 
+  "is_revoked"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
 }
@@ -69,7 +69,7 @@ export interface grades {
   "enrollment_id": string 
   "subject_id": string 
   "grade": number 
-  "is_hidden": boolean 
+  "is_hidden"?: boolean 
   "updated_at"?: any 
 }
 export interface guardians {
@@ -95,9 +95,9 @@ export interface management_accounts {
 export interface professors {
   "id"?: string 
   "department_id": string 
-  "first_name": string | null 
-  "middle_name": string | null 
-  "last_name": string | null 
+  "first_name": string 
+  "middle_name": string 
+  "last_name": string 
   "phone_number": string | null 
   "is_hidden"?: boolean 
   "created_at"?: any 
@@ -145,9 +145,10 @@ export interface students {
   "email_address": string | null 
   "username": string | null 
   "password": string | null 
-  "is_currently_enrolled": boolean 
+  "is_currently_enrolled"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
+  "is_hidden"?: boolean 
 }
 export interface subjects {
   "id"?: string 

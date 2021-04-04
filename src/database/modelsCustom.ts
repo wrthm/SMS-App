@@ -3,7 +3,7 @@ export interface pagination_args {
     "limit"?: number
 }
 
-export interface search_student_args {
+export interface search_name_args {
     "fname"?: string,
     "mname"?: string,
     "lname"?: string,

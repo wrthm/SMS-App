@@ -22,4 +22,12 @@ const pagination = {
     })
 }
 
-export const CommonValidator = { id, pagination }
+const searchGranularModel = {
+    query: pagination.query.append({
+        fname: Joi.string(),
+        mname: Joi.string(),
+        lname: Joi.string(),
+    }).min(1)
+}
+
+export const CommonValidator = { id, pagination, searchGranularModel }

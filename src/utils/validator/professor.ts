@@ -15,7 +15,7 @@ const postModel = {
                           .trim()
                           .required(),
          phone_number: Joi.string()
-                          .required(),
+                          .trim(),
     })
 }
 

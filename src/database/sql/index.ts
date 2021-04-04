@@ -66,6 +66,14 @@ export const grades = {
     listByEnrollmentID: sql('grades/listByEnrollmentID.sql'),
 }
 
+export const professors = {
+    findByNameOR: sql('professors/findByNameOR.sql'),
+    findByNameAND: sql('professors/findByNameAND.sql'),
+    add: sql('professors/add.sql'),
+    update: sql('professors/update.sql'),
+    delete: sql('professors/delete.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

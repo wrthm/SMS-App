@@ -23,6 +23,7 @@ export default function(app: Application) {
         require('./subject/route'),
         require('./enrollment/route'),
         require('./grade/route'),
+        require('./professor/route'),
         require('./rfid/route'),
     )
 
