@@ -12,6 +12,10 @@ const postModel = {
            last_name: Joi.string()
                          .trim(),
         phone_number: Joi.string()
+                         .trim()
+                         .min(11)
+                         .max(13)
+                         .regex(/^(\d{11}|\d{12}|\+\d{12})$/),
     })
 }
 
