@@ -593,6 +593,7 @@ paths:
       tags:
         - Student
       summary: Adds a new student.
+      description: After a student is successfully created, its corresponding guardian (with empty values) will also be automatically created.
       requestBody:
         required: true
         content:
@@ -899,6 +900,47 @@ paths:
         - Professor
       operationId: searchForProfessors
       summary: Search for professors.
+      responses:
+        '200':
+          description: The entries returned that match the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/professor"
+  /search/professors?fname=&mname=&lname=:
+    parameters:
+      - name: fname
+        in: query
+        required: false
+        description: Professor's first name
+        example: Portia
+        schema:
+          type: string
+      - name: mname
+        in: query
+        required: false
+        description: Professor's middle name
+        example: Laura
+        schema:
+          type: string
+      - name: lname
+        in: query
+        required: false
+        description: Professor's last name
+        example: Mitchell
+        schema:
+          type: string
+      - $ref: "#/components/parameters/page"
+      - $ref:  "#/components/parameters/limit"
+    get:
+      tags:
+        - Search
+        - Professor
+      operationId: searchForProfessorsGranular
+      summary: Search for professors by first, middle, and/or last name.
+      description: Empty arguments will not be included in the name filtering, but there must be at least one argument in the query.
       responses:
         '200':
           description: The entries returned that match the query
@@ -1632,13 +1674,20 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/guardian"
-  /guardian/{guardianID}:
+  /guardian/{studentID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - name: student_id
+        in: path
+        required: true
+        description: The student's unique identifier
+        schema:
+          type: string
+          format: uuid
+        example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
     get:
       tags:
         - Guardian
-      summary: Get a guardian from its ID.
+      summary: Get a guardian from its associated student ID.
       responses:
         '200':
           description: OK
@@ -1650,39 +1699,7 @@ paths:
           $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
-    delete:
-      tags:
-        - Guardian
-      summary: Delete an existing guardian.
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
-        '400':
-          $ref: "#/components/responses/InvalidID"
-        '404':
-          $ref: "#/components/responses/NotFound"
   /guardian:
-    post:
-      tags:
-        - Guardian
-      summary: Adds a new guardian.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref:  "#/components/schemas/guardian"
-            example:
-              student_id: d886d8ef-e718-4514-8421-de408a775bb0
-              first_name: Creekt
-              middle_name: Mondst
-              last_name: Gouste
-              phone_number: 0999992999
-      responses:
-        '201':
-          $ref: "#/components/responses/Success201"
-        '400':
-          $ref: "#/components/responses/IncompleteInput"
     put:
       tags:
         - Guardian
@@ -2076,10 +2093,6 @@ components:
       type: object
       required:
         - student_id
-        - first_name
-        - middle_name
-        - last_name
-        - phone_number
       properties:
         student_id:
           type: string
@@ -2092,8 +2105,6 @@ components:
           type: string
         phone_number:
           type: string
-        is_hidden:
-          type: boolean
         created_at:
           type: string
           format: date-time
@@ -2200,3 +2211,7 @@ components:
       type: apiKey
       name: t
       in: header
+
+tags:
+  - name: Login
+    description: Everything related to credentials
