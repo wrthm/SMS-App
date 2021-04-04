@@ -74,6 +74,14 @@ export const professors = {
     delete: sql('professors/delete.sql'),
 }
 
+export const guardians = {
+    findByStudentID: sql('guardians/findByStudentID.sql'),
+    findByNameOR: sql('guardians/findByNameOR.sql'),
+    findByNameAND: sql('guardians/findByNameAND.sql'),
+    add: sql('guardians/add.sql'),
+    update: sql('guardians/update.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

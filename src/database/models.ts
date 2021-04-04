@@ -74,11 +74,10 @@ export interface grades {
 }
 export interface guardians {
   "student_id": string 
-  "first_name": string 
+  "first_name": string | null 
   "middle_name": string | null 
-  "last_name": string 
+  "last_name": string | null 
   "phone_number": string | null 
-  "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
 }
@@ -143,8 +142,6 @@ export interface students {
   "birth_date": Date 
   "phone_number": string | null 
   "email_address": string | null 
-  "username": string | null 
-  "password": string | null 
   "is_currently_enrolled"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 

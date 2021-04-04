@@ -24,6 +24,7 @@ export default function(app: Application) {
         require('./enrollment/route'),
         require('./grade/route'),
         require('./professor/route'),
+        require('./guardian/route'),
         require('./rfid/route'),
     )
 

@@ -6,23 +6,26 @@ const postModel = {
                          .uuid()
                          .required(),
           first_name: Joi.string()
-                         .trim()
-                         .required(),
+                         .trim(),
          middle_name: Joi.string()
-                         .trim()
-                         .required(),
+                         .trim(),
            last_name: Joi.string()
-                         .trim()
-                         .required(),
+                         .trim(),
         phone_number: Joi.string()
-                         .required(),
+    })
+}
+
+const getStudentIDModel = {
+    params: Joi.object({
+        student_id: Joi.string()
+                       .uuid()
+                       .required()
     })
 }
 
 const model = {
     body: postModel.body.append({
-        is_hidden: Joi.bool(),
     })
 }
 
-export const GuardianValidator = { model, postModel }
+export const GuardianValidator = { model, postModel, getStudentIDModel }
