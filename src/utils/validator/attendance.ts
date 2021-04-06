@@ -1,4 +1,5 @@
 import { Joi } from 'express-validation'
+import { CommonValidator } from './common'
 
 const postModel = {
     body: Joi.object({
@@ -22,6 +23,27 @@ const postModel = {
     })
 }
 
+const listByStudentIDModel = {
+    params: Joi.object({
+        student_id: Joi.string()
+                       .uuid()
+                       .required(),
+    }),
+    query: CommonValidator.pagination.query
+}
+
+const listByStudentAcademicTermIDModel = {
+    params: Joi.object({
+              student_id: Joi.string()
+                             .uuid()
+                             .required(),
+        academic_term_id: Joi.string()
+                             .uuid()
+                             .required(),
+    }),
+    query: CommonValidator.pagination.query
+}
+
 const model = {
     body: postModel.body.append({
                id: Joi.string()
@@ -31,4 +53,4 @@ const model = {
 }
 
 
-export const AttendanceValidator = { postModel, model }
+export const AttendanceValidator = { postModel, model, listByStudentIDModel, listByStudentAcademicTermIDModel }

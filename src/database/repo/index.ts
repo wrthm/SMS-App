@@ -8,6 +8,7 @@ import { EnrollmentsRepository } from './enrollments'
 import { GradesRepository } from './grades'
 import { ProfessorsRepository } from './professors'
 import { GuardiansRepository } from './guardians'
+import { AttendancesRepository } from './attendances'
 
 interface IExtensions {
     common: CommonRepository,
@@ -20,6 +21,7 @@ interface IExtensions {
     grades: GradesRepository,
     professors: ProfessorsRepository,
     guardians: GuardiansRepository,
+    attendances: AttendancesRepository,
 }
 
 export {
@@ -34,4 +36,5 @@ export {
     GradesRepository,
     ProfessorsRepository,
     GuardiansRepository,
+    AttendancesRepository,
 }

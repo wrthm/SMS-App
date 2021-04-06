@@ -82,6 +82,15 @@ export const guardians = {
     update: sql('guardians/update.sql'),
 }
 
+
+export const attendances = {
+    add: sql('attendances/add.sql'),
+    delete: sql('attendances/delete.sql'),
+    listAll: sql('attendances/listAll.sql'),
+    listByStudentID: sql('attendances/listByStudentID.sql'),
+    listByStudentAcademicTermID: sql('attendances/listByStudentAcademicTermID.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);
