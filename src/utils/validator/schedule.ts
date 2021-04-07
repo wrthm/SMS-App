@@ -1,4 +1,5 @@
 import { Joi } from 'express-validation'
+import { CommonValidator } from './common'
 
 const postModel = {
     body: Joi.object({
@@ -17,8 +18,7 @@ const postModel = {
              capacity: Joi.number()
                           .min(1)
                           .required(),
-           time_start: Joi.date()
-                          .iso()
+           time_start: Joi.string()
                           .required(),
         time_duration: Joi.string()
                           .max(20)
@@ -42,4 +42,15 @@ const model = {
     })
 }
 
-export const ScheduleValidator = { model, postModel }
+const searchArgsModel = {
+    query: CommonValidator.pagination.query.append({
+         s_name: Joi.string(),
+        p_fname: Joi.string(),
+        p_mname: Joi.string(),
+        p_lname: Joi.string(),
+           room: Joi.string(),
+          class: Joi.string(),
+    })
+}
+
+export const ScheduleValidator = { model, postModel, searchArgsModel }

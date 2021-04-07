@@ -1383,13 +1383,42 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   ############ SCHEDULES ############
-  /search/schedules/{subjectName}:
+  /search/schedules:
     parameters:
-      - name: subjectName
-        in: path
-        required: true
-        description: The subject name used for querying schedule.
-        example: Soft Eng
+      - name: s_name
+        in: query
+        description: Subject name
+        example: Software Eng
+        schema:
+          type: string
+      - name: p_fname
+        in: query
+        description: Professor's first name
+        example: Alma
+        schema:
+          type: string
+      - name: p_mname
+        in: query
+        description: Professor's middle name
+        example: Davie
+        schema:
+          type: string
+      - name: p_lname
+        in: query
+        description: Professor's last name
+        example: Devlin
+        schema:
+          type: string
+      - name: room
+        in: query
+        description: Schedule room
+        example: CS-02-101
+        schema:
+          type: string
+      - name: class
+        in: query
+        description: Schedule class
+        example: BSCS-3-C
         schema:
           type: string
       - $ref: "#/components/parameters/page"
@@ -1460,6 +1489,26 @@ paths:
       tags:
         - Schedule
       summary: Adds a new schedule.
+      description: >-
+        ## Accepted values for 'days'
+        
+        
+        m, t, w, th, f, sa, su, mon, tues, wed, thur, fri,
+        monday, tuesday, wednesday, thursday, friday, saturday, sunday
+
+
+        ## time_duration format
+
+
+        >_x_ unit [_y_ unit] 
+
+
+        (Anything inside the square brackets is optional)
+
+
+        Replace _x_, _y_ with their respective values.
+        The only accepted units are hour and minute (plus their plural forms).
+        It does not accept durations greater than or equal to 1 day.
       requestBody:
         required: true
         content:
@@ -1473,8 +1522,11 @@ paths:
               class: BSCS-3C
               capacity: 40
               time_start: 09:00
-              time_duration: 03:00
-              days: 8
+              time_duration: 3 hours 30 minutes
+              days:
+                - m
+                - t
+                - th
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1484,6 +1536,26 @@ paths:
       tags:
         - Schedule
       summary: Update the data of an existing schedule.
+      description: >-
+        ## Accepted values for 'days'
+        
+        
+        m, t, w, th, f, sa, su, mon, tues, wed, thur, fri,
+        monday, tuesday, wednesday, thursday, friday, saturday, sunday
+
+
+        ## time_duration format
+
+
+        >_x_ unit [_y_ unit] 
+
+
+        (Anything inside the square brackets is optional)
+
+
+        Replace _x_, _y_ with their respective values.
+        The only accepted units are hour and minute (plus their plural forms).
+        It does not accept durations greater than or equal to 1 day.
       requestBody:
         required: true
         content:
@@ -1498,8 +1570,11 @@ paths:
               class: BSCS-3C
               capacity: 40
               time_start: 09:00
-              time_duration: 03:00
-              days: 8
+              time_duration: 3 hours
+              days:
+                - w
+                - f
+                - sa
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1982,8 +2057,6 @@ components:
         schedule_id:
           type: string
           format: uuid
-        is_hidden:
-          type: boolean
         created_at:
           type: string
           format: date-time
@@ -2036,7 +2109,9 @@ components:
           type: string
           format: interval
         days:
-          type: integer
+          type: array
+          items:
+            type: string
         is_hidden:
           type: boolean
         created_at:

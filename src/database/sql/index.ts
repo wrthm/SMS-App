@@ -91,6 +91,13 @@ export const attendances = {
     listByStudentAcademicTermID: sql('attendances/listByStudentAcademicTermID.sql'),
 }
 
+export const schedules = {
+    add: sql('schedules/add.sql'),
+    update: sql('schedules/update.sql'),
+    delete: sql('schedules/delete.sql'),
+    search: sql('schedules/search.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

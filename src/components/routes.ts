@@ -26,6 +26,7 @@ export default function(app: Application) {
         require('./professor/route'),
         require('./guardian/route'),
         require('./attendances/route'),
+        require('./schedules/route'),
         require('./rfid/route'),
     )
 
