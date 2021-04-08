@@ -2,16 +2,18 @@ import { Application, json, Response, Request, NextFunction } from 'express';
 import { NotFoundException } from '../exceptions';
 import { errorHandler } from '../middleware/errorHandler'
 import { logger } from 'express-winston'
-import { logger as loggerInstance } from '../utils/logger';
+import { logger as loggerInstance } from '../utils/logger'
+import { mw as requestIPmw } from 'request-ip'
 
 export default function(app: Application) {
     app.use(
+        requestIPmw(),
         json(),
         logger({
             winstonInstance: loggerInstance,
-            expressFormat: true,
+            msg: '\x1b[36m{{req.clientIp}}\x1b[0m {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
             colorize: true,
-            meta: false,
+            meta: true,
         })
     )
 

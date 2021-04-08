@@ -9,10 +9,7 @@ const consoleFormat = format.printf((info) => {
 const logger: Logger = createLogger({
     format: format.combine(
         format.timestamp({
-            format: new Intl.DateTimeFormat('en', {
-                dateStyle: 'short',
-                timeStyle: 'medium'
-            }).format
+            format: 'YYYY-MM-DD hh:mm:ss A'
         }),
         format.padLevels(),
         format.colorize(),
