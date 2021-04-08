@@ -10,6 +10,7 @@ import { ProfessorsRepository } from './professors'
 import { GuardiansRepository } from './guardians'
 import { AttendancesRepository } from './attendances'
 import { SchedulesRepository } from './schedules'
+import { ConfigRepository } from './config'
 
 interface IExtensions {
     common: CommonRepository,
@@ -24,6 +25,7 @@ interface IExtensions {
     guardians: GuardiansRepository,
     attendances: AttendancesRepository,
     schedules: SchedulesRepository,
+    config: ConfigRepository,
 }
 
 export {
@@ -40,4 +42,5 @@ export {
     GuardiansRepository,
     AttendancesRepository,
     SchedulesRepository,
+    ConfigRepository,
 }

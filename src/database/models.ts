@@ -24,6 +24,11 @@ export interface attendances {
   "login_time": any 
   "logout_time": any | null 
 }
+export interface configuration {
+  "key": string 
+  "value": string | null 
+  "updated_at"?: any 
+}
 export interface course_schedules {
   "id"?: string 
   "course_id": string 
@@ -37,7 +42,6 @@ export interface course_schedules_contents {
   "id"?: string 
   "course_schedule_id": string 
   "schedule_id": string 
-  "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
 }
@@ -124,7 +128,7 @@ export interface schedules {
   "room": string 
   "class": string 
   "capacity": number 
-  "time_start": any 
+  "time_start": Date 
   "time_duration": any 
   "days": number 
   "is_hidden"?: boolean 

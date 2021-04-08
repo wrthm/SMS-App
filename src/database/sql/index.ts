@@ -98,6 +98,14 @@ export const schedules = {
     search: sql('schedules/search.sql'),
 }
 
+export const config = {
+    add: sql('config/add.sql'),
+    get: sql('config/get.sql'),
+    set: sql('config/set.sql'),
+    exists: sql('config/exists.sql'),
+    list: sql('config/list.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

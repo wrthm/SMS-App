@@ -19,6 +19,7 @@ const initOptions: IInitOptions<ExtendedProtocol> = {
         obj.guardians = new Repos.GuardiansRepository(obj, pgp)
         obj.attendances = new Repos.AttendancesRepository(obj, pgp)
         obj.schedules = new Repos.SchedulesRepository(obj, pgp)
+        obj.config = new Repos.ConfigRepository(obj, pgp)
     }
 }
 
