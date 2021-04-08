@@ -2,15 +2,15 @@ import { Joi } from 'express-validation'
 
 const postModel = {
     body: Joi.object({
-        academic_term_id: Joi.string()
-                             .uuid()
-                             .required(),
-              student_id: Joi.string()
-                             .uuid()
-                             .required(),
-               course_id: Joi.string()
-                             .uuid()
-                             .required(),
+          academic_term_id: Joi.string()
+                               .uuid()
+                               .required(),
+                student_id: Joi.string()
+                               .uuid()
+                               .required(),
+        course_schedule_id: Joi.string()
+                               .uuid()
+                               .required(),
     })
 }
 
