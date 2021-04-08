@@ -128,7 +128,7 @@ export interface schedules {
   "room": string 
   "class": string 
   "capacity": number 
-  "time_start": Date 
+  "time_start": any 
   "time_duration": any 
   "days": number 
   "is_hidden"?: boolean 
