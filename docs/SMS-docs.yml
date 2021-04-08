@@ -1130,7 +1130,7 @@ paths:
             example:
               academic_term_id: 22297dec-9bb3-463a-bac8-c9fb2372982b
               student_id: d7f9a296-f5fa-43de-a039-164b5eca806f
-              course_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
+              course_schedule_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1139,13 +1139,27 @@ paths:
 
   ############ COURSE_SCHEDULES ############
 
-  /search/course_schedules/{name}:
+  /search/course_schedules:
     parameters:
       - name: name
-        in: path
-        required: true
-        description: The name used for querying course schedules.
-        example: BSCS 3C
+        in: query
+        required: false
+        description: Course schedule name
+        example: BSCS Computer Science 3rd Year
+        schema:
+          type: string
+      - name: c_name
+        in: query
+        required: false
+        description: Course name
+        example: BSCS Computer Science 3rd Year
+        schema:
+          type: string
+      - name: a_name
+        in: query
+        required: false
+        description: Academic term name
+        example: BSCS Computer Science 3rd Year
         schema:
           type: string
       - $ref: "#/components/parameters/page"
@@ -1992,7 +2006,7 @@ components:
       required:
         - academic_term_id
         - student_id
-        - course_id
+        - course_schedule_id
       properties:
         id:
           type: string
@@ -2003,7 +2017,7 @@ components:
         student_id:
           type: string
           format: uuid
-        course_id:
+        course_schedule_id:
           type: string
           format: uuid
         is_revoked:
