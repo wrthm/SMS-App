@@ -18,6 +18,13 @@ export interface search_schedule_args {
     [index: string] : any
 }
 
+export interface search_course_schedule_args {
+    "name"?: string,
+    "c_name"?: string,
+    "a_name"?: string,
+    [index: string] : any
+}
+
 export interface schedules_external {
     "id"?: string 
     "professor_id": string 

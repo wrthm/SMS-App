@@ -31,6 +31,7 @@ export default function(app: Application) {
         require('./guardian/route'),
         require('./attendance/route'),
         require('./schedule/route'),
+        require('./course_schedule/route'),
         require('./rfid/route'),
     )
 

@@ -106,6 +106,13 @@ export const config = {
     list: sql('config/list.sql'),
 }
 
+export const course_schedules = {
+    add: sql('course_schedules/add.sql'),
+    delete: sql('course_schedules/delete.sql'),
+    update: sql('course_schedules/update.sql'),
+    search: sql('course_schedules/search.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);
