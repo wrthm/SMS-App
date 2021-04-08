@@ -1,5 +1,6 @@
 node_modules/
 dist/
+logs/
 
 src/config/index.ts
 src/config/docsConfig.js
