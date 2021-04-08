@@ -1,6 +1,6 @@
 const DocsServerConfig = {
     APIDocsPort: 82,
-    EnableLogging: false,
+    EnableRequestLogging: false,
 }
 
 module.exports = DocsServerConfig
