@@ -4,21 +4,27 @@ import { CommonValidator } from './common'
 const postModel = {
     body: Joi.object({
             school_id: Joi.string()
-                          .trim(),
+                          .trim()
+                          .max(30),
            first_name: Joi.string()
                           .trim()
+                          .max(60)
                           .required(),
           middle_name: Joi.string()
                           .trim()
+                          .max(60)
                           .required(),
             last_name: Joi.string()
                           .trim()
+                          .max(60)
                           .required(),
               address: Joi.string()
                           .trim()
+                          .max(80)
                           .required(),
                   sex: Joi.string()
                           .trim()
+                          .max(20)
                           .required(),
            birth_date: Joi.date()
                           .iso()
@@ -30,6 +36,7 @@ const postModel = {
                           .regex(/^(\d{11}|\d{12}|\+\d{12})$/),
         email_address: Joi.string()
                           .trim()
+                          .max(60)
                           .email(),
     })
 }

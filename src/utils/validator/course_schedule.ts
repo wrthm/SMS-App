@@ -10,6 +10,7 @@ const postModel = {
                             .required(),
                    name: Joi.string()
                             .trim()
+                            .max(60)
                             .required(),
     })
 }

@@ -6,10 +6,13 @@ const postModel = {
                          .uuid()
                          .required(),
           first_name: Joi.string()
+                         .max(60)
                          .trim(),
          middle_name: Joi.string()
+                         .max(60)
                          .trim(),
            last_name: Joi.string()
+                         .max(60)
                          .trim(),
         phone_number: Joi.string()
                          .trim()

@@ -11,9 +11,11 @@ const postModel = {
                           .required(),
                  room: Joi.string()
                           .trim()
+                          .max(30)
                           .required(),
                 class: Joi.string()
                           .trim()
+                          .max(30)
                           .required(),
              capacity: Joi.number()
                           .min(1)

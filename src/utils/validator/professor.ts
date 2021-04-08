@@ -7,12 +7,15 @@ const postModel = {
                           .required(),
            first_name: Joi.string()
                           .trim()
+                          .max(60)
                           .required(),
           middle_name: Joi.string()
                           .trim()
+                          .max(60)
                           .required(),
             last_name: Joi.string()
                           .trim()
+                          .max(60)
                           .required(),
          phone_number: Joi.string()
                           .trim()

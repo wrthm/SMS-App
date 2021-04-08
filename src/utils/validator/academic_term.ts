@@ -4,6 +4,7 @@ const postModel = {
     body: Joi.object({
         name: Joi.string()
                  .trim()
+                 .max(60)
                  .required(),
     })
 }
