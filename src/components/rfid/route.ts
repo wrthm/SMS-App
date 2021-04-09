@@ -3,8 +3,8 @@ import { RFIDController as Controller} from './controller'
 import { validate } from 'express-validation'
 import { RFIDValidator } from '../../utils/validator'
 
-const CourseRouter : Router = Router()
+const RFIDRouter : Router = Router()
 
-CourseRouter.post('/rfid', validate(RFIDValidator.postModel), Controller.add)
+RFIDRouter.post('/rfid', validate(RFIDValidator.postModel), Controller.add)
 
-module.exports = CourseRouter
+module.exports = RFIDRouter
