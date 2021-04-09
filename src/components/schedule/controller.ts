@@ -59,7 +59,6 @@ const Controller = {
         const data: schedules_external = req.body
         try {
             processScheduleData(data)
-            // TODO: perform schedule validation here/in a separate function
             let result = await DatabaseService.schedules.add(data as schedule)
             res.statusCode = 201
             return res.send({"code": 201, "message": "Entry added successfully", "id": result.id})
@@ -73,7 +72,6 @@ const Controller = {
         const data: schedule = req.body
         try {
             processScheduleData(data)
-            // TODO: perform schedule validation here/in a separate function
             if ((await DatabaseService.schedules.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry updated successfully"})
             }
