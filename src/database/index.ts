@@ -21,6 +21,7 @@ const initOptions: IInitOptions<ExtendedProtocol> = {
         obj.schedules = new Repos.SchedulesRepository(obj, pgp)
         obj.config = new Repos.ConfigRepository(obj, pgp)
         obj.course_schedules = new Repos.CourseSchedulesRepository(obj, pgp)
+        obj.course_schedules_contents = new Repos.CourseSchedulesContentsRepository(obj, pgp)
     }
 }
 

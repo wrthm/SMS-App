@@ -32,6 +32,7 @@ export default function(app: Application) {
         require('./attendance/route'),
         require('./schedule/route'),
         require('./course_schedule/route'),
+        require('./course_schedule_content/route'),
         require('./rfid/route'),
     )
 

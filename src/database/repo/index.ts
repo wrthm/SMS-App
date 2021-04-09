@@ -12,6 +12,7 @@ import { AttendancesRepository } from './attendances'
 import { SchedulesRepository } from './schedules'
 import { ConfigRepository } from './config'
 import { CourseSchedulesRepository } from './course_schedules'
+import { CourseSchedulesContentsRepository } from './course_schedules_contents'
 
 interface IExtensions {
     common: CommonRepository,
@@ -28,6 +29,7 @@ interface IExtensions {
     schedules: SchedulesRepository,
     config: ConfigRepository,
     course_schedules: CourseSchedulesRepository,
+    course_schedules_contents: CourseSchedulesContentsRepository,
 }
 
 export {
@@ -46,4 +48,5 @@ export {
     SchedulesRepository,
     ConfigRepository,
     CourseSchedulesRepository,
+    CourseSchedulesContentsRepository,
 }

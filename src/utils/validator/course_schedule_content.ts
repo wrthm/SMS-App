@@ -20,5 +20,12 @@ const model = {
     })
 }
 
+const cs_idModel = {
+    params: Joi.object({
+        cs_id: Joi.string()
+                  .uuid()
+                  .required(),
+    })
+}
 
-export const CourseScheduleContentValidator = { postModel, model }
+export const CourseScheduleContentValidator = { postModel, model, cs_idModel }
