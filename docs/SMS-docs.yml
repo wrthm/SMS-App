@@ -11,8 +11,8 @@ info:
     ## Important note
     For now, the Application Server itself is still in the works. This means that you can't consume this API just yet.
   version: '0.1'
-# servers:
-#   - url: https://softeng.jbtabz.com/
+servers:
+  - url: https://softeng.jbtabz.com/
 paths:
   ############ LOGIN ############
   /login/s:
@@ -2074,9 +2074,6 @@ components:
         created_at:
           type: string
           format: date-time
-        updated_at:
-          type: string
-          format: date-time
 
     course_schedule_and_content:
       allOf:
@@ -2304,3 +2301,16 @@ components:
 tags:
   - name: Login
     description: Everything related to credentials
+  - name: Search
+  - name: Student
+  - name: Guardian
+  - name: Professor
+  - name: Department
+  - name: Academic Term
+  - name: Course
+  - name: Subject
+  - name: Schedule
+  - name: Course Schedule
+  - name: Enrollment
+  - name: Grades
+  - name: Attendance
