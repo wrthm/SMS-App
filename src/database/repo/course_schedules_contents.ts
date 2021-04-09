@@ -8,7 +8,7 @@ export class CourseSchedulesContentsRepository {
     }
 
     async findByID(id: string): Promise<CourseScheduleContents | null> {
-      return await this.db.oneOrNone(common.findByID, {tableName: 'course_schedules_contents', id})
+      return await this.db.oneOrNone(sql.findByID, {id})
     }
 
     async listByCourseSchedule(cs_id: string): Promise<CourseScheduleContents[] | null> {

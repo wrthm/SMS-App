@@ -10,7 +10,13 @@ export class SchedulesRepository {
     }
 
     async findByID(id: string): Promise<Schedule | null> {
-      return await this.db.oneOrNone(common.findByID, {tableName: 'schedules', id})
+      return await this.db.oneOrNone(sql.findByID, {id})
+    }
+
+    async listAll(args: pagination_args): Promise<Schedule[]> {
+      const pgArgs = parsePagination(args)
+      const { limit, offset } = pgArgs
+      return await this.db.manyOrNone(sql.listAll, {limit, offset})
     }
 
     async search(searchArgs: search_schedule_args, paginationArgs: pagination_args): Promise<Schedule[]> {

@@ -2,7 +2,7 @@ import { IDatabase, IMain, QueryFile } from 'pg-promise'
 import { parsePagination } from '../../utils/parsePagination'
 import { course_schedules as CourseSchedule } from '../models'
 import { pagination_args, search_course_schedule_args } from '../modelsCustom'
-import { course_schedules as sql, common} from '../sql'
+import { course_schedules as sql } from '../sql'
 
 export class CourseSchedulesRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
@@ -10,7 +10,13 @@ export class CourseSchedulesRepository {
     }
 
     async findByID(id: string): Promise<CourseSchedule | null> {
-      return await this.db.oneOrNone(common.findByID, {tableName: 'course_schedules', id})
+      return await this.db.oneOrNone(sql.findByID, {id})
+    }
+
+    async listAll(args: pagination_args): Promise<CourseSchedule[]> {
+      const pgArgs = parsePagination(args)
+      const { limit, offset } = pgArgs
+      return await this.db.manyOrNone(sql.listAll, {limit, offset})
     }
 
     async search(searchArgs: search_course_schedule_args, paginationArgs: pagination_args): Promise<CourseSchedule[]> {

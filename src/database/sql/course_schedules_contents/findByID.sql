@@ -21,6 +21,5 @@ INNER JOIN course_schedules c_s ON c_s_c.course_schedule_id = c_s.id
 INNER JOIN schedules sched ON c_s_c.schedule_id = sched.id
 INNER JOIN subjects subj ON sched.subject_id = subj.id
 INNER JOIN professors prof ON sched.professor_id = prof.id
-WHERE c_s_c.course_schedule_id = ${cs_id}
-ORDER BY c_s_c.created_at DESC
+WHERE c_s_c.id = ${id}
 ;

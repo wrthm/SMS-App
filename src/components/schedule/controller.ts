@@ -45,7 +45,7 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: schedule[] = await DatabaseService.common.listAll(req.query, 'schedules')
+            const result: schedule[] = await DatabaseService.schedules.listAll(req.query)
             result.forEach(element => {
                 convertDaysToArray(element)
             })

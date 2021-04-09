@@ -1,7 +1,7 @@
 import DatabaseService from '../../database'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { enrollments as enrollment} from '../../database/models'
+import { enrollments as enrollment } from '../../database/models'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
 
 const Controller = {

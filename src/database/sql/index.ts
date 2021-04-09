@@ -10,7 +10,9 @@ export const common = {
 }
 
 export const courses = {
+    findByID: sql('courses/findByID.sql'),
     findByName: sql('courses/findByName.sql'),
+    listAll: sql('courses/listAll.sql'),
     add: sql('courses/add.sql'),
     update: sql('courses/update.sql'),
     delete: sql('courses/delete.sql'),
@@ -67,8 +69,10 @@ export const grades = {
 }
 
 export const professors = {
-    findByNameOR: sql('professors/findByNameOR.sql'),
-    findByNameAND: sql('professors/findByNameAND.sql'),
+    findByID: sql('professors/findByID.sql'),
+    listByNameOR: sql('professors/listByNameOR.sql'),
+    listByNameAND: sql('professors/listByNameAND.sql'),
+    listAll: sql('professors/listAll.sql'),
     add: sql('professors/add.sql'),
     update: sql('professors/update.sql'),
     delete: sql('professors/delete.sql'),
@@ -92,6 +96,8 @@ export const attendances = {
 }
 
 export const schedules = {
+    findByID: sql('schedules/findByID.sql'),
+    listAll: sql('schedules/listAll.sql'),
     add: sql('schedules/add.sql'),
     update: sql('schedules/update.sql'),
     delete: sql('schedules/delete.sql'),
@@ -107,6 +113,8 @@ export const config = {
 }
 
 export const course_schedules = {
+    findByID: sql('course_schedules/findByID.sql'),
+    listAll: sql('course_schedules/listAll.sql'),
     add: sql('course_schedules/add.sql'),
     delete: sql('course_schedules/delete.sql'),
     update: sql('course_schedules/update.sql'),
@@ -114,6 +122,7 @@ export const course_schedules = {
 }
 
 export const course_schedule_contents = {
+    findByID: sql('course_schedules_contents/findByID.sql'),
     add: sql('course_schedules_contents/add.sql'),
     delete: sql('course_schedules_contents/delete.sql'),
     listCourseSchedule: sql('course_schedules_contents/listCourseSchedule.sql'),
