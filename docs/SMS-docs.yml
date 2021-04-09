@@ -1343,29 +1343,29 @@ paths:
           $ref: "#/components/responses/IncompleteInput"
 
   ############ COURSE_SCHEDULE + COURSE_SCHEDULE_CONTENT ###########
-  /course_schedule_and_contents/{courseScheduleID}:
-    get:
-      summary: Get the data of a course schedule and its contents.
-      tags:
-       - Course Schedule
-      parameters:
-        - name: courseScheduleID
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Operation completed successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/course_schedule_and_content"
-        '400':
-          $ref: "#/components/responses/InvalidID"
-        '404':
-          $ref: "#/components/responses/NotFound"
+  # /course_schedule_and_contents/{courseScheduleID}:
+  #   get:
+  #     summary: Get the data of a course schedule and its contents.
+  #     tags:
+  #      - Course Schedule
+  #     parameters:
+  #       - name: courseScheduleID
+  #         in: path
+  #         required: true
+  #         schema:
+  #           type: string
+  #           format: uuid
+  #     responses:
+  #       '200':
+  #         description: Operation completed successfully
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/course_schedule_and_content"
+  #       '400':
+  #         $ref: "#/components/responses/InvalidID"
+  #       '404':
+  #         $ref: "#/components/responses/NotFound"
   # /course_schedule_and_contents:
   #   post:
   #     summary: Add entry of a course schedule and its contents.
