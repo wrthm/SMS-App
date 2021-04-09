@@ -44,6 +44,7 @@ const Controller = {
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
         const data: course_schedule = req.body
+        data.name = data.name.trim()
         try {
             let result = await DatabaseService.course_schedules.add(data)
             res.statusCode = 201
@@ -56,6 +57,7 @@ const Controller = {
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
         const data: course_schedule = req.body
+        data.name = data.name.trim()
         try {
             if ((await DatabaseService.course_schedules.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry updated successfully"})
