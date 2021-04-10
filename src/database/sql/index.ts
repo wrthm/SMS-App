@@ -139,7 +139,7 @@ function sql(file: string): QueryFile {
     const qf: QueryFile = new QueryFile(fullPath, options);
 
     if (qf.error) {
-        logger.error(qf.error.message);
+        logger.error(qf.error.message, qf.error);
     }
 
     return qf;
