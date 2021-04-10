@@ -6,10 +6,27 @@ info:
     You may [read this article.](https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/)
 
     # Authentication
-    All endpoints below will require both the API key and session token (k and t in HTTP headers, respectively) unless stated otherwise.
+    <s>All endpoints below will require both the API key and session token (k and t in HTTP headers, respectively) unless stated otherwise.</s> 
 
-    ## Important note
-    For now, the Application Server itself is still in the works. This means that you can't consume this API just yet.
+    Authentication is not yet implemented and more credential related endpoints will most certainly be added pretty soon.
+
+    ---
+
+    ## Important notes
+    Relevant data from foreign keys are also appended to schemas below when using GET method:
+    - course_schedules
+    - course_schedule_contents
+    - courses
+    - enrollments
+    - grades
+    - professors
+    - schedules
+    
+    However, you are only allowed to change what is being referred to by the foreign key/s (unless stated otherwise) in said schemas.
+    This means if you want to update the data that is being pointed by the foreign key, you'll have to do it through that foreign key's respective endpoint.  
+    \
+    \
+    Course Schedule conflict checking is not yet implemented.
   version: '0.1'
 servers:
   - url: https://softeng.jbtabz.com/
