@@ -23,6 +23,12 @@ export class GuardiansRepository {
       return await this.db.manyOrNone(sql.findByNameAND, {name, pgArgs})
     }
 
+    async listAll(args: pagination_args): Promise<Guardian[]> {
+      const pgArgs = parsePagination(args)
+      const { limit, offset } = pgArgs
+      return await this.db.manyOrNone(sql.listAll, {limit, offset})
+  }
+
     async update(data: Guardian) {
       return await this.db.result(sql.update, data)
     }

@@ -82,6 +82,7 @@ export const guardians = {
     findByStudentID: sql('guardians/findByStudentID.sql'),
     findByNameOR: sql('guardians/findByNameOR.sql'),
     findByNameAND: sql('guardians/findByNameAND.sql'),
+    listAll: sql('guardians/listAll.sql'),
     add: sql('guardians/add.sql'),
     update: sql('guardians/update.sql'),
 }

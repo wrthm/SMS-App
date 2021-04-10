@@ -52,7 +52,7 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result = await DatabaseService.common.listAll(req.query, 'guardians')
+            const result = await DatabaseService.guardians.listAll(req.query)
             return res.send(result)
         }
         catch (err) {
