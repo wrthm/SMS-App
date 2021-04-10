@@ -13,6 +13,8 @@ info:
     ---
 
     ## Important notes
+    Date format is expected to be YYYY/MM/DD.
+
     Relevant data from foreign keys are also appended to schemas below when using GET method:
     - course_schedules
     - course_schedule_contents
