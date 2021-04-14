@@ -3,6 +3,7 @@ import { NotFoundException } from '../exceptions';
 import { errorHandler } from '../middleware/errorHandler'
 import { mw as requestIPmw } from 'request-ip'
 import requestLogger from '../middleware/requestLogger'
+import cors from '../middleware/cors'
 
 export default function(app: Application) {
     app.use(
@@ -11,7 +12,10 @@ export default function(app: Application) {
         requestLogger(),
     )
 
+    // CORS-enabled routes go here
+    app.options('*', cors())
     app.use(
+        cors(),
         require('./course/route'),
         require('./department/route'),
         require('./academic_term/route'),
