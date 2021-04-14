@@ -8,14 +8,13 @@ import cors from '../middleware/cors'
 export default function(app: Application) {
     app.use(
         requestIPmw(),
+        cors(),
         json(),
         requestLogger(),
     )
 
-    // CORS-enabled routes go here
     app.options('*', cors())
     app.use(
-        cors(),
         require('./course/route'),
         require('./department/route'),
         require('./academic_term/route'),
