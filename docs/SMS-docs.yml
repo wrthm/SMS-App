@@ -13,7 +13,7 @@ info:
     ---
 
     ## Important notes
-    Date format is expected to be YYYY/MM/DD.
+    Date format is expected to be YYYY/MM/DD, while time is using the 24-hour clock.
 
     Relevant data from foreign keys are also appended to schemas below when using GET method:
     - course_schedules
