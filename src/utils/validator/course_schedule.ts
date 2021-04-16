@@ -36,9 +36,9 @@ const model = {
 
 const searchArgsModel = {
     query: CommonValidator.pagination.query.append({
-          name: Joi.string(),
-        c_name: Joi.string(),
-        a_name: Joi.string(),
+          name: Joi.string().allow(null, ''),
+        c_name: Joi.string().allow(null, ''),
+        a_name: Joi.string().allow(null, ''),
     })
 }
 

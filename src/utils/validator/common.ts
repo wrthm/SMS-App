@@ -24,9 +24,9 @@ const pagination = {
 
 const searchGranularModel = {
     query: pagination.query.append({
-        fname: Joi.string(),
-        mname: Joi.string(),
-        lname: Joi.string(),
+        fname: Joi.string().allow(null, ''),
+        mname: Joi.string().allow(null, ''),
+        lname: Joi.string().allow(null, ''),
     }).min(1)
 }
 
