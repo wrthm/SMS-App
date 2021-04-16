@@ -31,8 +31,11 @@ if (config.EnableRequestLogging) {
         expressFormat: true,
     }))
 }
-app.set('etag', false)
-app.use(nocache())
+if (config.DisableCache) {
+    app.set('etag', false)
+    app.use(nocache())
+}
+
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options))
 app.listen(port, () => {
     console.log(`API Documentation Server now listening at (http/https)://${ip.address()}:${port}`)
