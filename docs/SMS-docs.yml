@@ -149,13 +149,7 @@ paths:
                   $ref: "#/components/schemas/course"
   /course/{courseID}:
     parameters:
-      - name: id
-        in: path
-        required: true
-        description: The entry's unique identifier
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/courseID"
     get:
       tags:
         - Course
@@ -271,13 +265,7 @@ paths:
                   $ref: "#/components/schemas/department"
   /department/{departmentID}:
     parameters:
-      - name: id
-        in: path
-        required: true
-        description: The entry's unique identifier
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/departmentID"
     get:
       tags:
         - Department
@@ -388,7 +376,7 @@ paths:
                   $ref: "#/components/schemas/academic_term"
   /academic_term/{academicTermID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/academicTermID"
     get:
       tags:
         - Academic Term
@@ -540,7 +528,7 @@ paths:
                   $ref: "#/components/schemas/student"
   /student/{studentID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - Student
@@ -569,7 +557,7 @@ paths:
           $ref: "#/components/responses/NotFound"
   /student/{studentID}/rfid/new:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - Student
@@ -597,7 +585,7 @@ paths:
           $ref: "#/components/responses/NotFound"
   /student/{studentID}/rfid/revoke:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - Student
@@ -705,7 +693,7 @@ paths:
                   $ref: "#/components/schemas/subject"
   /subject/{subjectID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/subjectID"
     get:
       tags:
         - Subject
@@ -793,13 +781,7 @@ paths:
                   $ref: "#/components/schemas/grade"
   /grades/{enrollmentID}:
     parameters:
-      - name: enrollmentID
-        in: path
-        required: true
-        description: The ID of the student's enrollment.
-        example: addd3001-210e-4ada-999d-a295b02a384d
-        schema:
-          type: string
+      - $ref: "#/components/parameters/enrollmentID"
     get:
       tags:
        - Grades
@@ -820,20 +802,8 @@ paths:
           $ref: "#/components/responses/NotFound"
   /grade/{enrollmentID}/{subjectID}:
     parameters:
-      - name: enrollmentID
-        in: path
-        required: true
-        description: The ID of the student's enrollment.
-        example: addd3001-210e-4ada-999d-a295b02a384d
-        schema:
-          type: string
-      - name: subjectID
-        in: path
-        required: true
-        description: The subject ID.
-        example: 95ee1ca3-9011-4916-a574-5962bb661fec
-        schema:
-          type: string
+      - $ref: "#/components/parameters/enrollmentID"
+      - $ref: "#/components/parameters/subjectID"
     get:
       tags:
         - Grades
@@ -988,7 +958,7 @@ paths:
                   $ref: "#/components/schemas/professor"
   /professor/{professorID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/professorID"
     get:
       tags:
         - Professor
@@ -1080,14 +1050,7 @@ paths:
                   $ref: "#/components/schemas/enrollment"
   /enrollments/{studentID}:
     parameters:
-      - name: studentID
-        in: path
-        required: true
-        description: The student's unique identifier.
-        example: addd3001-210e-4ada-999d-a295b02a384d
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
        - Enrollment
@@ -1108,7 +1071,7 @@ paths:
           $ref: "#/components/responses/NotFound"
   /enrollment/{enrollmentID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/enrollmentID"
     get:
       tags:
         - Enrollment
@@ -1217,7 +1180,7 @@ paths:
                   $ref: "#/components/schemas/course_schedule"
   /course_schedule/{courseScheduleID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/courseScheduleID"
     get:
       tags:
         - Course Schedule
@@ -1314,7 +1277,7 @@ paths:
           $ref: "#/components/responses/NotFound"
   /course_schedule_content/{courseScheduleContentID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/courseScheduleContentID"
     get:
       tags:
         - Course Schedule
@@ -1490,7 +1453,7 @@ paths:
                   $ref: "#/components/schemas/schedule"
   /schedule/{scheduleID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/scheduleID"
     get:
       tags:
         - Schedule
@@ -1523,14 +1486,14 @@ paths:
         - Schedule
       summary: Adds a new schedule.
       description: >-
-        ## Accepted values for 'days'
+        Accepted values for 'days':
         
         
         m, t, w, th, f, sa, su, mon, tues, wed, thur, fri,
         monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
-
-        ## time_duration format
+        <br><br><br>
+        time_duration format:
 
 
         >_x_ unit [_y_ unit] 
@@ -1570,14 +1533,14 @@ paths:
         - Schedule
       summary: Update the data of an existing schedule.
       description: >-
-        ## Accepted values for 'days'
+        Accepted values for 'days':
         
         
         m, t, w, th, f, sa, su, mon, tues, wed, thur, fri,
         monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
-
-        ## time_duration format
+        <br><br><br>
+        time_duration format:
 
 
         >_x_ unit [_y_ unit] 
@@ -1639,12 +1602,7 @@ paths:
       tags:
        - Attendance
       parameters:
-        - name: studentID
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/studentID"
       responses:
         '200':
           description: Operation completed successfully
@@ -1664,18 +1622,8 @@ paths:
       tags:
        - Attendance
       parameters:
-        - name: studentID
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: academicTermID
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/academicTermID"
       responses:
         '200':
           description: Operation completed successfully
@@ -1691,7 +1639,7 @@ paths:
           $ref: "#/components/responses/NotFound"
   /attendance/{attendanceID}:
     parameters:
-      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/attendanceID"
     get:
       tags:
         - Attendance
@@ -1784,14 +1732,7 @@ paths:
                   $ref: "#/components/schemas/guardian"
   /guardian/{studentID}:
     parameters:
-      - name: student_id
-        in: path
-        required: true
-        description: The student's unique identifier
-        schema:
-          type: string
-          format: uuid
-        example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - Guardian
@@ -2223,6 +2164,116 @@ components:
       in: path
       required: true
       description: The entry's unique identifier
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    studentID:
+      name: studentID
+      in: path
+      required: true
+      description: Unique identifier of a student
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    courseID:
+      name: courseID
+      in: path
+      required: true
+      description: Unique identifier of the course
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    departmentID:
+      name: departmentID
+      in: path
+      required: true
+      description: Unique identifier of the department
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    academicTermID:
+      name: academicTermID
+      in: path
+      required: true
+      description: Unique identifier of an academic term
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    subjectID:
+      name: subjectID
+      in: path
+      required: true
+      description: Unique identifier of a subject
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    enrollmentID:
+      name: enrollmentID
+      in: path
+      required: true
+      description: Unique identifier of a student's enrollment
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    professorID:
+      name: professorID
+      in: path
+      required: true
+      description: Unique identifier of a professor
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    courseScheduleID:
+      name: courseScheduleID
+      in: path
+      required: true
+      description: Unique identifier of a course schedule
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    courseScheduleContentID:
+      name: courseScheduleContentID
+      in: path
+      required: true
+      description: Unique identifier of a single element of the course schedule
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    scheduleID:
+      name: scheduleID
+      in: path
+      required: true
+      description: Unique identifier of a schedule
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
+    attendanceID:
+      name: attendanceID
+      in: path
+      required: true
+      description: Unique identifier of an attendance
       schema:
         type: string
         format: uuid
