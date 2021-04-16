@@ -615,7 +615,7 @@ paths:
               address: Legazpi City
               sex: Male
               birth_date: 04/01/2000
-              phone_number: 09299990
+              phone_number: '09299990999'
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -640,7 +640,7 @@ paths:
               address: Legazpi City
               sex: Male
               birth_date: 04/01/2000
-              phone_number: 09299990
+              phone_number: '09299990999'
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1001,7 +1001,7 @@ paths:
               first_name: Lany
               middle_name: L
               last_name: Maceda
-              phone_number: 0999999999
+              phone_number: '0999999999'
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1023,7 +1023,7 @@ paths:
               first_name: Lany
               middle_name: L
               last_name: Maceda
-              phone_number: 0999999999
+              phone_number: '0999999999'
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1764,7 +1764,7 @@ paths:
               first_name: Creekt
               middle_name: Mondst
               last_name: Gouste
-              phone_number: 0999992999
+              phone_number: '0999992999'
       responses:
         '200':
           $ref: "#/components/responses/Success"
