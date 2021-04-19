@@ -616,6 +616,7 @@ paths:
               sex: Male
               birth_date: '2000-04-01'
               phone_number: '09299990999'
+              email_address: 'u@get.it'
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -641,6 +642,7 @@ paths:
               sex: Male
               birth_date: '2000-04-01'
               phone_number: '09299990999'
+              email_address: 'u@get.it'
       responses:
         '200':
           $ref: "#/components/responses/Success"
