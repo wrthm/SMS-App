@@ -125,6 +125,7 @@ export interface schedules {
   "id"?: string 
   "professor_id": string 
   "subject_id": string 
+  "unit_type": string 
   "room": string 
   "class": string 
   "capacity": number 
