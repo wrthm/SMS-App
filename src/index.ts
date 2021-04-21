@@ -10,5 +10,5 @@ const port = AppServerConfig.APIPort
 Routes(app)
 
 app.listen(port, () => {
-    logger.info(`Application Server now listening at (http/https)://${ip.address()}:${port}`)
+    logger.info(`Application Server now listening at ${ip.address()}:${port}`)
 })

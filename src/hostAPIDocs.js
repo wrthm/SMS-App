@@ -38,5 +38,5 @@ if (config.DisableCache) {
 
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options))
 app.listen(port, () => {
-    console.log(`API Documentation Server now listening at (http/https)://${ip.address()}:${port}`)
+    console.log(`API Documentation Server now listening at ${ip.address()}:${port}`)
 })
