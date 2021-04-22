@@ -1828,6 +1828,12 @@ paths:
               middle_name: Mondst
               last_name: Gouste
               phone_number: '0999992999'
+              address: A place
+              first_name_2: Despt
+              middle_name_2: Asefec
+              last_name_2: Gouste
+              phone_number_2: '0999991999'
+              address_2: A place 2
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -2231,6 +2237,18 @@ components:
         last_name:
           type: string
         phone_number:
+          type: string
+        address:
+          type: string
+        first_name_2:
+          type: string
+        middle_name_2:
+          type: string
+        last_name_2:
+          type: string
+        phone_number_2:
+          type: string
+        address_2:
           type: string
         created_at:
           type: string
