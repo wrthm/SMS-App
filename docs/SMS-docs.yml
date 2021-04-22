@@ -34,61 +34,61 @@ servers:
   - url: https://softeng.jbtabz.com/
 paths:
   ############ CONFIG ############
-  # /configs/:
-  #   get:
-  #     tags:
-  #       - Configuration
-  #     summary: Fetches entire configuration of the system.
-  #     responses: 
-  #       '200':
-  #         description: The configuration entries
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: array
-  #               items:
-  #                 $ref: "#/components/schemas/configList"
-  # /config/{key}:
-  #   parameters:
-  #     - name: key
-  #       in: path
-  #       required: true
-  #       description: The key string used to find its corresponding value.
-  #       example: current_academic_term
-  #       schema:
-  #         type: string
-  #   get:
-  #     tags:
-  #       - Configuration
-  #     summary: Gets a key-value pair from the configuration using the input key.
-  #     responses:
-  #       '200':
-  #         description: The key and value pair
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schemas/config"
-  #             example:
-  #               value: 5b513f90-77af-47ce-b20a-621536e70ed6
-  #       '404':
-  #         $ref: "#/components/responses/NotFound"
-  #   put:
-  #     tags:
-  #       - Configuration
-  #     summary: Changes the value of the key in the configuration.
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref:  "#/components/schemas/config"
-  #           example:
-  #             value: 5b513f90-77af-47ce-b20a-621536e70ed6
-  #     responses:
-  #       '200':
-  #         $ref: "#/components/responses/Success"
-  #       '404':
-  #         $ref: "#/components/responses/NotFound"
+  /configs/:
+    get:
+      tags:
+        - Configuration
+      summary: Fetches entire configuration of the system.
+      responses: 
+        '200':
+          description: The configuration entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/configList"
+  /config/{key}:
+    parameters:
+      - name: key
+        in: path
+        required: true
+        description: The key string used to find its corresponding value.
+        example: current_academic_term
+        schema:
+          type: string
+    get:
+      tags:
+        - Configuration
+      summary: Gets a key-value pair from the configuration using the input key.
+      responses:
+        '200':
+          description: The key and value pair
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/config"
+              example:
+                value: 5b513f90-77af-47ce-b20a-621536e70ed6
+        '404':
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags:
+        - Configuration
+      summary: Changes the value of the key in the configuration.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/config"
+            example:
+              value: 5b513f90-77af-47ce-b20a-621536e70ed6
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '404':
+          $ref: "#/components/responses/NotFound"
 
   ############ LOGIN ############
   /login/s:
@@ -1545,11 +1545,6 @@ paths:
         - Schedule
       summary: Adds a new schedule.
       description: >-
-        Accepted values for 'unit_type':
-
-
-        lec, lab<br><br><br>
-
         Accepted values for 'days':
         
         
@@ -1578,7 +1573,6 @@ paths:
             example:
               professor_id: 38fe95f6-e7aa-4b04-9848-ee2d5fb6f94e
               subject_id: 75850f7e-81a9-4441-845b-51d9afa7b7cb
-              unit_type: lec
               room: CS-02-101
               class: BSCS-3C
               capacity: 40
@@ -1598,11 +1592,6 @@ paths:
         - Schedule
       summary: Update the data of an existing schedule.
       description: >-
-        Accepted values for 'unit_type':
-
-
-        lec, lab<br><br><br>
-
         Accepted values for 'days':
         
         
@@ -1632,7 +1621,6 @@ paths:
               id: 34ac4863-2c53-44ca-b571-80d2c33f3e15
               professor_id: 38fe95f6-e7aa-4b04-9848-ee2d5fb6f94e
               subject_id: 75850f7e-81a9-4441-845b-51d9afa7b7cb
-              unit_type: lab
               room: CS-02-101
               class: BSCS-3C
               capacity: 40
@@ -2133,7 +2121,6 @@ components:
       required:
         - professor_id
         - subject_id
-        - unit_type
         - room
         - class
         - capacity
@@ -2150,8 +2137,6 @@ components:
         subject_id:
           type: string
           format: uuid
-        unit_type:
-          type: string
         room:
           type: string
         class:
