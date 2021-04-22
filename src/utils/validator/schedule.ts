@@ -9,8 +9,6 @@ const postModel = {
            subject_id: Joi.string()
                           .uuid()
                           .required(),
-            unit_type: Joi.string()
-                          .required(),
                  room: Joi.string()
                           .trim()
                           .max(30)

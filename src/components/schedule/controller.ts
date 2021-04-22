@@ -1,7 +1,7 @@
 import DatabaseService from '../../database'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { schedules as schedule, schedules} from '../../database/models'
+import { schedules as schedule} from '../../database/models'
 import { pagination_args, schedules_external, search_schedule_args } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
 
@@ -98,7 +98,7 @@ const Controller = {
     }
 }
 
-const processScheduleData = (obj: schedules_external): void => {
+const processScheduleData = (obj: schedules_external) => {
     // trim strings
     obj.room = obj.room.trim()
     obj.class = obj.class.trim()
@@ -152,13 +152,6 @@ const processScheduleData = (obj: schedules_external): void => {
         throw new InvalidArgumentException('Bitmasked day value out of range')
     }
 
-    // check unit_type value
-    const unit_type = obj.unit_type
-    const valid_values = ['lec', 'lab']
-    if (!valid_values.includes(unit_type)) {
-        throw new InvalidArgumentException(`Invalid unit_type specified ("${unit_type}"); should be either "lec" or "lab"`)
-    }
-
     // TODO: check if schedule duration is way too short or long
     // or just perform the check in postgres instead...
     // if (obj.time_duration.toLowerCase().includes('day')) {
@@ -166,7 +159,7 @@ const processScheduleData = (obj: schedules_external): void => {
     // }
 }
 
-const convertDaysToArray = (obj: schedules_external): void => {
+const convertDaysToArray = (obj: schedules_external) => {
     const daysLookup = ['mon', 'tues', 'wed', 'thur', 'fri', 'sat', 'sun']
     const daysArray = []
     for (let i = 0; i < daysLookup.length; ++i) {
@@ -177,7 +170,7 @@ const convertDaysToArray = (obj: schedules_external): void => {
     obj.days = daysArray
 }
 
-const parseScheduleSearchArgs = (args: search_schedule_args): void => {
+const parseScheduleSearchArgs = (args: search_schedule_args) => {
     const search_args_keys = ['s_name', 'p_fname', 'p_mname', 'p_lname', 'room', 'class']
 
     search_args_keys.forEach((key) => {
