@@ -155,6 +155,8 @@ export interface subjects {
   "id"?: string 
   "code": string 
   "name": string 
+  "unit_lec": number
+  "unit_lab": number
   "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 

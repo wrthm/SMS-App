@@ -10,6 +10,10 @@ const postModel = {
                  .trim()
                  .max(60)
                  .required(),
+    unit_lec: Joi.number()
+                 .required(),
+    unit_lab: Joi.number()
+                 .required(),
     })
 }
 
