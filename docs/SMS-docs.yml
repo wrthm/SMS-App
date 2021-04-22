@@ -1285,6 +1285,7 @@ paths:
               course_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
               academic_term_id: 22297dec-9bb3-463a-bac8-c9fb2372982b
               name: BSCS 3 - Block C
+              year_level: Third Year
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -1304,6 +1305,7 @@ paths:
             example:
               id: 790a4ae2-f559-40b9-999f-9f3e640c837e
               name: BSCS 3 - Block C
+              year_level: Third Year
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -2082,6 +2084,7 @@ components:
         - course_id
         - academic_term_id
         - name
+        - year_level
       properties:
         id:
           type: string
@@ -2093,6 +2096,8 @@ components:
           type: string
           format: uuid
         name:
+          type: string
+        year_level:
           type: string
         is_hidden:
           type: boolean
