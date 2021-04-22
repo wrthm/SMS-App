@@ -792,8 +792,10 @@ paths:
             schema:
               $ref:  "#/components/schemas/subject"
             example:
-              code: CS 116
+              code: CS 117
               name: Software Engineering
+              unit_lec: 2.0
+              unit_lab: 1.0
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -811,8 +813,10 @@ paths:
               $ref:  "#/components/schemas/subject"
             example:
               id: 642e8f50-2e73-4070-a3c0-d173e2e7453a
-              code: CS 116
+              code: CS 117
               name: Software Engineering
+              unit_lec: 2.0
+              unit_lab: 1.0
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -1963,6 +1967,8 @@ components:
       required:
         - code
         - name
+        - unit_lec
+        - unit_lab
       properties:
         id:
           type: string
@@ -1971,6 +1977,10 @@ components:
           type: string
         name:
           type: string
+        unit_lec:
+          type: number
+        unit_lab:
+          type: number
         is_hidden:
           type: boolean
         created_at:
