@@ -82,6 +82,12 @@ export interface guardians {
   "middle_name": string | null 
   "last_name": string | null 
   "phone_number": string | null 
+  "address": string | null 
+  "first_name_2": string | null 
+  "middle_name_2": string | null 
+  "last_name_2": string | null 
+  "phone_number_2": string | null 
+  "address_2": string | null 
   "created_at"?: any 
   "updated_at"?: any 
 }
