@@ -34,61 +34,61 @@ servers:
   - url: https://softeng.jbtabz.com/
 paths:
   ############ CONFIG ############
-  /configs/:
-    get:
-      tags:
-        - Configuration
-      summary: Fetches entire configuration of the system.
-      responses: 
-        '200':
-          description: The configuration entries
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/configList"
-  /config/{key}:
-    parameters:
-      - name: key
-        in: path
-        required: true
-        description: The key string used to find its corresponding value.
-        example: current_academic_term
-        schema:
-          type: string
-    get:
-      tags:
-        - Configuration
-      summary: Gets a key-value pair from the configuration using the input key.
-      responses:
-        '200':
-          description: The key and value pair
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/config"
-              example:
-                value: 5b513f90-77af-47ce-b20a-621536e70ed6
-        '404':
-          $ref: "#/components/responses/NotFound"
-    put:
-      tags:
-        - Configuration
-      summary: Changes the value of the key in the configuration.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref:  "#/components/schemas/config"
-            example:
-              value: 5b513f90-77af-47ce-b20a-621536e70ed6
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
-        '404':
-          $ref: "#/components/responses/NotFound"
+  # /configs/:
+  #   get:
+  #     tags:
+  #       - Configuration
+  #     summary: Fetches entire configuration of the system.
+  #     responses: 
+  #       '200':
+  #         description: The configuration entries
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/configList"
+  # /config/{key}:
+  #   parameters:
+  #     - name: key
+  #       in: path
+  #       required: true
+  #       description: The key string used to find its corresponding value.
+  #       example: current_academic_term
+  #       schema:
+  #         type: string
+  #   get:
+  #     tags:
+  #       - Configuration
+  #     summary: Gets a key-value pair from the configuration using the input key.
+  #     responses:
+  #       '200':
+  #         description: The key and value pair
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/config"
+  #             example:
+  #               value: 5b513f90-77af-47ce-b20a-621536e70ed6
+  #       '404':
+  #         $ref: "#/components/responses/NotFound"
+  #   put:
+  #     tags:
+  #       - Configuration
+  #     summary: Changes the value of the key in the configuration.
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref:  "#/components/schemas/config"
+  #           example:
+  #             value: 5b513f90-77af-47ce-b20a-621536e70ed6
+  #     responses:
+  #       '200':
+  #         $ref: "#/components/responses/Success"
+  #       '404':
+  #         $ref: "#/components/responses/NotFound"
 
   ############ LOGIN ############
   /login/s:
@@ -2435,7 +2435,7 @@ components:
       in: header
 
 tags:
-  - name: Configuration
+  # - name: Configuration
   - name: Authentication
     description: Everything related to credentials
   - name: Search
