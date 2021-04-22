@@ -13,12 +13,14 @@ const pagination = {
          page: Joi.number()
                   .integer()
                   .min(1)
-                  .default(1),
+                  .default(1)
+                  .allow(null),
         limit: Joi.number()
                   .integer()
                   .min(25)
                   .max(250)
-                  .default(50),
+                  .default(50)
+                  .allow(null),
     })
 }
 

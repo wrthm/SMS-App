@@ -21,7 +21,8 @@ const postModel = {
                           .trim()
                           .min(11)
                           .max(13)
-                          .regex(/^(\d{11}|\d{12}|\+\d{12})$/),
+                          .regex(/^(\d{11}|\d{12}|\+\d{12})$/)
+                          .allow(null),
     })
 }
 

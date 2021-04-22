@@ -19,7 +19,8 @@ const postModel = {
                              .iso()
                              .required(),
              logout_time: Joi.date()
-                             .iso(),
+                             .iso()
+                             .allow(null),
     })
 }
 

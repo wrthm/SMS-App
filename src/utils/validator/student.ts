@@ -5,7 +5,8 @@ const postModel = {
     body: Joi.object({
             school_id: Joi.string()
                           .trim()
-                          .max(30),
+                          .max(30)
+                          .allow(null),
            first_name: Joi.string()
                           .trim()
                           .max(60)
@@ -33,11 +34,13 @@ const postModel = {
                           .trim()
                           .min(11)
                           .max(13)
-                          .regex(/^(\d{11}|\d{12}|\+\d{12})$/),
+                          .regex(/^(\d{11}|\d{12}|\+\d{12})$/)
+                          .allow(null),
         email_address: Joi.string()
                           .trim()
                           .max(60)
-                          .email(),
+                          .email()
+                          .allow(null),
     })
 }
 
