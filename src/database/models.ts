@@ -37,6 +37,7 @@ export interface course_schedules {
   "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
+  "year_level": string
 }
 export interface course_schedules_contents {
   "id"?: string 

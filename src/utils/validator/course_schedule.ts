@@ -13,16 +13,26 @@ const postModel = {
                             .trim()
                             .max(60)
                             .required(),
+             year_level: Joi.string()
+                            .trim()
+                            .max(30)
+                            .required(),
     })
 }
 
 const putModel = {
-      id: Joi.string()
-             .uuid()
-             .required(),
-    name: Joi.string()
-             .trim()
-             .required()
+    body: Joi.object({
+                id: Joi.string()
+                       .uuid()
+                       .required(),
+              name: Joi.string()
+                       .trim()
+                       .required(),
+        year_level: Joi.string()
+                       .trim()
+                       .max(30)
+                       .required(),
+    })
 }
 
 const model = {
