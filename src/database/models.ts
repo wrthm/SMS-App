@@ -66,6 +66,7 @@ export interface enrollments {
   "academic_term_id": string 
   "student_id": string 
   "course_id": string 
+  "status": string
   "is_revoked"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 

@@ -11,6 +11,10 @@ const postModel = {
         course_schedule_id: Joi.string()
                                .uuid()
                                .required(),
+                    status: Joi.string()
+                               .max(16)
+                               .trim()
+                               .required(),
     })
 }
 

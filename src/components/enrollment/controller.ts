@@ -46,6 +46,7 @@ const Controller = {
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
         const data: enrollment = req.body
+        data.status = data.status.trim()
         try {
             let result = await DatabaseService.enrollments.add(data)
             if (result.success) {
