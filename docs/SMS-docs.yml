@@ -1219,6 +1219,7 @@ paths:
               academic_term_id: 22297dec-9bb3-463a-bac8-c9fb2372982b
               student_id: d7f9a296-f5fa-43de-a039-164b5eca806f
               course_schedule_id: 416b6cbd-756d-4ceb-9049-db6d062c50d7
+              status: Regular
       responses:
         '201':
           $ref: "#/components/responses/Success201"
@@ -2099,6 +2100,7 @@ components:
         - academic_term_id
         - student_id
         - course_schedule_id
+        - status
       properties:
         id:
           type: string
@@ -2112,6 +2114,8 @@ components:
         course_schedule_id:
           type: string
           format: uuid
+        status:
+          type: string
         is_revoked:
           type: boolean
         created_at:
