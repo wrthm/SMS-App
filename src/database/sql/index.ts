@@ -120,6 +120,7 @@ export const course_schedules = {
     delete: sql('course_schedules/delete.sql'),
     update: sql('course_schedules/update.sql'),
     search: sql('course_schedules/search.sql'),
+    _filterByAcademicTerm: sql('course_schedules/_filterByAcademicTerm.sql'),
 }
 
 export const course_schedule_contents = {
@@ -127,6 +128,8 @@ export const course_schedule_contents = {
     add: sql('course_schedules_contents/add.sql'),
     delete: sql('course_schedules_contents/delete.sql'),
     listCourseSchedule: sql('course_schedules_contents/listCourseSchedule.sql'),
+    listCourseScheduleByProf: sql('course_schedules_contents/listCourseScheduleByProf.sql'),
+    _listCourseScheduleByProfAndAT: sql('course_schedules_contents/_listCourseScheduleByProfAndAT.sql'),
 }
 
 function sql(file: string): QueryFile {

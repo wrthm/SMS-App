@@ -28,4 +28,23 @@ const cs_idModel = {
     })
 }
 
-export const CourseScheduleContentValidator = { postModel, model, cs_idModel }
+const getProfessorIDModel = {
+    params: Joi.object({
+        professor_id: Joi.string()
+                         .uuid()
+                         .required(),
+    })
+}
+
+const getProfessorAcademicTermIDsModel = {
+    params: Joi.object({
+            professor_id: Joi.string()
+                             .uuid()
+                             .required(),
+        academic_term_id: Joi.string()
+                             .uuid()
+                             .required(),
+    })
+}
+
+export const CourseScheduleContentValidator = { postModel, model, cs_idModel, getProfessorIDModel, getProfessorAcademicTermIDsModel }

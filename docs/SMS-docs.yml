@@ -1092,6 +1092,49 @@ paths:
           $ref: "#/components/responses/Success"
         '404':
           $ref: "#/components/responses/NotFound"
+  # /professor/{professorID}/schedules:
+  #   parameters:
+  #     - $ref: "#/components/parameters/professorID"
+  #   get:
+  #     tags:
+  #       - Professor
+  #       - Course Schedule
+  #     summary: Gets the schedules of a professor throughout every academic term.
+  #     responses:
+  #       '200':
+  #         description: OK
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: "#/components/schemas/course_schedule_content"
+  #       '400':
+  #         $ref: "#/components/responses/InvalidID"
+  #       '404':
+  #         $ref: "#/components/responses/NotFound"
+  /professor/{professorID}/schedules/{academicTermID}:
+    parameters:
+      - $ref: "#/components/parameters/professorID"
+      - $ref: "#/components/parameters/academicTermID"
+    get:
+      tags:
+        - Professor
+        - Course Schedule
+      summary: Gets the schedules of a professor filtered to a single academic term.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course_schedule_content"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
 
   ############ ENROLLMENTS ############
   /enrollments:

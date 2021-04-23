@@ -31,6 +31,26 @@ const Controller = {
             next(err)
         }
     },
+    // listByProf: async (req: Request, res: Response, next: NextFunction) => {
+    //     try {
+    //         const { professor_id } = req.params
+    //         const result = await DatabaseService.course_schedules_contents.listByCourseScheduleFilterByProf(professor_id)
+    //         return res.send(result)
+    //     }
+    //     catch (err) {
+    //         next(err)
+    //     }
+    // },
+    listByProfAndAT: async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { professor_id, academic_term_id } = req.params
+            const result = await DatabaseService.course_schedules_contents.listByCourseScheduleFilterByProfAndAT(professor_id, academic_term_id)
+            return res.send(result)
+        }
+        catch (err) {
+            next(err)
+        }
+    },
     add: async (req: Request, res: Response, next: NextFunction) => {
         const data: course_schedule_content = req.body
         try {
