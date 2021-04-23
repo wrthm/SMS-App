@@ -1534,6 +1534,17 @@ paths:
         - Schedule
       operationId: searchForSchedules
       summary: Search for schedules by its subject name.
+      description: |-
+        Note:
+        "time_duration"'s data type is _object_ when fetching from the app server.
+        Its POST and PUT methods still expect a string however.
+
+        Example of a time_duration value from GET method:
+
+            {
+              "hour": 1,
+              "minute": 30
+            }
       responses:
         '200':
           description: The entries returned that match the query
@@ -1548,6 +1559,17 @@ paths:
       tags:
        - Schedule
       summary: Get list of every schedule. (50 entries per page by default)
+      description: |-
+        Note:
+        "time_duration"'s data type is _object_ when fetching from the app server.
+        Its POST and PUT methods still expect a string however.
+
+        Example of a time_duration value from GET method:
+
+            {
+              "hour": 1,
+              "minute": 30
+            }
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref:  "#/components/parameters/limit"
@@ -1567,6 +1589,17 @@ paths:
       tags:
         - Schedule
       summary: Get the data of a schedule from its ID.
+      description: |-
+        Note:
+        "time_duration"'s data type is _object_ when fetching from the app server.
+        Its POST and PUT methods still expect a string however.
+
+        Example of a time_duration value from GET method:
+
+            {
+              "hour": 1,
+              "minute": 30
+            }
       responses:
         '200':
           description: OK
@@ -1601,7 +1634,7 @@ paths:
         m, t, w, th, f, sa, su, mon, tues, wed, thur, fri,
         monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
-        <br><br><br>
+        <br><hr><br>
         time_duration format:
 
 
@@ -1648,7 +1681,7 @@ paths:
         m, t, w, th, f, sa, su, mon, tues, wed, thur, fri,
         monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
-        <br><br><br>
+        <br><hr><br>
         time_duration format:
 
 
