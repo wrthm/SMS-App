@@ -8,7 +8,7 @@ import { convertDaysToArray } from '../../utils/parseSchedule'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
-        let result: schedule_external | schedule[] | null
+        let result: schedule_external | null
         let { id } = req.params
         try {
             if (id) {
@@ -16,14 +16,8 @@ const Controller = {
             } else {
                 return next(new InvalidArgumentException())
             }
-            checkIfNull(result)
-            if (Array.isArray(result)) {
-                result.forEach(element => {
-                    element.days = convertDaysToArray(element.days)
-                })
-            } else {
-                (result as schedule_external).days = convertDaysToArray((result as schedule_external).days as number)
-            }
+            checkIfNull(result);
+            (result as schedule_external).days = convertDaysToArray((result as schedule_external).days as number)
             return res.send(result)
         }
         catch (err) {
