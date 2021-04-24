@@ -848,7 +848,15 @@ paths:
     get:
       tags:
        - Grades
-      summary: Get all grades of a student, filtered by the enrollment's academic term by default.
+      summary: Get all grades of a student, filtered by his/her enrollment's academic term.
+      description: |-
+        This endpoint expects the student's <b>enrollment ID</b>, NOT the student's (internal) ID!
+
+        <b>Special constants on grade value:</b>
+
+          - 0 or null = Grade still not given by professor
+          - -1 = INC
+          - -2 = Dropped
       operationId: getGradesOfStudent
       responses:
         '200':
@@ -871,6 +879,14 @@ paths:
       tags:
         - Grades
       summary: Get a grade from its IDs.
+      description: |-
+        This endpoint expects the student's <b>enrollment ID</b>, NOT the student's (internal) ID!
+
+        <b>Special constants on grade value:</b>
+
+          - 0 or null = Grade still not given by professor
+          - -1 = INC
+          - -2 = Dropped
       responses:
         '200':
           description: OK
@@ -882,22 +898,19 @@ paths:
           $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
-    delete:
-      tags:
-        - Grades
-      summary: Delete an existing grade.
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
-        '400':
-          $ref: "#/components/responses/InvalidID"
-        '404':
-          $ref: "#/components/responses/NotFound"
   /grade:
     post:
       tags:
         - Grades
-      summary: Adds a new grade for a student.
+      summary: Updates a subject's grade of a student.
+      description: |-
+        This endpoint expects the student's <b>enrollment ID</b>, NOT the student's (internal) ID!
+
+        <b>Special constants on grade value:</b>
+
+          - 0 = Grade still not given by professor
+          - -1 = INC
+          - -2 = Dropped
       requestBody:
         required: true
         content:
@@ -909,29 +922,10 @@ paths:
               subject_id: a64da858-0cce-408a-aa01-b89356a15c16
               grade: 3
       responses:
-        '201':
-          $ref: "#/components/responses/Success201"
-        '400':
-          $ref: "#/components/responses/IncompleteInput"
-    put:
-      tags:
-        - Grades
-      summary: Update an existing grade.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref:  "#/components/schemas/grade"
-            example:
-              enrollment_id: 558ae929-b80f-402a-934b-a9a07c201f72
-              subject_id: a64da858-0cce-408a-aa01-b89356a15c16
-              grade: 2
-      responses:
         '200':
           $ref: "#/components/responses/Success"
-        '404':
-          $ref: "#/components/responses/NotFound"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
 
 
   ############ PROFESSORS ############
