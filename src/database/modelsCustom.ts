@@ -38,4 +38,27 @@ export interface schedules_external {
     "is_hidden"?: boolean 
     "created_at"?: any 
     "updated_at"?: any 
+}
+
+export interface course_schedules_contents_external {
+    "id"?: string 
+    "course_schedule_id": string 
+    "course_schedule_name": string
+    "professor_id": string
+    "professor_first_name": string
+    "professor_middle_name": string
+    "professor_last_name": string
+    "subject_id": string
+    "subject_name": string
+    "subject_code": string
+    "subject_unit_lec": number
+    "subject_unit_lab": number
+    "schedule_id": string 
+    "schedule_room": string
+    "schedule_class": string
+    "schedule_capacity": string
+    "schedule_time_start": string
+    "schedule_time_duration": object
+    "schedule_days": number | string[]
+    "created_at"?: any 
   }

@@ -44,7 +44,6 @@ export interface course_schedules_contents {
   "course_schedule_id": string 
   "schedule_id": string 
   "created_at"?: any 
-  "updated_at"?: any 
 }
 export interface courses {
   "id"?: string 

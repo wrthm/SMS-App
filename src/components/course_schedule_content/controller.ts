@@ -3,10 +3,12 @@ import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
 import { course_schedules_contents as course_schedule_content} from '../../database/models'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
+import { course_schedules_contents_external } from '../../database/modelsCustom'
+import { convertDaysToArray } from '../../utils/parseSchedule'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
-        let result: course_schedule_content | course_schedule_content[] | null
+        let result: course_schedules_contents_external | null
         const { id } = req.params
         try {
             if (id) {
@@ -14,7 +16,8 @@ const Controller = {
             } else {
                 return next(new InvalidArgumentException())
             }
-            checkIfNull(result)
+            checkIfNull(result);
+            (result as course_schedules_contents_external).schedule_days = convertDaysToArray(result?.schedule_days as number)
             return res.send(result)
         }
         catch (err) {
@@ -25,6 +28,9 @@ const Controller = {
         try {
             const { cs_id } = req.params
             const result = await DatabaseService.course_schedules_contents.listByCourseSchedule(cs_id)
+            result?.forEach(element => {
+                element.schedule_days = convertDaysToArray(element.schedule_days as number)
+            })
             return res.send(result)
         }
         catch (err) {
@@ -35,6 +41,9 @@ const Controller = {
     //     try {
     //         const { professor_id } = req.params
     //         const result = await DatabaseService.course_schedules_contents.listByCourseScheduleFilterByProf(professor_id)
+    //     result?.forEach(element => {
+    //         element.schedule_days = convertDaysToArray(element.schedule_days as number)
+    //     })
     //         return res.send(result)
     //     }
     //     catch (err) {
@@ -45,6 +54,9 @@ const Controller = {
         try {
             const { professor_id, academic_term_id } = req.params
             const result = await DatabaseService.course_schedules_contents.listByCourseScheduleFilterByProfAndAT(professor_id, academic_term_id)
+            result?.forEach(element => {
+                element.schedule_days = convertDaysToArray(element.schedule_days as number)
+            })
             return res.send(result)
         }
         catch (err) {

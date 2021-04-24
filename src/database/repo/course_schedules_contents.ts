@@ -1,5 +1,6 @@
 import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { course_schedules_contents as CourseScheduleContents } from '../models'
+import { course_schedules_contents_external as CourseScheduleContentsExternal } from "../modelsCustom";
 import { course_schedule_contents as sql, course_schedules as cs_sql} from '../sql'
 
 export class CourseSchedulesContentsRepository {
@@ -7,11 +8,11 @@ export class CourseSchedulesContentsRepository {
 
     }
 
-    async findByID(id: string): Promise<CourseScheduleContents | null> {
+    async findByID(id: string): Promise<CourseScheduleContentsExternal | null> {
       return await this.db.oneOrNone(sql.findByID, {id})
     }
 
-    async listByCourseSchedule(cs_id: string): Promise<CourseScheduleContents[] | null> {
+    async listByCourseSchedule(cs_id: string): Promise<CourseScheduleContentsExternal[] | null> {
       return await this.db.manyOrNone(sql.listCourseSchedule, {cs_id})
     }
 
@@ -24,7 +25,7 @@ export class CourseSchedulesContentsRepository {
     //   return await this.db.manyOrNone(sql.listCourseScheduleByProf, {professor_id})
     // }
 
-    async listByCourseScheduleFilterByProfAndAT(professor_id: string, academic_term_id: string): Promise<CourseScheduleContents[] | null> {
+    async listByCourseScheduleFilterByProfAndAT(professor_id: string, academic_term_id: string): Promise<CourseScheduleContentsExternal[] | null> {
       return await this.db.task(async t => {
         const cs_result = await this.db.manyOrNone(cs_sql._filterByAcademicTerm, {academic_term_id})
         
