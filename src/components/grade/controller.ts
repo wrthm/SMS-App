@@ -34,6 +34,18 @@ const Controller = {
             next(err)
         }
     },
+    updateOrAdd: async (req: Request, res: Response, next: NextFunction) => {
+        const data: grade = req.body
+        try {
+            await DatabaseService.grades.updateOrAdd(data)
+            res.statusCode = 200
+            return res.send({"code": 200, "message": "Grade updated successfully"})
+        }
+        catch (err) {
+            next(err)
+        }
+        
+    },
     add: async (req: Request, res: Response, next: NextFunction) => {
         const data: grade = req.body
         try {

@@ -8,8 +8,8 @@ const GradeRouter : Router = Router()
 GradeRouter.get('/grade/:enrollment_id/:subject_id', validate(SchemaValidator.getEnrollmentSubjectIDsModel), Controller.find)
            .get('/grades/:enrollment_id', validate(SchemaValidator.getEnrollmentIDModel), Controller.find)
            .get('/grades', validate(CommonValidator.pagination), Controller.findAll)
-           .post('/grade', validate(SchemaValidator.postModel), Controller.add)
-           .put('/grade', validate(SchemaValidator.model), Controller.update)
+           .post('/grade', validate(SchemaValidator.postModel), Controller.updateOrAdd)
+           // .put('/grade', validate(SchemaValidator.model), Controller.updateOrAdd)
            // .delete('/department/:id', validate(CommonValidator.id), Controller.delete)
 
 module.exports = GradeRouter

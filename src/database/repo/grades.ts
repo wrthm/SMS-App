@@ -23,6 +23,18 @@ export class GradesRepository {
       return await this.db.manyOrNone(sql.listAll, {limit, offset})
     }
 
+    async updateOrAdd(data: Grade) {
+      // returns true if an update occured, otherwise false if it added a new entry instead
+      return await this.db.task(async t => {
+        const updateResult = await this.db.result(sql.update, data)
+        if (updateResult.rowCount === 0) {
+          await this.db.none(sql.add, data)
+          return false
+        }
+        return true
+      })
+    }
+
     async add(data: Grade) {
       return await this.db.none(sql.add, data)
     }
