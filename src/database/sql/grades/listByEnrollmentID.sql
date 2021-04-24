@@ -2,7 +2,6 @@ SELECT DISTINCT ON (subj.id)
     subj.id as subject_id,
     subj.name as subject_name,
     g.grade,
-    g.is_hidden,
     g.updated_at
 FROM enrollments e
 INNER JOIN course_schedules c_s ON c_s.id = e.course_schedule_id
