@@ -1536,8 +1536,8 @@ paths:
         Example of a time_duration value from GET method:
 
             {
-              "hour": 1,
-              "minute": 30
+              "hours": 1,
+              "minutes": 30
             }
       responses:
         '200':
@@ -1561,8 +1561,8 @@ paths:
         Example of a time_duration value from GET method:
 
             {
-              "hour": 1,
-              "minute": 30
+              "hours": 1,
+              "minutes": 30
             }
       parameters:
         - $ref: "#/components/parameters/page"
@@ -1591,8 +1591,8 @@ paths:
         Example of a time_duration value from GET method:
 
             {
-              "hour": 1,
-              "minute": 30
+              "hours": 1,
+              "minutes": 30
             }
       responses:
         '200':
