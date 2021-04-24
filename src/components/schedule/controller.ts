@@ -2,12 +2,13 @@ import DatabaseService from '../../database'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
 import { schedules as schedule} from '../../database/models'
-import { pagination_args, schedules_external, search_schedule_args } from '../../database/modelsCustom'
+import { pagination_args, schedules_external as schedule_external, search_schedule_args } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
+import { convertDaysToArray } from '../../utils/parseSchedule'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
-        let result: schedule | schedule[] | null
+        let result: schedule_external | schedule[] | null
         let { id } = req.params
         try {
             if (id) {
@@ -18,10 +19,10 @@ const Controller = {
             checkIfNull(result)
             if (Array.isArray(result)) {
                 result.forEach(element => {
-                    convertDaysToArray(element)
+                    element.days = convertDaysToArray(element.days)
                 })
             } else {
-                convertDaysToArray(result as schedule)
+                (result as schedule_external).days = convertDaysToArray((result as schedule_external).days as number)
             }
             return res.send(result)
         }
@@ -33,9 +34,9 @@ const Controller = {
         try {
             const { page, limit, ...searchArgs } = req.query
             parseScheduleSearchArgs(searchArgs)
-            const result: schedule[] = await DatabaseService.schedules.search(searchArgs, {page, limit} as pagination_args)
+            const result: schedule_external[] = await DatabaseService.schedules.search(searchArgs, {page, limit} as pagination_args)
             result.forEach(element => {
-                convertDaysToArray(element)
+                element.days = convertDaysToArray(element.days as number)
             })
             return res.send(result)
         }
@@ -45,9 +46,9 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: schedule[] = await DatabaseService.schedules.listAll(req.query)
+            const result: schedule_external[] = await DatabaseService.schedules.listAll(req.query)
             result.forEach(element => {
-                convertDaysToArray(element)
+                element.days = convertDaysToArray(element.days as number)
             })
             return res.send(result)
         }
@@ -56,7 +57,7 @@ const Controller = {
         }
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
-        const data: schedules_external = req.body
+        const data: schedule_external = req.body
         try {
             processScheduleData(data)
             let result = await DatabaseService.schedules.add(data as schedule)
@@ -98,7 +99,7 @@ const Controller = {
     }
 }
 
-const processScheduleData = (obj: schedules_external) => {
+const processScheduleData = (obj: schedule_external) => {
     // trim strings
     obj.room = obj.room.trim()
     obj.class = obj.class.trim()
@@ -157,17 +158,6 @@ const processScheduleData = (obj: schedules_external) => {
     // if (obj.time_duration.toLowerCase().includes('day')) {
     //     throw new InvalidArgumentException('Duration ')
     // }
-}
-
-const convertDaysToArray = (obj: schedules_external) => {
-    const daysLookup = ['mon', 'tues', 'wed', 'thur', 'fri', 'sat', 'sun']
-    const daysArray = []
-    for (let i = 0; i < daysLookup.length; ++i) {
-        if (obj.days as number >> i & 1) {
-            daysArray.push(daysLookup[i])
-        }
-    }
-    obj.days = daysArray
 }
 
 const parseScheduleSearchArgs = (args: search_schedule_args) => {
