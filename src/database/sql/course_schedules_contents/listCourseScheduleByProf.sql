@@ -11,6 +11,7 @@ SELECT
     prof.last_name AS professor_last_name,
     sched.subject_id, 
     subj.name AS subject_name,
+    subj.code as subject_code,
     subj.unit_lec AS subject_unit_lec,
     subj.unit_lab AS subject_unit_lab,
     sched.room AS schedule_room,
