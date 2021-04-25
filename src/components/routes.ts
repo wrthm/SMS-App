@@ -4,10 +4,12 @@ import { errorHandler } from '../middleware/errorHandler'
 import { mw as requestIPmw } from 'request-ip'
 import requestLogger from '../middleware/requestLogger'
 import cors from '../middleware/cors'
+import { requestIPcf } from '../middleware/requestIPcf';
 
 export default function(app: Application) {
     app.use(
         requestIPmw(),
+        requestIPcf(),
         cors(),
         json(),
         requestLogger(),
