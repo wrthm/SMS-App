@@ -2201,15 +2201,15 @@ components:
           type: string
           format: date-time
 
-    course_schedule_and_content:
-      allOf:
-        - $ref: "#/components/schemas/course_schedule"
-        - type: object
-          properties:
-            content:
-              type: array
-              items:
-                $ref: "#/components/schemas/course_schedule_content"
+    # course_schedule_and_content:
+    #   allOf:
+    #     - $ref: "#/components/schemas/course_schedule"
+    #     - type: object
+    #       properties:
+    #         content:
+    #           type: array
+    #           items:
+    #             $ref: "#/components/schemas/course_schedule_content"
 
     schedule:
       type: object
