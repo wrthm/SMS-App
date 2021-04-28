@@ -132,6 +132,15 @@ export const course_schedule_contents = {
     _listCourseScheduleByProfAndAT: sql('course_schedules_contents/_listCourseScheduleByProfAndAT.sql'),
 }
 
+export const auth_students_credentials = {
+    exists: sql('auth/students_credentials/exists.sql'),
+    add: sql('auth/students_credentials/add.sql'),
+    update: sql('auth/students_credentials/update.sql'),
+    findByUsername: sql('auth/students_credentials/findByUsername.sql'),
+    findByStudentID: sql('auth/students_credentials/findByStudentID.sql'),
+    getUsername: sql('auth/students_credentials/getUsername.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

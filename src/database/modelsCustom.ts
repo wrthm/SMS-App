@@ -62,3 +62,10 @@ export interface course_schedules_contents_external {
     "schedule_days": number | string[]
     "created_at"?: any 
   }
+
+export interface students_credentials_put {
+    "student_id": string 
+    "username"?: string
+    "password"?: string
+    "updated_at"?: any 
+  }
