@@ -9,11 +9,11 @@ export class ConfigRepository {
 
     async getAdd(key: string): Promise<string> {
         return await this.db.task(async t => {
-            const keyCheck = await this.db.oneOrNone(sql.exists, {key})
+            const keyCheck = await t.oneOrNone(sql.exists, {key})
             if (!keyCheck.exists) {
-                await this.db.none(sql.add, {key: key, value: null})
+                await t.none(sql.add, {key: key, value: null})
             }
-            return await this.db.one(sql.get, {key})
+            return await t.one(sql.get, {key})
         })
     }
 

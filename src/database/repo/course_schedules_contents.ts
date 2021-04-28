@@ -27,7 +27,7 @@ export class CourseSchedulesContentsRepository {
 
     async listByCourseScheduleFilterByProfAndAT(professor_id: string, academic_term_id: string): Promise<CourseScheduleContentsExternal[] | null> {
       return await this.db.task(async t => {
-        const cs_result = await this.db.manyOrNone(cs_sql._filterByAcademicTerm, {academic_term_id})
+        const cs_result = await t.manyOrNone(cs_sql._filterByAcademicTerm, {academic_term_id})
         
         if (cs_result.length !== 0) {
           let course_schedule_ids = ''
@@ -37,7 +37,7 @@ export class CourseSchedulesContentsRepository {
             }
             course_schedule_ids += `c_s_c.course_schedule_id='${cs_result[i].id}'`
           }
-          return await this.db.manyOrNone(sql._listCourseScheduleByProfAndAT, {professor_id, course_schedule_ids})
+          return await t.manyOrNone(sql._listCourseScheduleByProfAndAT, {professor_id, course_schedule_ids})
         }
         return []
       })

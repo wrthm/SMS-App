@@ -33,8 +33,8 @@ export class EnrollmentsRepository {
           // check if student is already enrolled
           const enrollCheck = await t.oneOrNone(students.isEnrolled, {id: student_id})
           if (!enrollCheck.exists) {
-            const result = await this.db.one(sql.add, data)
-            await this.db.none(students.enroll, {id: student_id})
+            const result = await t.one(sql.add, data)
+            await t.none(students.enroll, {id: student_id})
             return {success: true, result}
           } else {
             return {success: false, message: "Student is already enrolled"}
@@ -52,8 +52,8 @@ export class EnrollmentsRepository {
         if (row.exists) {
           // get the value of student_id from the enrollment
           const data = await t.one(sql.getStudentID, {id})
-          await this.db.none(students.unenroll, {id: data.student_id})
-          await this.db.result(sql.delete, {id})
+          await t.none(students.unenroll, {id: data.student_id})
+          await t.result(sql.delete, {id})
           return {success: true}
         } else {
           return {success: false}

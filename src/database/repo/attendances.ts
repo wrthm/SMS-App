@@ -35,7 +35,7 @@ export class AttendancesRepository {
       return await this.db.task(async t => {
         const row = await t.oneOrNone(common.exists, {tableName: 'attendances', id: id})
         if (row.exists) {
-          await this.db.none(sql.delete, {id})
+          await t.none(sql.delete, {id})
           return {success: true}
         } else {
           return {success: false}
