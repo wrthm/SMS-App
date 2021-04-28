@@ -37,7 +37,7 @@ export interface course_schedules {
   "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
-  "year_level": string
+  "year_level": string 
 }
 export interface course_schedules_contents {
   "id"?: string 
@@ -64,11 +64,11 @@ export interface enrollments {
   "id"?: string 
   "academic_term_id": string 
   "student_id": string 
-  "course_id": string 
-  "status": string
+  "course_schedule_id": string 
   "is_revoked"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
+  "status": string 
 }
 export interface grades {
   "enrollment_id": string 
@@ -83,14 +83,14 @@ export interface guardians {
   "middle_name": string | null 
   "last_name": string | null 
   "phone_number": string | null 
+  "created_at"?: any 
+  "updated_at"?: any 
   "address": string | null 
   "first_name_2": string | null 
   "middle_name_2": string | null 
   "last_name_2": string | null 
   "phone_number_2": string | null 
   "address_2": string | null 
-  "created_at"?: any 
-  "updated_at"?: any 
 }
 export interface management_accounts {
   "id"?: string 
@@ -162,9 +162,9 @@ export interface subjects {
   "id"?: string 
   "code": string 
   "name": string 
-  "unit_lec": number
-  "unit_lab": number
   "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
+  "unit_lec"?: number 
+  "unit_lab"?: number 
 }
