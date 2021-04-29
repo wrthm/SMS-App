@@ -141,6 +141,10 @@ export const auth_students_credentials = {
     getUsername: sql('auth/students_credentials/getUsername.sql'),
 }
 
+export const auth_sessions = {
+    create: sql('auth/sessions/create.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

@@ -2,7 +2,7 @@ import AuthService from '../../database/indexAuth'
 import DatabaseService from '../../database/index'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { students_credentials } from '../../database/modelsAuth'
+import { students_credentials, sessions } from '../../database/modelsAuth'
 import { students_credentials_put as student_credential_put } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException, NotImplementedException } from '../../exceptions'
 import { hash, compare } from 'bcrypt'
@@ -17,18 +17,23 @@ const loginStudent = async (req: Request, res: Response, next: NextFunction) => 
         if (student) {
             if (await compare(credential.password, student.password)) {
                 // TODO: move session creation routine to a separate function
-                const session_token = await uid(24)
-                const expiry_date = DateTime.now().plus({days: 7}).toISO()
-                // routine to create session on db goes here...
-                const data = {
-                    'id': student.student_id,
-                    'session-token': session_token,
-                    'expiration-date': expiry_date,
+                const user_agent = (req.headers['user-agent']) ? req.headers['user-agent'] : null
+                const session: sessions = {
+                    session_token: await uid(24),
+                    ip_address: req.clientIp,
+                    user_agent: user_agent,
+                    type: 'student',
+                    id: student.student_id,
+                    expiration_date: DateTime.now().plus({days: 7}).toISO()
                 }
-                return res.send(data)
+                await AuthService.sessions.create(session)
+                const dataOut = {
+                    'id': student.student_id,
+                    'session-token': session.session_token,
+                    'expiration-date': session.expiration_date,
+                }
+                return res.send(dataOut)
             }
-        } else {
-            console.log('lol')
         }
         next(new InvalidArgumentException('Wrong username or password'))
     } catch (err) {
