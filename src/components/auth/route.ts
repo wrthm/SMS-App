@@ -5,7 +5,7 @@ import { AuthController as Controller} from './controller'
 
 const AuthRouter : Router = Router()
 
-AuthRouter.post('/auth/login', Controller.nope)
+AuthRouter.post('/auth/login', validate(SchemaValidator.loginModel), Controller.loginDispatcher)
           .get('/auth/logout', Controller.nope)
           .get('/auth/whoami', Controller.nope)
           .post('/auth/register', Controller.nope)

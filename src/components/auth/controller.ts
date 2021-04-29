@@ -2,15 +2,45 @@ import AuthService from '../../database/indexAuth'
 import DatabaseService from '../../database/index'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
+import { students_credentials } from '../../database/modelsAuth'
 import { students_credentials_put as student_credential_put } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException, NotImplementedException } from '../../exceptions'
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
 import { AppServerConfig } from '../../config'
+import { DateTime } from 'luxon'
+import uid from 'uid-safe'
+
+const loginStudent = async (req: Request, res: Response, next: NextFunction) => {
+    const credential = req.body
+    try {
+        const student: students_credentials = await AuthService.students_credentials.findByUsername(credential.username)
+        if (student) {
+            if (await compare(credential.password, student.password)) {
+                // TODO: move session creation routine to a separate function
+                const session_token = await uid(24)
+                const expiry_date = DateTime.now().plus({days: 7}).toISO()
+                // routine to create session on db goes here...
+                const data = {
+                    'id': student.student_id,
+                    'session-token': session_token,
+                    'expiration-date': expiry_date,
+                }
+                return res.send(data)
+            }
+        } else {
+            console.log('lol')
+        }
+        next(new InvalidArgumentException('Wrong username or password'))
+    } catch (err) {
+        next(err)
+    }
+    
+}
 
 const Controller = {
     // login dispatcher
     loginDispatcher: async (req: Request, res: Response, next: NextFunction) => {
-        throw new NotImplementedException()
+        return loginStudent(req, res, next)
     },
 
     // login routine for student
@@ -20,7 +50,7 @@ const Controller = {
 
 
     nope: async (req: Request, res: Response, next: NextFunction) => {
-        throw new NotImplementedException()
+        next(new NotImplementedException())
     },
 
     update_student_cred: async (req: Request, res: Response, next: NextFunction) => {
