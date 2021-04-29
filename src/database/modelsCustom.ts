@@ -65,7 +65,7 @@ export interface course_schedules_contents_external {
 
 export interface students_credentials_put {
     "student_id": string 
-    "username"?: string
-    "password"?: string
+    "username"?: string | null
+    "password"?: string | null
     "updated_at"?: any 
   }

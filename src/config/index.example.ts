@@ -1,6 +1,7 @@
 const AppServerConfig = {
     APIPort: 80,
     PaginationDefaultLimit: 50,
+    BcryptSaltRounds: 12,
 }
 
 const DatabaseConfig = {

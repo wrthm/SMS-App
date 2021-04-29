@@ -10,13 +10,13 @@ export class StudentsCredentialsRepository {
 
     async updateOrAdd(data: students_credentials_put) {
         return await this.db.task(async t => {
-            const credExists = await t.result(sql.exists, data)
+            const credExists = await t.one(sql.exists, data)
             if (credExists.exists) {    // update student credential
                 await t.none(sql.update, data)
                 return {success: true, message: 'Update'}
             } else {                    // create student credential
                 if (data.username != null && data.password != null) {
-                    await t.one(sql.add, data)
+                    await t.none(sql.add, data)
                     return {success: true, message: 'Create'}
                 } else {
                     return {success: false, message: 'Both username and password must be supplied before creating student\'s credential'}
