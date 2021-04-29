@@ -5,9 +5,12 @@ import { mw as requestIPmw } from 'request-ip'
 import requestLogger from '../middleware/requestLogger'
 import cors from '../middleware/cors'
 import { requestIPcf } from '../middleware/requestIPcf';
+import nocache from 'nocache'
 
 export default function(app: Application) {
+    app.set('etag', false)
     app.use(
+        nocache(),
         requestIPmw(),
         requestIPcf(),
         cors(),
