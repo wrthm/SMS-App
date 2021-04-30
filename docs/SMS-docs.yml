@@ -697,6 +697,27 @@ paths:
           $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
+  /student/{studentID}/username:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+    get:
+      tags:
+        - Student
+      summary: Get the student's username from its ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
   /student/{studentID}/rfid/new:
     parameters:
       - $ref: "#/components/parameters/studentID"

@@ -6,6 +6,7 @@ import { StudentController as Controller} from './controller'
 const StudentRouter : Router = Router()
 
 StudentRouter.get('/student/:id', validate(CommonValidator.id), Controller.find)
+             .get('/student/:id/username', validate(CommonValidator.id), Controller.getUsername)
              .get('/search/students/:name', validate(CommonValidator.pagination), Controller.find)
              .get('/search/students', validate(CommonValidator.searchGranularModel), Controller.find)
              .get('/students', validate(CommonValidator.pagination), Controller.findAll)

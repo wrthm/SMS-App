@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express'
 import { students as student} from '../../database/models'
 import { search_name_args } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
+import AuthService from '../../database/indexAuth'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
@@ -109,6 +110,23 @@ const Controller = {
             }
             else {
                 return next(new NotFoundException('Entry does not exist'))
+            }
+        } catch (err) {
+            next(err)
+        }
+    },
+    getUsername: async (req: Request, res: Response, next: NextFunction) => {
+        const { id } = req.params
+        try {
+            if ((await DatabaseService.common.exists(id, 'students')).exists) {
+                const result = await AuthService.students_credentials.getUsername(id)
+                if (result) {
+                    res.send(result)
+                } else {
+                    res.send({username: null})
+                }
+            } else {
+                next(new NotFoundException('Entry does not exist'))
             }
         } catch (err) {
             next(err)
