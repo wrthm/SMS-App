@@ -2521,6 +2521,7 @@ components:
         - last_name
         - username
         - password
+        - privilege
       properties:
         id:
           type: string
@@ -2540,7 +2541,9 @@ components:
         password:
           type: string
         privilege:
-          type: integer
+          type: array
+          items:
+            type: string
         is_deactivated:
           type: boolean
         created_at:
