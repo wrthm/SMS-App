@@ -157,32 +157,6 @@ paths:
         '400':
           description: Invalid/expired session token
 
-  /auth/register:
-    post:
-      tags:
-        - Authentication
-      summary: Adds a new faculty. (Admin)
-      requestBody:
-        description: The entered login credentials of a student
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/faculty"
-            example:
-              first_name: Aa
-              middle_name: Ee
-              last_name: Oo
-              address: Somewhere
-              phone_number: 09100000000
-              username: aaeeoo
-              password: hunter2
-              privilege: 1
-      responses:
-        '200':
-          $ref:  "#/components/responses/Success201"
-        '400':
-          description: Invalid/expired session token
-
   /auth/update:
     put:
       tags:
@@ -2037,6 +2011,7 @@ paths:
   /faculty:
     post:
       tags:
+        - Authentication
         - Faculty
       summary: Adds a new faculty. (Admin)
       requestBody:
@@ -2061,8 +2036,9 @@ paths:
           description: Invalid/expired session token
     put:
       tags:
+        - Authentication
         - Faculty
-      summary: Updates info of an existing faculty. (Admin)
+      summary: Updates info/login credentials of an existing faculty. (Admin)
       description: Both usernames & password fields are optional.
       requestBody:
         description: The updated data of a faculty
