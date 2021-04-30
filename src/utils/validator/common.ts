@@ -32,4 +32,13 @@ const searchGranularModel = {
     }).min(1)
 }
 
-export const CommonValidator = { id, pagination, searchGranularModel }
+const loginModel = {
+    body: Joi.object({
+        username: Joi.string()
+                     .required(),
+        password: Joi.string()
+                     .required(),
+    })
+}
+
+export const CommonValidator = { id, pagination, searchGranularModel, loginModel }

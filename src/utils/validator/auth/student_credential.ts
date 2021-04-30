@@ -21,13 +21,4 @@ const putModel = {
     })
 }
 
-const loginModel = {
-    body: Joi.object({
-        username: Joi.string()
-                     .required(),
-        password: Joi.string()
-                     .required(),
-    })
-}
-
-export const AuthStudentCredentialValidator = { putModel, loginModel, unRegex, pwRegex }
+export const AuthStudentCredentialValidator = { putModel, unRegex, pwRegex }
