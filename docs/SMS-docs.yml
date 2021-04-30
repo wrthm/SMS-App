@@ -95,9 +95,9 @@ paths:
     post:
       tags:
         - Authentication
-      summary: Signs in a student/faculty.
+      summary: Signs in a user.
       description: |-
-        The client's component (and thus if the person signing in is student or faculty) is determined from the value of 'X-Component-Key' in the HTTP header.
+        The client's component (i.e. if the person signing in is student or faculty) is determined from the value of 'X-Component-Key' in the HTTP header.
 
         If 'X-Component-Key' is omitted, then it is assumed that the client is under Student Center component.
       requestBody:
@@ -133,7 +133,7 @@ paths:
     get:
       tags:
         - Authentication
-      summary: Signs out a student/faculty.
+      summary: Signs out a user.
       description: |-
         Invalidates the session token of the current user.
       responses:
@@ -146,12 +146,10 @@ paths:
     get:
       tags:
         - Authentication
-      summary: Gets info about the currently signed in faculty. (Registrar/Admin)
-      description: |-
-        For the Student Center component, please use the /student endpoint instead in fetching logged in student's info.
+      summary: Gets info about the currently signed in user
       responses:
         '200':
-          description: Returns the data of the currently signed in faculty.
+          description: Returns the data of the currently signed in student/faculty.
           content:
             application/json:
               schema:
@@ -185,66 +183,34 @@ paths:
         '400':
           description: Invalid/expired session token
 
-  /auth/update_f:
+  /auth/update:
     put:
       tags:
         - Authentication
-      description: Only admins can update faculty's log in credentials, or the logged in faculty's own account.
-      summary: Updates info of an existing faculty. (Registrar/Admin)
-      requestBody:
-        description: The new data of a faculty
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/faculty"
-            example:
-              id: 6413942f-268c-4c10-943c-29d1f46dd79c
-              first_name: Aa
-              middle_name: Ee
-              last_name: Oo
-              address: Somewhere
-              phone_number: 09100000000
-              username: aaeeoo
-              password: hunter2
-              privilege: 1
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
-        '400':
-          $ref: "#/components/responses/IncompleteInput"
-
-  /auth/update_s:
-    put:
-      tags:
-        - Authentication
-      summary: Updates login credentials of a student. (Registrar/Admin/Student)
+      summary: Updates login password of the current user.
       description: |-
-        A student can only update his own password, not his own username nor other students' username/password.
-        However, if the student still has no username, then he/she can't change his/her account's password.
-
-        Registrars & Admins can change both username and password of the student.
+        If you are looking for an endpoint that also updates the username,
+        check /student/{studentID}/credential and PUT /faculty/.
+        Students however can't update their own username by themselves.
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                id:
+                currentPassword:
                   type: string
-                  format: uuid
-                username:
-                  type: string
-                password:
+                newPassword:
                   type: string
             example:
-              id: 6413942f-268c-4c10-943c-29d1f46dd79c
-              username: noited
-              password: hunter2
+              currentPassword: hunter2
+              newPassword: T0!meToTakeAP1ss
       responses:
         '200':
           $ref:  "#/components/responses/Success"
         '400':
           $ref: "#/components/responses/IncompleteInput"
+
   ############ COURSES ############
   /search/courses/{name}:
     parameters:
@@ -718,6 +684,37 @@ paths:
           $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
+  /student/{studentID}/credentials:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+    put:
+      tags:
+        - Authentication
+        - Student
+      summary: Updates login credentials of a student. (Registrar/Admin)
+      description: |-
+        Only registrars & admins can access this endpoint.
+
+        It is allowed to update either username or password only.
+        Of course, updating both at the same time is also allowed.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+            example:
+              username: noited
+              password: hunter2
+      responses:
+        '200':
+          $ref:  "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
   /student/{studentID}/rfid/new:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -2019,6 +2016,105 @@ paths:
         '404':
           $ref: "#/components/responses/NotFound"
 
+  ############ FACULTIES ############
+  /faculties:
+    get:
+      tags:
+       - Faculty
+      summary: Get list of every faculty. (50 entries per page by default) (Admin)
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref:  "#/components/parameters/limit"
+      responses:
+        '200':
+          description: Operation completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/faculty"
+  /faculty:
+    post:
+      tags:
+        - Faculty
+      summary: Adds a new faculty. (Admin)
+      requestBody:
+        description: The data of the faculty
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/faculty"
+            example:
+              first_name: Aa
+              middle_name: Ee
+              last_name: Oo
+              address: Somewhere
+              phone_number: 09100000000
+              username: aaeeoo
+              password: hunter2
+              privilege: 1
+      responses:
+        '200':
+          $ref:  "#/components/responses/Success201"
+        '400':
+          description: Invalid/expired session token
+    put:
+      tags:
+        - Faculty
+      summary: Updates info of an existing faculty. (Admin)
+      description: Both usernames & password fields are optional.
+      requestBody:
+        description: The updated data of a faculty
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/faculty"
+            example:
+              id: 6413942f-268c-4c10-943c-29d1f46dd79c
+              first_name: Aa
+              middle_name: Ee
+              last_name: Oo
+              address: Somewhere
+              phone_number: 09100000000
+              username: aaeeoo
+              password: hunter2
+              privilege: 1
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/IncompleteInput"
+  /faculty/{facultyID}:
+    parameters:
+      - $ref: "#/components/parameters/facultyID"
+    get:
+      tags:
+        - Faculty
+      summary: Get the data of a faculty from its ID. (Admin)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/faculty"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Faculty
+      summary: Deactivate an existing faculty. (Admin)
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
 components:
   schemas:
     response:
@@ -2599,6 +2695,16 @@ components:
         format: uuid
       example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
 
+    facultyID:
+      name: facultyID
+      in: path
+      required: true
+      description: Unique identifier of a faculty
+      schema:
+        type: string
+        format: uuid
+      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
+
     page:
       name: page
       in: query
@@ -2704,3 +2810,5 @@ tags:
   - name: Enrollment
   - name: Grades
   - name: Attendance
+  - name: Faculty
+    description: Can only be accessed by admins
