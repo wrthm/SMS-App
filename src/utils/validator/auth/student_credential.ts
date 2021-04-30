@@ -30,4 +30,4 @@ const loginModel = {
     })
 }
 
-export const AuthSubjectCredentialValidator = { putModel, loginModel }
+export const AuthStudentCredentialValidator = { putModel, loginModel, unRegex, pwRegex }

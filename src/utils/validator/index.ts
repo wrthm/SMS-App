@@ -14,7 +14,8 @@ import { RFIDValidator } from './rfid'
 import { ScheduleValidator } from './schedule'
 import { StudentValidator } from './student'
 import { SubjectValidator } from './subject'
-import { AuthSubjectCredentialValidator } from './auth/student_credential'
+import { AuthStudentCredentialValidator } from './auth/student_credential'
+import { AuthFacultyValidator } from './auth/faculty'
 
 export {
     AcademicTermValidator, AttendanceValidator, CommonValidator,
@@ -22,5 +23,5 @@ export {
     CourseValidator, DepartmentValidator, EnrollmentValidator,
     GradeValidator, GuardianValidator, ProfessorValidator,
     RFIDValidator, ScheduleValidator, StudentValidator, SubjectValidator,
-    AuthSubjectCredentialValidator,
+    AuthStudentCredentialValidator, AuthFacultyValidator,
 }

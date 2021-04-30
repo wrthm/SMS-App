@@ -145,6 +145,10 @@ export const auth_sessions = {
     create: sql('auth/sessions/create.sql'),
 }
 
+export const faculties = {
+    add: sql('auth/sessions/add.sql'),
+}
+
 function sql(file: string): QueryFile {
 
     const fullPath: string = joinPath(__dirname, file);

@@ -2,7 +2,7 @@ import AuthService from '../../database/indexAuth'
 import DatabaseService from '../../database/index'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { students_credentials, sessions } from '../../database/modelsAuth'
+import { students_credentials, sessions, faculties as faculty } from '../../database/modelsAuth'
 import { students_credentials_put as student_credential_put } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException, NotImplementedException } from '../../exceptions'
 import { hash, compare } from 'bcrypt'
@@ -92,6 +92,11 @@ const Controller = {
                 next(err)
             }
         }
+        
+    },
+
+    registerFaculty: async (req: Request, res: Response, next: NextFunction) => {
+        const data: faculty = req.body
         
     },
 }
