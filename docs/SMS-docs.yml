@@ -2014,6 +2014,8 @@ paths:
         - Authentication
         - Faculty
       summary: Adds a new faculty. (Admin)
+      description: |-
+        TODO: enumerate valid privilege values here
       requestBody:
         description: The data of the faculty
         content:
@@ -2028,7 +2030,8 @@ paths:
               phone_number: 09100000000
               username: aaeeoo
               password: hunter2
-              privilege: 1
+              privilege:
+                - ManagementPanelRegistrar
       responses:
         '200':
           $ref:  "#/components/responses/Success201"
@@ -2039,7 +2042,10 @@ paths:
         - Authentication
         - Faculty
       summary: Updates info/login credentials of an existing faculty. (Admin)
-      description: Both usernames & password fields are optional.
+      description: |-
+        Both usernames & password fields are optional.
+
+        TODO: enumerate valid privilege values here
       requestBody:
         description: The updated data of a faculty
         content:
@@ -2055,7 +2061,8 @@ paths:
               phone_number: 09100000000
               username: aaeeoo
               password: hunter2
-              privilege: 1
+              privilege:
+                - ManagementPanelRegistrar
       responses:
         '200':
           $ref: "#/components/responses/Success"
