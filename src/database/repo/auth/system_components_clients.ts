@@ -2,7 +2,7 @@ import { IDatabase, IMain } from "pg-promise";
 import { system_components_clients as sys_comp_clients } from '../../modelsAuth'
 import { auth_sys_components_clients as sql, common} from '../../sql'
 
-export class StudentsCredentialsRepository {
+export class SystemComponentsClientsRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
 
     }
