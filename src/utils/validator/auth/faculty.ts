@@ -1,5 +1,5 @@
 import { Joi } from 'express-validation'
-import { AuthStudentCredentialValidator as credRegex } from './student_credential'
+import { AuthLoginValidator as credRegex } from './login'
 
 const postModel = {
     body: Joi.object({
@@ -14,6 +14,9 @@ const postModel = {
                          .trim()
                          .max(60)
                          .required(),
+             address: Joi.string()
+                         .trim()
+                         .max(100),
         phone_number: Joi.string()
                          .trim()
                          .min(11)
@@ -24,12 +27,12 @@ const postModel = {
                          .min(5)
                          .max(32)
                          .regex(credRegex.unRegex)
-                         .allow(null),
+                         .required(),
             password: Joi.string()
-                         .min(8)
+                         .min(6)
                          .max(64)
                          .regex(credRegex.pwRegex)
-                         .allow(null),
+                         .required(),
           privilege: Joi.array()
                         .items(
                             Joi.string().required()
@@ -37,6 +40,49 @@ const postModel = {
                         .min(1)
                         .max(7)
                         .required()
+    })
+}
+
+const putModel = {
+    body: Joi.object({
+                    id: Joi.string()
+                           .uuid()
+                           .required(),
+        is_deactivated: Joi.bool(),
+            first_name: Joi.string()
+                           .trim()
+                           .max(60),
+           middle_name: Joi.string()
+                           .trim()
+                           .max(60),
+             last_name: Joi.string()
+                           .trim()
+                           .max(60),
+               address: Joi.string()
+                           .trim()
+                           .max(100),
+          phone_number: Joi.string()
+                           .trim()
+                           .min(11)
+                           .max(13)
+                           .regex(/^(\d{11}|\d{12}|\+\d{12})$/)
+                           .allow(null),
+              username: Joi.string()
+                           .min(5)
+                           .max(32)
+                           .regex(credRegex.unRegex)
+                           .allow(null),
+              password: Joi.string()
+                           .min(6)
+                           .max(64)
+                           .regex(credRegex.pwRegex)
+                           .allow(null),
+             privilege: Joi.array()
+                           .items(
+                              Joi.string().required()
+                           )
+                           .min(1)
+                           .max(7),
     })
 }
 
@@ -49,4 +95,4 @@ const model = {
     })
 }
 
-export const AuthFacultyValidator = { model, postModel }
+export const AuthFacultyValidator = { model, postModel, putModel }

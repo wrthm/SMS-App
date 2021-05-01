@@ -146,7 +146,11 @@ export const auth_sessions = {
 }
 
 export const faculties = {
-    add: sql('auth/sessions/add.sql'),
+    add: sql('auth/faculties/add.sql'),
+    update: sql('auth/faculties/update.sql'),
+    findByID: sql('auth/faculties/findByID.sql'),
+    listAll: sql('auth/faculties/listAll.sql'),
+    delete: sql('auth/faculties/delete.sql'),
 }
 
 function sql(file: string): QueryFile {

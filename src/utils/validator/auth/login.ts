@@ -14,11 +14,20 @@ const putModel = {
                        .regex(unRegex)
                        .allow(null),
           password: Joi.string()
-                       .min(8)
+                       .min(6)
                        .max(64)
                        .regex(pwRegex)
                        .allow(null),
     })
 }
 
-export const AuthStudentCredentialValidator = { putModel, unRegex, pwRegex }
+const loginModel = {
+    body: Joi.object({
+        username: Joi.string()
+                     .required(),
+        password: Joi.string()
+                     .required(),
+    })
+}
+
+export const AuthLoginValidator = { putModel, unRegex, pwRegex, loginModel }

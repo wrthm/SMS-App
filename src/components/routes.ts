@@ -35,6 +35,7 @@ export default function(app: Application) {
         require('./course_schedule/route'),
         require('./course_schedule_content/route'),
         require('./rfid/route'),
+        require('./faculty/route'),
     )
 
     // 404 error

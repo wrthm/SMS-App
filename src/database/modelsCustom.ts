@@ -68,4 +68,34 @@ export interface students_credentials_put {
     "username"?: string | null
     "password"?: string | null
     "updated_at"?: any 
-  }
+}
+
+export interface faculties_put {
+    "id"?: string 
+    "first_name"?: string | null
+    "middle_name"?: string | null 
+    "last_name"?: string | null
+    "address"?: string | null 
+    "phone_number"?: string | null 
+    "username"?: string | null
+    "password"?: string | null
+    "privilege"?: number | string[] | null
+    "is_deactivated"?: boolean 
+    "created_at"?: any 
+    "updated_at"?: any 
+}
+
+export interface faculties_external {
+    "id"?: string 
+    "first_name": string 
+    "middle_name": string | null 
+    "last_name": string 
+    "address": string | null 
+    "phone_number": string | null 
+    "username": string 
+    "password": string 
+    "privilege": number | string[]
+    "is_deactivated"?: boolean 
+    "created_at"?: any 
+    "updated_at"?: any 
+}
