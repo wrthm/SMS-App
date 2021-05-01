@@ -29,7 +29,7 @@ info:
     \
     \
     Course Schedule conflict checking is not yet implemented.
-  version: '0.1'
+  version: '0.9'
 servers:
   - url: https://softeng.jbtabz.com/
 paths:
@@ -2098,6 +2098,82 @@ paths:
         '404':
           $ref: "#/components/responses/NotFound"
 
+  ############ COMPONENT_CLIENTS ############
+  /components/:
+    get:
+      tags:
+        - Component Client
+      summary: Gets all the component clients of the Student Management System
+      description: The API key itself is internally stored in the database and will NEVER be exposed to the admins.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/component_client"
+
+  /component/:
+    post:
+      tags:
+        - Component Client
+      summary: Creates a new component client
+      description: |-
+        The API key of the new component client will only return ONCE via this endpoint.
+        Afterwards there is no other way to obtain the API key, thus leaving no choice but to create another component client for a fresh API key.
+
+        TODO: enumerate valid component values here
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/component_client"
+            example:
+              client_name: Student Information System
+              component:
+                - StudentInformationSystem
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  api_key: 
+                    type: string
+                example:
+                  code: 201
+                  message: Component client created successfully
+                  api_key: x5hYiUmfSdtX2LqKHoIlgQ
+
+  /component/{componentName}:
+    parameters:
+      - name: componentName
+        in: path
+        required: true
+        description: The component client's name
+        schema:
+          type: string
+        example: Management Panel
+    delete:
+      tags:
+        - Component Client
+      summary: Revokes component client's access to the system permanently
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
+
 components:
   schemas:
     response:
@@ -2559,6 +2635,16 @@ components:
         updated_at:
           type: string
           format: date-time
+      
+    component_client:
+      type: object
+      properties:
+        client_name:
+          type: string
+        component:
+          type: array
+          items:
+            type: string
 
   parameters:
     ID:
@@ -2797,4 +2883,6 @@ tags:
   - name: Grades
   - name: Attendance
   - name: Faculty
+    description: Can only be accessed by admins
+  - name: Component Client
     description: Can only be accessed by admins
