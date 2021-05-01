@@ -87,7 +87,6 @@ export const guardians = {
     update: sql('guardians/update.sql'),
 }
 
-
 export const attendances = {
     add: sql('attendances/add.sql'),
     delete: sql('attendances/delete.sql'),
@@ -145,6 +144,14 @@ export const auth_sessions = {
     create: sql('auth/sessions/create.sql'),
 }
 
+export const auth_sys_components_clients = {
+    add: sql('auth/system_components_clients/add.sql'),
+    revoke: sql('auth/system_components_clients/revoke.sql'),
+    listAll: sql('auth/system_components_clients/listAll.sql'),
+    findByKey: sql('auth/system_components_clients/findByKey.sql'),
+    findByNotRevokedKey: sql('auth/system_components_clients/findByNotRevokedKey.sql'),
+}
+
 export const faculties = {
     add: sql('auth/faculties/add.sql'),
     update: sql('auth/faculties/update.sql'),
@@ -154,7 +161,6 @@ export const faculties = {
 }
 
 function sql(file: string): QueryFile {
-
     const fullPath: string = joinPath(__dirname, file);
 
     const options: IQueryFileOptions = {

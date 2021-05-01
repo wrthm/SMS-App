@@ -23,11 +23,11 @@ const facultyPrivilegeBits: PB = {
 }
 
 // Determines an API key's assigned component
-const componentBits: CB = {
+const systemComponentBits: CB = {
     StudentCenter:              0b0000_0001,
     ManagementPanel:            0b0000_0010,
     AttendanceTracker:          0b0000_0100,
     StudentInformationSystem:   0b0000_1000,
 }
 
-export { facultyPrivilegeBits, componentBits }
+export { facultyPrivilegeBits, systemComponentBits }
