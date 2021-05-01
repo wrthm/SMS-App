@@ -99,3 +99,10 @@ export interface faculties_external {
     "created_at"?: any 
     "updated_at"?: any 
 }
+
+export interface system_components_clients_external{
+    "api_key"?: string 
+    "client_name": string 
+    "component": number | string[]
+    "is_revoked"?: boolean 
+  }

@@ -11,8 +11,8 @@ export class SystemComponentsClientsRepository {
         return await this.db.one(sql.add, data)
     }
 
-    async revoke(api_key: string) {
-        return await this.db.result(sql.revoke, {api_key})
+    async revoke(client_name: string) {
+        return await this.db.result(sql.revoke, {client_name})
     }
 
     // gets by API key, even if it's revoked

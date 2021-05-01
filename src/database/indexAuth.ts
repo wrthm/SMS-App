@@ -11,6 +11,7 @@ const initOptions: IInitOptions<ExtendedProtocolAuth> = {
         obj.sessions = new Repos.SessionsRepository(obj, pgp)
         obj.students_credentials = new Repos.StudentsCredentialsRepository(obj, pgp)
         obj.faculties = new Repos.FacultiesRepository(obj, pgp)
+        obj.component_clients = new Repos.SystemComponentsClientsRepository(obj, pgp)
     }
 }
 
