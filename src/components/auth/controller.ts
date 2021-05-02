@@ -16,7 +16,6 @@ const loginStudent = async (req: Request, res: Response, next: NextFunction) => 
         const student: students_credentials = await AuthService.students_credentials.findByUsername(credential.username)
         if (student) {
             if (await compare(credential.password, student.password)) {
-                // TODO: move session creation routine to a separate function
                 const user_agent = (req.headers['user-agent']) ? req.headers['user-agent'] : null
                 const session: sessions = {
                     session_token: await uid(24),
