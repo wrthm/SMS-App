@@ -52,7 +52,7 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
             throw new UnauthorizedException('Unauthorized: Invalid session token')
         }
     } else {
-        throw new UnauthorizedException('Unauthorized: Session token not present in request')
+        throw new UnauthorizedException('Unauthorized: Session token not present in HTTP header')
     }
 }
 
