@@ -4,8 +4,9 @@ import { errorHandler } from '../middleware/errorHandler'
 import { mw as requestIPmw } from 'request-ip'
 import requestLogger from '../middleware/requestLogger'
 import cors from '../middleware/cors'
-import { requestIPcf } from '../middleware/requestIPcf';
+import { requestIPcf } from '../middleware/requestIPcf'
 import nocache from 'nocache'
+import { authenticate } from '../middleware/authenticate'
 
 export default function(app: Application) {
     app.set('etag', false)
@@ -20,6 +21,7 @@ export default function(app: Application) {
 
     app.options('*', cors())
     app.use(
+        authenticate,
         require('./auth/route'),
         require('./course/route'),
         require('./department/route'),

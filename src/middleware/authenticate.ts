@@ -1,0 +1,55 @@
+import { Request, Response, NextFunction } from 'express';
+import AuthService from '../database/indexAuth'
+import { systemComponentBits } from '../utils/authConstants'
+import { sessions as session, system_components_clients } from '../database/modelsAuth'
+import { UnauthorizedException } from '../exceptions';
+import { DateTime } from 'luxon'
+
+const _authenticate = async (req: Request, res: Response, next: NextFunction) => {
+    const componentKey = req.headers['X-Component-Key']
+    const sessionToken = req.headers['X-Session-Token']
+    let component: number
+
+
+    if (typeof componentKey === 'string') {
+        const result: system_components_clients | null = await AuthService.component_clients.findByNotRevokedKey(componentKey)
+        if (result) {
+            component = result.component
+        } else {
+            throw new UnauthorizedException('Invalid component key')
+        }
+    } else {
+        component = systemComponentBits.StudentCenter
+    }
+    req.component = component
+
+    if (typeof sessionToken === 'string') {
+        const result: session | null = await AuthService.sessions.get(sessionToken)
+        if (result) {
+            if (DateTime.fromISO(result.expiration_date) < DateTime.now()) {
+                await AuthService.sessions.revoke(result.session_token)
+                throw new UnauthorizedException('Session token has expired')
+            }
+
+            let privilege = 0
+            if (component !== systemComponentBits.StudentCenter) {
+                let facultyPriv = await AuthService.faculties.getPrivilege(result.id)
+                if (facultyPriv) {
+                    privilege = facultyPriv.privilege
+                } else {
+                    throw new UnauthorizedException('Invalid faculty ID assigned to session token')
+                }
+            }
+            req.sessionData = {
+                id: result.id,
+                privilege: privilege
+            }
+        } else {
+            throw new UnauthorizedException('Invalid session token')
+        }
+    }
+}
+
+export const authenticate = (req: Request, res: Response, next: NextFunction) => {
+    _authenticate(req, res, next).then(() => next()).catch((err) => {throw err});
+}

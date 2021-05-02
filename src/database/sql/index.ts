@@ -142,6 +142,8 @@ export const auth_students_credentials = {
 
 export const auth_sessions = {
     create: sql('auth/sessions/create.sql'),
+    get: sql('auth/sessions/get.sql'),
+    revoke: sql('auth/sessions/revoke.sql'),
 }
 
 export const auth_sys_components_clients = {
@@ -155,6 +157,7 @@ export const auth_sys_components_clients = {
 export const faculties = {
     add: sql('auth/faculties/add.sql'),
     update: sql('auth/faculties/update.sql'),
+    getPrivilege: sql('auth/faculties/getPrivilege.sql'),
     findByID: sql('auth/faculties/findByID.sql'),
     listAll: sql('auth/faculties/listAll.sql'),
     delete: sql('auth/faculties/delete.sql'),

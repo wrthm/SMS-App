@@ -17,12 +17,12 @@ export class SystemComponentsClientsRepository {
 
     // gets by API key, even if it's revoked
     async findByKey(api_key: string) {
-        return await this.db.result(sql.findByKey, {api_key})
+        return await this.db.oneOrNone(sql.findByKey, {api_key})
     }
 
     // gets by API key only if it's not revoked; the function to use when authenticating system component client
-    async findByNotRevokedKey(api_key: string) {
-        return await this.db.result(sql.findByNotRevokedKey, {api_key})
+    async findByNotRevokedKey(api_key: string): Promise<sys_comp_clients | null> {
+        return await this.db.oneOrNone(sql.findByNotRevokedKey, {api_key})
     }
 
     async listAll() {

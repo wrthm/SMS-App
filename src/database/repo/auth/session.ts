@@ -10,4 +10,12 @@ export class SessionsRepository {
     async create(data: sessions) {
         return await this.db.result(sql.create, data)
     }
+
+    async get(session_token: string) {
+        return await this.db.oneOrNone(sql.get, {session_token})
+    }
+
+    async revoke(session_token: string) {
+        return await this.db.result(sql.revoke, {session_token})
+    }
 }

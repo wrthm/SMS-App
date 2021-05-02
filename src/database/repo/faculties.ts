@@ -4,6 +4,8 @@ import { faculties as Faculty } from '../modelsAuth'
 import { faculties_put as FacultyPut, pagination_args } from '../modelsCustom'
 import { faculties as sql, common} from '../sql'
 
+type FacultyPrivilege = { privilege: number }
+
 export class FacultiesRepository {
     constructor(private db: IDatabase<any>, private pgp: IMain) {
 
@@ -15,6 +17,10 @@ export class FacultiesRepository {
 
     async findByID(id: string): Promise<Faculty | null> {
         return await this.db.oneOrNone(sql.findByID, {id})
+    }
+
+    async getPrivilege(id: string): Promise<FacultyPrivilege | null> {
+        return await this.db.oneOrNone(sql.getPrivilege, {id})
     }
 
     async listAll(args: pagination_args) {
