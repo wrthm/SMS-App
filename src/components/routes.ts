@@ -21,8 +21,8 @@ export default function(app: Application) {
 
     app.options('*', cors())
     app.use(
-        authenticate,
         require('./auth/route'),
+        authenticate,
         require('./course/route'),
         require('./department/route'),
         require('./academic_term/route'),
