@@ -6,7 +6,7 @@ import { UnauthorizedException } from '../exceptions';
 import { DateTime } from 'luxon'
 
 const _authenticateComponentOnly = async (req: Request, res: Response, next: NextFunction) => {
-    const componentKey = req.headers['X-Component-Key']
+    const componentKey = req.get('X-Component-Key')
     let component: number
 
     if (typeof componentKey === 'string') {
@@ -24,7 +24,7 @@ const _authenticateComponentOnly = async (req: Request, res: Response, next: Nex
 
 const _authenticate = async (req: Request, res: Response, next: NextFunction) => {
     await _authenticateComponentOnly(req, res, next)
-    const sessionToken = req.headers['X-Session-Token']
+    const sessionToken = req.get('X-Session-Token')
 
     if (typeof sessionToken === 'string') {
         const result: session | null = await AuthService.sessions.get(sessionToken)
@@ -33,7 +33,6 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
                 await AuthService.sessions.revoke(result.session_token)
                 throw new UnauthorizedException('Unauthorized: Session token has expired')
             }
-            console.log("session is valid")
             
             let privilege = 0
             if (result.type === 'faculty') {
