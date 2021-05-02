@@ -31,7 +31,7 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
         if (result) {
             if (DateTime.fromISO(result.expiration_date) < DateTime.now()) {
                 await AuthService.sessions.revoke(result.session_token)
-                throw new UnauthorizedException('Session token has expired')
+                throw new UnauthorizedException('Unauthorized: Session token has expired')
             }
             console.log("session is valid")
             
@@ -41,7 +41,7 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
                 if (facultyPriv) {
                     privilege = facultyPriv.privilege
                 } else {
-                    throw new UnauthorizedException('Invalid faculty ID assigned to session token')
+                    throw new UnauthorizedException('Unauthorized: Invalid faculty ID assigned to session token')
                 }
             }
             req.sessionData = {
@@ -50,10 +50,10 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
                 privilege: privilege
             }
         } else {
-            throw new UnauthorizedException('Invalid session token')
+            throw new UnauthorizedException('Unauthorized: Invalid session token')
         }
     } else {
-        throw new UnauthorizedException('Session token not present in request')
+        throw new UnauthorizedException('Unauthorized: Session token not present in request')
     }
 }
 
