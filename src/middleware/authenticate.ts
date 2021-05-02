@@ -52,5 +52,5 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-    _authenticate(req, res, next).then(() => next()).catch((err) => {throw err});
+    _authenticate(req, res, next).then(() => next()).catch((err) => {next(err)});
 }
