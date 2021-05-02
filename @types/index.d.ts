@@ -1,5 +1,6 @@
 type SessionData = {
     id: string,
+    type: string,
     privilege: number,          // 0 if user is a student
 }
 

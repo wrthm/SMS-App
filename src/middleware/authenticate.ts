@@ -32,7 +32,7 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
             }
 
             let privilege = 0
-            if (component !== systemComponentBits.StudentCenter) {
+            if (result.type === 'faculty') {
                 let facultyPriv = await AuthService.faculties.getPrivilege(result.id)
                 if (facultyPriv) {
                     privilege = facultyPriv.privilege
@@ -42,6 +42,7 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
             }
             req.sessionData = {
                 id: result.id,
+                type: result.type,
                 privilege: privilege
             }
         } else {
