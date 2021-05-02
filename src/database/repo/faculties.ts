@@ -19,6 +19,10 @@ export class FacultiesRepository {
         return await this.db.oneOrNone(sql.findByID, {id})
     }
 
+    async findByUsername(username: string): Promise<Faculty | null> {
+        return await this.db.oneOrNone(sql.findByUsername, {username})
+    }
+
     async getPrivilege(id: string): Promise<FacultyPrivilege | null> {
         return await this.db.oneOrNone(sql.getPrivilege, {id})
     }

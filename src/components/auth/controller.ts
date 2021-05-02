@@ -2,9 +2,10 @@ import AuthService from '../../database/indexAuth'
 import DatabaseService from '../../database/index'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { students_credentials, sessions, faculties as faculty } from '../../database/modelsAuth'
+import { students_credentials, sessions, faculties as faculty, faculties } from '../../database/modelsAuth'
 import { students_credentials_put as student_credential_put } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException, NotImplementedException } from '../../exceptions'
+import { systemComponentBits } from '../../utils/authConstants'
 import { hash, compare } from 'bcrypt'
 import { AppServerConfig } from '../../config'
 import { DateTime } from 'luxon'
@@ -41,17 +42,45 @@ const loginStudent = async (req: Request, res: Response, next: NextFunction) => 
     
 }
 
+const loginFaculty = async (req: Request, res: Response, next: NextFunction) => {
+    const credential = req.body
+    try {
+        const faculty: faculties | null = await AuthService.faculties.findByUsername(credential.username)
+        if (faculty) {
+            if (await compare(credential.password, faculty.password)) {
+                const user_agent = (req.headers['user-agent']) ? req.headers['user-agent'] : null
+                const session: sessions = {
+                    session_token: await uid(24),
+                    ip_address: req.clientIp,
+                    user_agent: user_agent,
+                    type: 'faculty',
+                    id: faculty.id as string,
+                    expiration_date: DateTime.now().plus({days: 7}).toISO()
+                }
+                await AuthService.sessions.create(session)
+                const dataOut = {
+                    'id': faculty.id as string,
+                    'session-token': session.session_token,
+                    'expiration-date': session.expiration_date,
+                }
+                return res.send(dataOut)
+            }
+        }
+        next(new InvalidArgumentException('Wrong username or password'))
+    } catch (err) {
+        next(err)
+    }
+}
+
 const Controller = {
-    // login dispatcher
     loginDispatcher: async (req: Request, res: Response, next: NextFunction) => {
-        return loginStudent(req, res, next)
+        if (req?.component === systemComponentBits.StudentCenter) {
+            return loginStudent(req, res, next)
+        } else {
+            return loginFaculty(req, res, next)
+        }
+        
     },
-
-    // login routine for student
-
-    // login routine for faculty
-
-
 
     nope: async (req: Request, res: Response, next: NextFunction) => {
         next(new NotImplementedException())
@@ -109,7 +138,5 @@ const Controller = {
         }
     },
 }
-
-
 
 export { Controller as AuthController }

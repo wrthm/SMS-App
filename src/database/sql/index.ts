@@ -159,6 +159,7 @@ export const faculties = {
     update: sql('auth/faculties/update.sql'),
     getPrivilege: sql('auth/faculties/getPrivilege.sql'),
     findByID: sql('auth/faculties/findByID.sql'),
+    findByUsername: sql('auth/faculties/findByUsername.sql'),
     listAll: sql('auth/faculties/listAll.sql'),
     delete: sql('auth/faculties/delete.sql'),
 }
