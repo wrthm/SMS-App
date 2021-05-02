@@ -5,11 +5,9 @@ import { sessions as session, system_components_clients } from '../database/mode
 import { UnauthorizedException } from '../exceptions';
 import { DateTime } from 'luxon'
 
-const _authenticate = async (req: Request, res: Response, next: NextFunction) => {
+const _authenticateComponentOnly = async (req: Request, res: Response, next: NextFunction) => {
     const componentKey = req.headers['X-Component-Key']
-    const sessionToken = req.headers['X-Session-Token']
     let component: number
-
 
     if (typeof componentKey === 'string') {
         const result: system_components_clients | null = await AuthService.component_clients.findByNotRevokedKey(componentKey)
@@ -22,6 +20,11 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
         component = systemComponentBits.StudentCenter
     }
     req.component = component
+}
+
+const _authenticate = async (req: Request, res: Response, next: NextFunction) => {
+    await _authenticateComponentOnly(req, res, next)
+    const sessionToken = req.headers['X-Session-Token']
 
     if (typeof sessionToken === 'string') {
         const result: session | null = await AuthService.sessions.get(sessionToken)
@@ -30,7 +33,8 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
                 await AuthService.sessions.revoke(result.session_token)
                 throw new UnauthorizedException('Session token has expired')
             }
-
+            console.log("session is valid")
+            
             let privilege = 0
             if (result.type === 'faculty') {
                 let facultyPriv = await AuthService.faculties.getPrivilege(result.id)
@@ -48,9 +52,15 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
         } else {
             throw new UnauthorizedException('Invalid session token')
         }
+    } else {
+        throw new UnauthorizedException('Session token not present in request')
     }
 }
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
     _authenticate(req, res, next).then(() => next()).catch((err) => {next(err)});
+}
+
+export const authenticateComponentOnly = (req: Request, res: Response, next: NextFunction) => {
+    _authenticateComponentOnly(req, res, next).then(() => next()).catch((err) => {next(err)});
 }
