@@ -44,6 +44,7 @@ const _authenticate = async (req: Request, res: Response, next: NextFunction) =>
                 }
             }
             req.sessionData = {
+                token: result.session_token,
                 id: result.id,
                 type: result.type,
                 privilege: privilege
