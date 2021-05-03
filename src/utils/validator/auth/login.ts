@@ -3,7 +3,7 @@ import { Joi } from 'express-validation'
 const unRegex = /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,30}[a-zA-Z0-9]$/
 const pwRegex = /^((?=.*[0-9])|(?=.*[!@#&()–_\[{}\]:;',?/*`~$^+=<>]))(?=.*[a-z])(?=.*[A-Z]).{6,64}$/
 
-const putModel = {
+const putStudentCredModel = {
     body: Joi.object({
         student_id: Joi.string()
                        .uuid()
@@ -30,4 +30,4 @@ const loginModel = {
     })
 }
 
-export const AuthLoginValidator = { putModel, unRegex, pwRegex, loginModel }
+export const AuthLoginValidator = { putStudentCredModel, unRegex, pwRegex, loginModel }

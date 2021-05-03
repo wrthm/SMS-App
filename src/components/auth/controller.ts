@@ -4,7 +4,7 @@ import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
 import { students_credentials, sessions, faculties as faculty, faculties } from '../../database/modelsAuth'
 import { students_credentials_put as student_credential_put } from '../../database/modelsCustom'
-import { InvalidArgumentException, NotFoundException, UnauthorizedException } from '../../exceptions'
+import { InvalidArgumentException, NotFoundException, NotImplementedException, UnauthorizedException } from '../../exceptions'
 import { systemComponentBits } from '../../utils/authConstants'
 import { hash, compare } from 'bcrypt'
 import { AppServerConfig } from '../../config'
@@ -114,6 +114,10 @@ const Controller = {
         } catch (err) {
             next(err)
         }
+    },
+
+    update_password: async (req: Request, res: Response, next: NextFunction) => {
+        return next(new NotImplementedException)
     },
 
     update_student_cred: async (req: Request, res: Response, next: NextFunction) => {
