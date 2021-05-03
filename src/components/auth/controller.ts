@@ -82,8 +82,24 @@ const Controller = {
         
     },
 
-    nope: async (req: Request, res: Response, next: NextFunction) => {
-        next(new NotImplementedException())
+    logout: async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const token: string | undefined = req.sessionData?.token
+            if (token) {
+                await AuthService.sessions.revoke(token)
+                res.send({"code": 200, "message": "User logged out successfully"})
+            }
+        } catch (err) {
+            next(err)
+        }
+    },
+
+    whoAmI: async (req: Request, res: Response, next: NextFunction) => {
+        try {
+
+        } catch (err) {
+            next(err)
+        }
     },
 
     update_student_cred: async (req: Request, res: Response, next: NextFunction) => {
