@@ -4,7 +4,7 @@ import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
 import { students_credentials, sessions, faculties as faculty, faculties } from '../../database/modelsAuth'
 import { students_credentials_put as student_credential_put } from '../../database/modelsCustom'
-import { InvalidArgumentException, NotFoundException, NotImplementedException } from '../../exceptions'
+import { InvalidArgumentException, NotFoundException, UnauthorizedException } from '../../exceptions'
 import { systemComponentBits } from '../../utils/authConstants'
 import { hash, compare } from 'bcrypt'
 import { AppServerConfig } from '../../config'
@@ -96,7 +96,21 @@ const Controller = {
 
     whoAmI: async (req: Request, res: Response, next: NextFunction) => {
         try {
+            switch (req.sessionData?.type.toLowerCase()) {
+                case 'student':
+                    const studentPromise = DatabaseService.students.findByID(req.sessionData.id)
+                    const usernamePromise = AuthService.students_credentials.getUsername(req.sessionData.id)
+                    const student = await studentPromise
+                    const username = await usernamePromise
+                    return res.send({...student, username: username.username})
+                    break
+                case 'faculty':
+                    const faculty = await AuthService.faculties.findByID(req.sessionData.id)
+                    return res.send(faculty)
+                    break
+            }
 
+            next(new UnauthorizedException())
         } catch (err) {
             next(err)
         }
