@@ -45,7 +45,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
                     if (facultyPriv) {
                         privilege = facultyPriv.privilege
                     } else {
-                        return next(new UnauthorizedException('Unauthorized: Invalid faculty ID assigned to session token'))
+                        return next(new UnauthorizedException('Unauthorized: Faculty does not exist'))
                     }
                 }
                 req.sessionData = {
