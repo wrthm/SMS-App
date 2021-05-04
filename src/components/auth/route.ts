@@ -9,7 +9,7 @@ const AuthRouter : Router = Router()
 AuthRouter.post('/auth/login', authenticateComponentOnly, validate(LoginValidator.loginModel), Controller.loginDispatcher)
           .get('/auth/logout', authenticate, Controller.logout)
           .get('/auth/whoami', authenticate, Controller.whoAmI)
-          .put('/auth/update', authenticate, validate(LoginValidator.putStudentCredModel), Controller.update_password)
+          .put('/auth/update', authenticate, validate(LoginValidator.putPasswordModel), Controller.update_password)
           .put('/student/update_credentials', validate(LoginValidator.putStudentCredModel), Controller.update_student_cred)
 
 module.exports = AuthRouter

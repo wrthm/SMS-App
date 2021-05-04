@@ -2,19 +2,20 @@ import AuthService from '../../database/indexAuth'
 import DatabaseService from '../../database/index'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
-import { students_credentials, sessions, faculties as faculty, faculties } from '../../database/modelsAuth'
-import { students_credentials_put as student_credential_put } from '../../database/modelsCustom'
+import { students_credentials as student_credentials, sessions, faculties as faculty, faculties } from '../../database/modelsAuth'
+import { students_credentials_put as student_credential_put, update_password } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException, NotImplementedException, UnauthorizedException } from '../../exceptions'
 import { systemComponentBits } from '../../utils/authConstants'
 import { hash, compare } from 'bcrypt'
 import { AppServerConfig } from '../../config'
 import { DateTime } from 'luxon'
 import uid from 'uid-safe'
+import { FacultyGetPassword } from '../../database/repo/faculties'
 
 const loginStudent = async (req: Request, res: Response, next: NextFunction) => {
     const credential = req.body
     try {
-        const student: students_credentials = await AuthService.students_credentials.findByUsername(credential.username)
+        const student: student_credentials = await AuthService.students_credentials.findByUsername(credential.username)
         if (student) {
             if (await compare(credential.password, student.password)) {
                 const user_agent = (req.headers['user-agent']) ? req.headers['user-agent'] : null
@@ -117,7 +118,36 @@ const Controller = {
     },
 
     update_password: async (req: Request, res: Response, next: NextFunction) => {
-        return next(new NotImplementedException)
+        const pw: update_password = req.body
+
+        let user: student_credentials | FacultyGetPassword | null
+        switch (req?.sessionData?.type) {
+            case 'student':
+                user = await AuthService.students_credentials.findByStudentID(req.sessionData.id)
+                break
+            case 'faculty':
+                user = await AuthService.faculties.getPassword(req.sessionData.id)
+                break
+            default:
+                return next(new UnauthorizedException())
+        }
+        if (user) {
+            if (await compare(pw.currentPassword, user.password)) {
+                pw.newPassword = await hash(pw.newPassword, AppServerConfig.BcryptSaltRounds)
+                const result = req?.sessionData.type === 'student' ? await AuthService.students_credentials.updatePasswordOnly(req.sessionData.id, pw.newPassword) :
+                               req?.sessionData.type === 'faculty' ? await AuthService.faculties.updatePasswordOnly({id: req.sessionData.id, password: pw.newPassword}) : null
+
+                if (result !== null) {
+                    return res.send({"code": 200, "message": "Password updated successfully"})
+                } else {
+                    return next(new UnauthorizedException())
+                }
+            } else {
+                return next(new InvalidArgumentException("Invalid current password"))
+            }
+        } else {
+            return next(new UnauthorizedException("Unauthorized: User account (linked to the session token) was not found on the system"))
+        }
     },
 
     update_student_cred: async (req: Request, res: Response, next: NextFunction) => {

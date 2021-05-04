@@ -25,6 +25,10 @@ export class StudentsCredentialsRepository {
         })
     }
 
+    async updatePasswordOnly(student_id: string, password: string) {
+        return await this.db.result(sql.updatePasswordOnly, {student_id, password})
+    }
+
     // USE THIS WHEN THE CLIENTS FETCH STUDENT CRED, DON'T EXPOSE (HASHED) PW!!
     async getUsername(student_id: string) {
         return this.db.oneOrNone(sql.getUsername, {student_id})

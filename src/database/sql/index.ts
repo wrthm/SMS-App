@@ -135,6 +135,7 @@ export const auth_students_credentials = {
     exists: sql('auth/students_credentials/exists.sql'),
     add: sql('auth/students_credentials/add.sql'),
     update: sql('auth/students_credentials/update.sql'),
+    updatePasswordOnly: sql('auth/students_credentials/updatePasswordOnly.sql'),
     findByUsername: sql('auth/students_credentials/findByUsername.sql'),
     findByStudentID: sql('auth/students_credentials/findByStudentID.sql'),
     getUsername: sql('auth/students_credentials/getUsername.sql'),
@@ -157,7 +158,9 @@ export const auth_sys_components_clients = {
 export const faculties = {
     add: sql('auth/faculties/add.sql'),
     update: sql('auth/faculties/update.sql'),
+    updatePasswordOnly: sql('auth/faculties/updatePasswordOnly.sql'),
     getPrivilege: sql('auth/faculties/getPrivilege.sql'),
+    getPassword: sql('auth/faculties/getPassword.sql'),
     findByID: sql('auth/faculties/findByID.sql'),
     findByUsername: sql('auth/faculties/findByUsername.sql'),
     listAll: sql('auth/faculties/listAll.sql'),

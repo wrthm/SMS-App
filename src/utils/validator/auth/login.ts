@@ -21,6 +21,20 @@ const putStudentCredModel = {
     })
 }
 
+const putPasswordModel = {
+    body: Joi.object({
+        currentPassword: Joi.string()
+                            .min(6)
+                            .max(64)
+                            .required(),
+            newPassword: Joi.string()
+                            .min(6)
+                            .max(64)
+                            .regex(pwRegex)
+                            .required(),
+    })
+}
+
 const loginModel = {
     body: Joi.object({
         username: Joi.string()
@@ -30,4 +44,4 @@ const loginModel = {
     })
 }
 
-export const AuthLoginValidator = { putStudentCredModel, unRegex, pwRegex, loginModel }
+export const AuthLoginValidator = { putStudentCredModel, putPasswordModel, unRegex, pwRegex, loginModel }

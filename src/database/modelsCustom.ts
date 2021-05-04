@@ -106,3 +106,8 @@ export interface system_components_clients_external{
     "component": number | string[]
     "is_revoked"?: boolean 
   }
+
+export interface update_password {
+    "currentPassword": string
+    "newPassword": string
+}
