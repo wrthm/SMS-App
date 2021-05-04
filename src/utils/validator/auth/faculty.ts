@@ -27,12 +27,18 @@ const postModel = {
                          .min(5)
                          .max(32)
                          .regex(credRegex.unRegex)
-                         .required(),
+                         .required()
+                         .messages({
+                             'string.pattern.base': 'Username did not meet the specified criteria',
+                         }),
             password: Joi.string()
                          .min(6)
                          .max(64)
                          .regex(credRegex.pwRegex)
-                         .required(),
+                         .required()
+                         .messages({
+                             'string.pattern.base': 'Password did not meet the specified criteria',
+                         }),
           privilege: Joi.array()
                         .items(
                             Joi.string().required()
@@ -71,12 +77,18 @@ const putModel = {
                            .min(5)
                            .max(32)
                            .regex(credRegex.unRegex)
-                           .allow(null),
+                           .allow(null)
+                           .messages({
+                               'string.pattern.base': 'Username did not meet the specified criteria',
+                           }),
               password: Joi.string()
                            .min(6)
                            .max(64)
                            .regex(credRegex.pwRegex)
-                           .allow(null),
+                           .allow(null)
+                           .messages({
+                               'string.pattern.base': 'Password did not meet the specified criteria',
+                           }),
              privilege: Joi.array()
                            .items(
                               Joi.string().required()

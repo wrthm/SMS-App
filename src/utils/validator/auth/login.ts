@@ -12,12 +12,18 @@ const putStudentCredModel = {
                        .min(5)
                        .max(32)
                        .regex(unRegex)
-                       .allow(null),
+                       .allow(null)
+                       .messages({
+                            'string.pattern.base': 'Username did not meet the specified criteria',
+                        }),
           password: Joi.string()
                        .min(6)
                        .max(64)
                        .regex(pwRegex)
-                       .allow(null),
+                       .allow(null)
+                       .messages({
+                            'string.pattern.base': 'Password did not meet the specified criteria',
+                        }),
     })
 }
 
@@ -31,7 +37,10 @@ const putPasswordModel = {
                             .min(6)
                             .max(64)
                             .regex(pwRegex)
-                            .required(),
+                            .required()
+                            .messages({
+                                'string.pattern.base': 'Password did not meet the specified criteria',
+                            }),
     })
 }
 
