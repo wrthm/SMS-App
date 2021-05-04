@@ -18,6 +18,12 @@ export class AcademicTermsRepository {
       const {limit, offset} = pgArgs
       return await this.db.manyOrNone(sql.findByName, {name, limit, offset})
     }
+
+    async listAll(args: pagination_args): Promise<AcademicTerms[] | null> {
+      const pgArgs = parsePagination(args)
+      const {limit, offset} = pgArgs
+      return await this.db.manyOrNone(sql.listAll, {limit, offset})
+    }
     
     async add(data: AcademicTerms) {
       return await this.db.one(sql.add, data)
