@@ -34,7 +34,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (typeof sessionToken === 'string') {
             const result: session | null = await AuthService.sessions.get(sessionToken)
             if (result) {
-                if (DateTime.fromISO(result.expiration_date) < DateTime.now()) {
+                if (DateTime.fromJSDate(result.expiration_date) < DateTime.now()) {
                     await AuthService.sessions.revoke(result.session_token)
                     return next(new UnauthorizedException('Unauthorized: Session token has expired'))
                 }
