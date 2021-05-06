@@ -6,9 +6,7 @@ info:
     You may [read this article.](https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/)
 
     # Authentication
-    <s>All endpoints below will require both the API key and session token (k and t in HTTP headers, respectively) unless stated otherwise.</s> 
-
-    Authentication is not yet implemented and more credential related endpoints will most certainly be added pretty soon.
+    Still writing up this section, plz come back in a day or two
 
     ---
 
@@ -139,7 +137,7 @@ paths:
       responses:
         '200':
           $ref:  "#/components/responses/Success"
-        '400':
+        '401':
           description: Invalid/expired session token
 
   /auth/whoami:
@@ -154,7 +152,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/faculty"
-        '400':
+        '401':
           description: Invalid/expired session token
 
   /auth/update:
@@ -184,6 +182,8 @@ paths:
           $ref:  "#/components/responses/Success"
         '400':
           $ref: "#/components/responses/IncompleteInput"
+        '401':
+          description: Invalid/expired session token
 
   ############ COURSES ############
   /search/courses/{name}:
