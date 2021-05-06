@@ -2015,7 +2015,11 @@ paths:
         - Faculty
       summary: Adds a new faculty. (Admin)
       description: |-
-        TODO: enumerate valid privilege values here
+        Valid faculty privilege values:
+          - ManagementPanelRegistrar
+          - ManagementPanelAdmin
+          - Attendance
+          - StudentInformationSystem
       requestBody:
         description: The data of the faculty
         content:
@@ -2032,6 +2036,7 @@ paths:
               password: hunter2
               privilege:
                 - ManagementPanelRegistrar
+                - Attendance
       responses:
         '200':
           $ref:  "#/components/responses/Success201"
@@ -2045,7 +2050,11 @@ paths:
       description: |-
         Both usernames & password fields are optional.
 
-        TODO: enumerate valid privilege values here
+        Valid faculty privilege values:
+          - ManagementPanelRegistrar
+          - ManagementPanelAdmin
+          - Attendance
+          - StudentInformationSystem
       requestBody:
         description: The updated data of a faculty
         content:
@@ -2063,6 +2072,7 @@ paths:
               password: hunter2
               privilege:
                 - ManagementPanelRegistrar
+                - Attendance
       responses:
         '200':
           $ref: "#/components/responses/Success"
