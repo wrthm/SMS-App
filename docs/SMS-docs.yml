@@ -5,12 +5,71 @@ info:
     # How do I use/consume this API?
     You may [read this article.](https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/)
 
-    # Authentication
-    Still writing up this section, plz come back in a day or two
-
     ---
+    # Authentication
+    There are two values that component developers must securely store: the component's API key and the session token.
+    The API key will serve as the identification of the component for the App Server. On the other hand, the session token will serve as the identification of the user.
+    Without those two, a component is considered to be unauthorized to access the App Server and thus resulting in the rejection of the API request.
 
-    ## Important notes
+    ## How to acquire them
+    API keys are given out directly to the component developers while a session token is acquired after a successful login by a user (through `/auth/login`).
+
+    ## Usage
+    The API key and session token must be included on every requests (that isn't `/auth/login`) under the HTTP header names `X-Component-Key` and `X-Session-Token` respectively. 
+
+    Student Center however only needs the `X-Session-Token` HTTP header in their requests.
+
+    Keep in mind that session tokens have an expiration date of 1 week. When a session token expires, the user has to log in again in order to obtain another session token.
+
+    ### Example code snippets
+    PHP:
+    ~~~
+    $ch = curl_init($url);                             // initiate session
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    // returns data string
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(        // sets custom http headers
+        "X-Component-Key: replace w/ component key",
+        "X-Session-Token: replace w/ session token"
+    ));
+    $curl_data = curl_exec($ch);                       // store data on variable
+    ~~~
+
+    Javascript (web browsers):
+    ~~~
+    const fetchData = await fetch(url, {
+        headers: {
+            "X-Session-Token": "replace w/ session token"
+        }
+    });
+    const data = fetchData.json();
+    ~~~
+    ## Login Flow
+    (this assumes that the API key is included with every API requests, except for Student Center)
+    1. User enters his/her credential and logs in
+    2. If the entered credential matches with what's stored in the system database, App Server then gives the session token to the component and include it on succeeding API requests
+    3. Component then initiates API requests while serving pages for the user
+        - If session token had already expired or revoked while processing the request, App Server rejects the request and the component then kicks the user back to the login page
+    4. After user is done with his/her session, the user may click the logout button, which sends a logout request to the App Server which then revokes the current session token of the user.
+
+    ## Storage tips
+    - The component key should be stored separately (like in a config file). The file then can be referenced by other source codes.
+    - If using a version control system (e.g. Git), the file containing the component key must not be included/tracked in the repository to prevent being exposed to the public.
+      This can be achieved by utilizing the .gitignore file (in Git).
+    - In PHP, a session token can be stored using PHP's sessions.
+
+    ## Username requirements
+    1.	Username consists of alphanumeric characters (a-zA-Z0-9), lowercase, or uppercase.
+    2.	Username allowed of the dot (.), underscore (_), and hyphen (-).
+    3.	The dot (.), underscore (_), or hyphen (-) must not be the first or last character.
+    4.	The dot (.), underscore (_), or hyphen (-) does not appear consecutively, e.g., java..regex
+    5.	The number of characters must be between 5 to 32.
+
+    ## Password requirements
+    1.	At least one lowercase character [a-z]
+    2.	At least one uppercase character [A-Z]
+    3.	At least one special character [*.!@#$%^&(){}[]:;<>,.?/`~_+-=|\] OR At least one digit [0-9]
+    4.	At least 6 characters in length, but no more than 64.
+    ---
+    # Important notes
     Date format is expected to be YYYY-MM-DD, while time is using the 24-hour clock.
 
     Relevant data from foreign keys are also appended to schemas below when using GET method:
@@ -21,7 +80,7 @@ info:
     - grades
     - professors
     - schedules
-    
+
     However, you are only allowed to change what is being referred to by the foreign key/s (unless stated otherwise) in said schemas.
     This means if you want to update the data that is being pointed by the foreign key, you'll have to do it through that foreign key's respective endpoint.  
     \
@@ -95,9 +154,9 @@ paths:
         - Authentication
       summary: Signs in a user.
       description: |-
-        The client's component (i.e. if the person signing in is student or faculty) is determined from the value of 'X-Component-Key' in the HTTP header.
+        The client's component (i.e. if the person signing in is student or faculty) is determined from the value of `X-Component-Key` in the HTTP header.
 
-        If 'X-Component-Key' is omitted, then it is assumed that the client is under Student Center component.
+        If `X-Component-Key` is omitted, then it is assumed that the client is under the Student Center component.
       requestBody:
         description: The entered login credentials of a student/faculty
         content:
@@ -162,7 +221,7 @@ paths:
       summary: Updates login password of the current user.
       description: |-
         If you are looking for an endpoint that also updates the username,
-        check /student/{studentID}/credential and PUT /faculty/.
+        check PUT `/student/update_credentials` and PUT `/faculty/`.
         Students however can't update their own username by themselves.
       requestBody:
         content:
