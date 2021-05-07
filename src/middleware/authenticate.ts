@@ -21,6 +21,7 @@ const _authenticateComponentOnly = async (req: Request, res: Response, next: Nex
             component = systemComponentBits.StudentCenter
         }
         req.component = component
+        return true
     } catch (err) {
         next(err)
     }
@@ -28,7 +29,9 @@ const _authenticateComponentOnly = async (req: Request, res: Response, next: Nex
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await _authenticateComponentOnly(req, res, next)
+        if (!(await _authenticateComponentOnly(req, res, next) === true)) {
+            return
+        }
         const sessionToken = req.get('X-Session-Token')
 
         if (typeof sessionToken === 'string') {
