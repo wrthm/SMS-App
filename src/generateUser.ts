@@ -27,7 +27,6 @@ async function generateUser() {
         middle_name: mname,
         last_name: lname,
         address: chance.address(),
-        phone_number: "09999999999",
         privilege: facBits.Attendance | facBits.ManagementPanelAdmin | facBits.ManagementPanelRegistrar | facBits.StudentInformationSystem,
         username: username,
         password: await hash(password, AppServerConfig.BcryptSaltRounds)
