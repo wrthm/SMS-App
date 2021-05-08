@@ -64,7 +64,10 @@ const Controller = {
         data.first_name = propTrimOrNull(data.first_name)
         data.middle_name = propTrimOrNull(data.middle_name)
         data.last_name = propTrimOrNull(data.last_name)
+        data.address = propTrimOrNull(data.address)
         data.phone_number = propTrimOrNull(data.phone_number)
+        data.address_2 = propTrimOrNull(data.address_2)
+        data.phone_number_2 = propTrimOrNull(data.phone_number_2)
         try {
             if ((await DatabaseService.guardians.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry updated successfully"})

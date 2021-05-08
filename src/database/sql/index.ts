@@ -27,6 +27,7 @@ export const departments = {
 
 export const academic_terms = {
     findByName: sql('academic_terms/findByName.sql'),
+    listAll: sql('academic_terms/listAll.sql'),
     add: sql('academic_terms/add.sql'),
     update: sql('academic_terms/update.sql'),
     delete: sql('academic_terms/delete.sql'),

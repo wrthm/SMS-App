@@ -1,7 +1,7 @@
 SELECT 
     c_s_c.id,
-    c_s_c.course_schedule_id,
-    c_s.name as course_schedule_name,
+    -- c_s_c.course_schedule_id,
+    -- c_s.name as course_schedule_name,
     c_s_c.schedule_id,
     sched.professor_id,
     prof.first_name AS professor_first_name, 
@@ -20,7 +20,7 @@ SELECT
     sched.days AS schedule_days,
     c_s_c.created_at
 FROM course_schedules_contents c_s_c
-INNER JOIN course_schedules c_s ON c_s_c.course_schedule_id = c_s.id
+-- INNER JOIN course_schedules c_s ON c_s_c.course_schedule_id = c_s.id
 INNER JOIN schedules sched ON c_s_c.schedule_id = sched.id
 INNER JOIN subjects subj ON sched.subject_id = subj.id
 INNER JOIN professors prof ON sched.professor_id = prof.id

@@ -30,15 +30,19 @@ export class EnrollmentsRepository {
         // check if student exists
         const row = await t.oneOrNone(common.exists, {tableName: 'students', id: student_id})
         if (row.exists) {
-          // check if student is already enrolled
-          const enrollCheck = await t.oneOrNone(students.isEnrolled, {id: student_id})
-          if (!enrollCheck.exists) {
-            const result = await t.one(sql.add, data)
-            await t.none(students.enroll, {id: student_id})
-            return {success: true, result}
-          } else {
-            return {success: false, message: "Student is already enrolled"}
-          }
+          const result = await t.one(sql.add, data)
+          await t.none(students.enroll, {id: student_id})
+          return {success: true, result}
+          // --- disable enrollment check enforcement for now
+          // // check if student is already enrolled
+          // const enrollCheck = await t.oneOrNone(students.isEnrolled, {id: student_id})
+          // if (!enrollCheck.exists) {
+          //   const result = await t.one(sql.add, data)
+          //   await t.none(students.enroll, {id: student_id})
+          //   return {success: true, result}
+          // } else {
+          //   return {success: false, message: "Student is already enrolled"}
+          // }
         } else {
           return {success: false, message: "Student does not exist"}
         }
