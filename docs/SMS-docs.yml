@@ -718,8 +718,6 @@ paths:
         '404':
           $ref: "#/components/responses/NotFound"
   /student/update_credentials:
-    parameters:
-      - $ref: "#/components/parameters/studentID"
     put:
       tags:
         - Authentication
@@ -730,17 +728,22 @@ paths:
 
         It is allowed to update either username or password only.
         Of course, updating both at the same time is also allowed.
+
+        This endpoint can also be used as a initial registration of the student for the Student Center website.
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
+                student_id:
+                  type: string
                 username:
                   type: string
                 password:
                   type: string
             example:
+              student_id: 50782d26-4b44-4486-9a85-961ee20574ee
               username: noited
               password: hunter2
       responses:
