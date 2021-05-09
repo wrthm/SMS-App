@@ -2193,7 +2193,11 @@ paths:
         The API key of the new component client will only return ONCE via this endpoint.
         Afterwards there is no other way to obtain the API key, thus leaving no choice but to create another component client for a fresh API key.
 
-        TODO: enumerate valid component values here
+        Valid Component type values:
+          - StudentCenter
+          - ManagementPanel
+          - AttendanceTracker
+          - StudentInformationSystem
       requestBody:
         content:
           application/json:
