@@ -10,7 +10,7 @@ export class StudentsRepository {
     }
 
     async findByID(id: string): Promise<Student | null> {
-      return await this.db.oneOrNone(common.findByID, {tableName: 'students', id})
+      return await this.db.oneOrNone(common.findByID, {tableName: 'students_fix', id})
     }
 
     async findByNameOR(name: search_name_args, args: pagination_args): Promise<Student[] | null> {
