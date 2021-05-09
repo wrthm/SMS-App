@@ -2090,7 +2090,7 @@ paths:
               middle_name: Ee
               last_name: Oo
               address: Somewhere
-              phone_number: 09100000000
+              phone_number: '09100000000'
               username: aaeeoo
               password: hunter2
               privilege:
@@ -2126,7 +2126,7 @@ paths:
               middle_name: Ee
               last_name: Oo
               address: Somewhere
-              phone_number: 09100000000
+              phone_number: '09100000000'
               username: aaeeoo
               password: hunter2
               privilege:
