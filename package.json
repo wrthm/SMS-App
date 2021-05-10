@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The backend application server for the Student Management System.",
   "main": "src/index.ts",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && copyfiles -u 1 src/**/*.sql dist/",
