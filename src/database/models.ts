@@ -24,6 +24,13 @@ export interface attendances {
   "login_time": any 
   "logout_time": any | null 
 }
+export interface attendances_plan_b {
+  "id"?: string 
+  "enrollment_id": string 
+  "check_type": string 
+  "time": any 
+  "component_client_key": string 
+}
 export interface configuration {
   "key": string 
   "value": string | null 
