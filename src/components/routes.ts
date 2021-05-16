@@ -39,6 +39,7 @@ export default function(app: Application) {
         require('./rfid/route'),
         require('./faculty/route'),
         require('./system_component_client/route'),
+        require('./attendance_b/route'),
     )
 
     // 404 error

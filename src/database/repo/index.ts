@@ -17,6 +17,7 @@ import { SessionsRepository } from './auth/session'
 import { StudentsCredentialsRepository } from './auth/students_credentials'
 import { FacultiesRepository } from './faculties'
 import { SystemComponentsClientsRepository } from './auth/system_components_clients'
+import { AttendancesPlanBRepository } from './attendances_plan_b'
 
 interface IExtensions {
     common: CommonRepository,
@@ -34,6 +35,7 @@ interface IExtensions {
     config: ConfigRepository,
     course_schedules: CourseSchedulesRepository,
     course_schedules_contents: CourseSchedulesContentsRepository,
+    attendances_plan_b: AttendancesPlanBRepository
 }
 
 interface IExtensionsAuth {
@@ -66,4 +68,5 @@ export {
     StudentsCredentialsRepository,
     FacultiesRepository,
     SystemComponentsClientsRepository,
+    AttendancesPlanBRepository,
 }

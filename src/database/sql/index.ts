@@ -36,6 +36,7 @@ export const academic_terms = {
 export const students = {
     findByNameOR: sql('students/findByNameOR.sql'),
     findByNameAND: sql('students/findByNameAND.sql'),
+    findBySchoolID: sql('students/findBySchoolID.sql'),
     add: sql('students/add.sql'),
     update: sql('students/update.sql'),
     delete: sql('students/delete.sql'),
@@ -166,6 +167,13 @@ export const faculties = {
     findByUsername: sql('auth/faculties/findByUsername.sql'),
     listAll: sql('auth/faculties/listAll.sql'),
     delete: sql('auth/faculties/delete.sql'),
+}
+
+export const attendances_plan_b = {
+    add: sql('attendances_plan_b/add.sql'),
+    delete: sql('attendances_plan_b/delete.sql'),
+    listByStudentAcademicTermID_DateRange: sql('attendances_plan_b/listByStudentAcademicTermID_DateRange.sql'),
+    listByStudentAcademicTermID: sql('attendances_plan_b/listByStudentAcademicTermID.sql'),
 }
 
 function sql(file: string): QueryFile {

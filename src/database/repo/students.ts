@@ -13,6 +13,10 @@ export class StudentsRepository {
       return await this.db.oneOrNone(common.findByID, {tableName: 'students_fix', id})
     }
 
+    async findBySchoolID(school_id: string): Promise<Student | null> {
+      return await this.db.oneOrNone(sql.findBySchoolID, {school_id})
+    }
+
     async findByNameOR(name: search_name_args, args: pagination_args): Promise<Student[] | null> {
       const pgArgs = parsePagination(args)
       return await this.db.manyOrNone(sql.findByNameOR, {name, pgArgs})
