@@ -2,6 +2,8 @@ SELECT DISTINCT ON (subj.id)
     subj.id as subject_id,
     subj.name as subject_name,
     subj.code as subject_code,
+    s.unit_lec as subject_unit_lec,
+    s.unit_lab as subject_unit_lab,
     g.grade,
     g.updated_at
 FROM enrollments e
