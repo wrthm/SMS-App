@@ -131,7 +131,20 @@ const Controller = {
         } catch (err) {
             next(err)
         }
-    }
+    },
+    hasEnrollments: async (req: Request, res: Response, next: NextFunction) => {
+        const { id } = req.params
+        try {
+            if ((await DatabaseService.common.exists(id, 'students')).exists) {
+                const result = await DatabaseService.enrollments.studentHasEnrollments(id)
+                res.send(result)
+            } else {
+                next(new NotFoundException('Entry does not exist'))
+            }
+        } catch (err) {
+            next(err)
+        }
+    },
 }
 
 

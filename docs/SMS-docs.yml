@@ -717,6 +717,27 @@ paths:
           $ref: "#/components/responses/InvalidID"
         '404':
           $ref: "#/components/responses/NotFound"
+  /student/{studentID}/has_enrollments:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+    get:
+      tags:
+        - Student
+      summary: Tell if the student has enrolled at least once. (Voided enrollments also count)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+        '400':
+          $ref: "#/components/responses/InvalidID"
+        '404':
+          $ref: "#/components/responses/NotFound"
   /student/update_credentials:
     put:
       tags:

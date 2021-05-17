@@ -7,6 +7,7 @@ const StudentRouter : Router = Router()
 
 StudentRouter.get('/student/:id', validate(CommonValidator.id), Controller.find)
              .get('/student/:id/username', validate(CommonValidator.id), Controller.getUsername)
+             .get('/student/:id/has_enrollments', validate(CommonValidator.id), Controller.hasEnrollments)
              .get('/search/students/:name', validate(CommonValidator.pagination), Controller.find)
              .get('/search/students', validate(CommonValidator.searchGranularModel), Controller.find)
              .get('/students', validate(CommonValidator.pagination), Controller.findAll)
