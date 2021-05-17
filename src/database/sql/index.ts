@@ -60,6 +60,7 @@ export const enrollments = {
     listAll: sql('enrollments/listAll.sql'),
     findByID: sql('enrollments/findByID.sql'),
     getStudentID: sql('enrollments/getStudentID.sql'),
+    studentHasEnrollments: sql('enrollments/studentHasEnrollments.sql'),
 }
 
 export const grades = {

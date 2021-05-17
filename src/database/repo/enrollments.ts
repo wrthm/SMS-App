@@ -49,7 +49,7 @@ export class EnrollmentsRepository {
       })
     }
 
-    async delete(id: String) {
+    async delete(id: string) {
       return await this.db.task(async t => {
         // check if enrollment exists
         const row = await t.oneOrNone(common.exists, {tableName: 'enrollments', id: id})
@@ -63,5 +63,9 @@ export class EnrollmentsRepository {
           return {success: false}
         }
       })
+    }
+
+    async studentHasEnrollments(student_id: string) {
+      return this.db.one(sql.studentHasEnrollments, {student_id})
     }
 }

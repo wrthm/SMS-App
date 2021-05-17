@@ -154,10 +154,12 @@ const Controller = {
         const student: student_credential_put = req.body
         try {
             // check first if student exists in main db
-            const studentExists = await DatabaseService.common.exists(student.student_id, 'students')
-
-            if (!studentExists.exists) {
+            const studentExists = DatabaseService.common.exists(student.student_id, 'students')
+            const studentHasEnrollments = DatabaseService.enrollments.studentHasEnrollments(student.student_id)
+            if (!(await studentExists).exists) {
                 return next(new NotFoundException('Student not found'))
+            } else if (!(await studentHasEnrollments).result) {
+                return next(new InvalidArgumentException('Student must enroll first before creating his/her Student Center account'))
             }
 
             if (!student.username) {

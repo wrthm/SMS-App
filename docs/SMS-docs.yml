@@ -724,6 +724,8 @@ paths:
         - Student
       summary: Updates login credentials of a student. (Registrar/Admin)
       description: |-
+        **The student must have at least one enrollment first before he/she can create his/her Student Center account!**
+
         Only registrars & admins can access this endpoint.
 
         It is allowed to update either username or password only.
