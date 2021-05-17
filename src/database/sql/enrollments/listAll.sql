@@ -18,8 +18,8 @@ INNER JOIN academic_terms a_t ON e.academic_term_id = a_t.id
 INNER JOIN students s ON e.student_id = s.id
 INNER JOIN course_schedules c_s ON e.course_schedule_id = c_s.id
 INNER JOIN courses c ON c_s.course_id = c.id
-ORDER BY e.created_at DESC
 WHERE e.is_revoked = false
+ORDER BY e.created_at DESC
 LIMIT ${limit}
 OFFSET ${offset}
 ;
