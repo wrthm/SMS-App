@@ -62,14 +62,7 @@ const Controller = {
     },
     add: async (req: Request, res: Response, next: NextFunction) => {
         const data: student = req.body
-        data.school_id = propTrimOrNull(data.school_id)
-        data.first_name = data.first_name.trim()
-        data.middle_name = data.middle_name.trim()
-        data.last_name = data.last_name.trim()
-        data.address = data.address.trim()
-        data.sex = data.sex.trim()
-        data.email_address = propTrimOrNull(data.email_address)
-        data.phone_number = propTrimOrNull(data.phone_number)
+        trimStudent(data)
         try {
             let result = await DatabaseService.students.add(data)
             res.statusCode = 201
@@ -82,14 +75,7 @@ const Controller = {
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
         const data: student = req.body
-        data.school_id = propTrimOrNull(data.school_id)
-        data.first_name = data.first_name.trim()
-        data.middle_name = data.middle_name.trim()
-        data.last_name = data.last_name.trim()
-        data.address = data.address.trim()
-        data.sex = data.sex.trim()
-        data.email_address = propTrimOrNull(data.email_address)
-        data.phone_number = propTrimOrNull(data.phone_number)
+        trimStudent(data)
         try {
             if ((await DatabaseService.students.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Entry updated successfully"})
@@ -147,6 +133,18 @@ const Controller = {
     },
 }
 
-
+const trimStudent = (data: student) => {
+    data.school_id = propTrimOrNull(data.school_id)
+    data.first_name = data.first_name.trim()
+    data.middle_name = data.middle_name.trim()
+    data.last_name = data.last_name.trim()
+    data.a_street = data.a_street.trim()
+    data.a_barangay = data.a_barangay.trim()
+    data.a_city = data.a_city.trim()
+    data.a_province = data.a_province.trim()
+    data.sex = data.sex.trim()
+    data.email_address = propTrimOrNull(data.email_address)
+    data.phone_number = propTrimOrNull(data.phone_number)
+}
 
 export { Controller as StudentController }

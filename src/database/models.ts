@@ -155,7 +155,6 @@ export interface students {
   "first_name": string 
   "middle_name": string 
   "last_name": string 
-  "address": string 
   "sex": string 
   "birth_date": Date 
   "phone_number": string | null 
@@ -164,6 +163,11 @@ export interface students {
   "created_at"?: any 
   "updated_at"?: any 
   "is_hidden"?: boolean 
+  "a_street": string 
+  "a_barangay": string 
+  "a_city": string 
+  "a_province": string 
+  "a_zip_code": number 
 }
 export interface subjects {
   "id"?: string 

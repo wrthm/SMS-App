@@ -82,10 +82,7 @@ info:
     - schedules
 
     However, you are only allowed to change what is being referred to by the foreign key/s (unless stated otherwise) in said schemas.
-    This means if you want to update the data that is being pointed by the foreign key, you'll have to do it through that foreign key's respective endpoint.  
-    \
-    \
-    Course Schedule conflict checking is not yet implemented.
+    This means if you want to update the data that is being pointed by the foreign key, you'll have to do it through that foreign key's respective endpoint.
   version: '0.9'
 servers:
   - url: https://softeng.jbtabz.com/
@@ -608,7 +605,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/student"
+                  $ref: "#/components/schemas/student_get"
   /search/students?fname=&mname=&lname=:
     parameters:
       - name: fname
@@ -649,7 +646,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/student"
+                  $ref: "#/components/schemas/student_get"
   /students:
     get:
       tags:
@@ -666,7 +663,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/student"
+                  $ref: "#/components/schemas/student_get"
   /student/{studentID}:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -680,7 +677,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/student"
+                $ref: "#/components/schemas/student_get"
         '400':
           $ref: "#/components/responses/InvalidID"
         '404':
@@ -831,7 +828,11 @@ paths:
               first_name: McGnobbin
               middle_name: Aoen
               last_name: McGnobbers
-              address: Legazpi City
+              a_street: Something St
+              a_barangay: San Isicolas
+              a_city: Legazpi City
+              a_province: Bicol
+              a_zip_code: 4500
               sex: Male
               birth_date: '2000-04-01'
               phone_number: '09299990999'
@@ -857,7 +858,11 @@ paths:
               first_name: McGnobbin
               middle_name: Aoen
               last_name: McGnobbers
-              address: Legazpi City
+              a_street: Something St
+              a_barangay: San Isicolas
+              a_city: Legazpi City
+              a_province: Bicol
+              a_zip_code: 4500
               sex: Male
               birth_date: '2000-04-01'
               phone_number: '09299990999'
@@ -2362,7 +2367,11 @@ components:
         - first_name
         - middle_name
         - last_name
-        - address
+        - a_street
+        - a_barangay
+        - a_city
+        - a_province
+        - a_zip_code
         - sex
         - birth_date
         - phone_number
@@ -2378,8 +2387,63 @@ components:
           type: string
         last_name:
           type: string
+        a_street:
+          type: string
+        a_barangay:
+          type: string
+        a_city:
+          type: string
+        a_province:
+          type: string
+        a_zip_code:
+          type: integer
+        sex:
+          type: string
+        birth_date:
+          type: string
+          format: date
+        phone_number:
+          type: string
+        email_address:
+          type: string
+          format: email
+        is_currently_enrolled:
+          type: boolean
+        is_hidden:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    student_get:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        school_id:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
         address:
           type: string
+        a_street:
+          type: string
+        a_barangay:
+          type: string
+        a_city:
+          type: string
+        a_province:
+          type: string
+        a_zip_code:
+          type: integer
         sex:
           type: string
         birth_date:
