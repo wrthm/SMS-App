@@ -147,6 +147,8 @@ paths:
   ############ LOGIN ############
   /auth/login:
     post:
+      security:
+      - component-key: []
       tags:
         - Authentication
       summary: Signs in a user.
@@ -3049,3 +3051,7 @@ tags:
     description: Can only be accessed by admins
   - name: Component Client
     description: Can only be accessed by admins
+
+security:
+  - component-key: []
+  - session-token: []
