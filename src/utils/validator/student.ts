@@ -25,15 +25,15 @@ const postModel = {
                           .required(),
            a_barangay: Joi.string()
                           .trim()
-                          .max(40)
+                          .max(60)
                           .required(),
                a_city: Joi.string()
                           .trim()
-                          .max(30)
+                          .max(40)
                           .required(),
            a_province: Joi.string()
                           .trim()
-                          .max(30)
+                          .max(40)
                           .required(),
            a_zip_code: Joi.number()
                           .integer()
