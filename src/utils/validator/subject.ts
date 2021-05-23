@@ -1,4 +1,5 @@
 import { Joi } from 'express-validation'
+import { CommonValidator } from './common'
 
 const postModel = {
     body: Joi.object({
@@ -26,4 +27,12 @@ const model = {
     })
 }
 
-export const SubjectValidator = { model, postModel }
+const subjPagination = {
+    query: CommonValidator.pagination.query.append({
+        code: Joi.string()
+                 .allow(null),
+    })
+         
+}
+
+export const SubjectValidator = { model, postModel, subjPagination }

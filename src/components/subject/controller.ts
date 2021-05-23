@@ -25,7 +25,13 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result = await DatabaseService.common.listAll(req.query, 'subjects')
+            let { code } = req.query
+            let result: subject[]
+            if (code) {
+                result = await DatabaseService.subjects.listByCode(code as string, req.query)
+            } else {
+                result = await DatabaseService.common.listAll(req.query, 'subjects')
+            }
             return res.send(result)
         }
         catch (err) {

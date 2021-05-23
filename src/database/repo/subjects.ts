@@ -27,7 +27,13 @@ export class SubjectsRepository {
       return await this.db.result(sql.update, data)
     }
 
-    async delete(id: String) {
+    async delete(id: string) {
       return await this.db.result(sql.delete, {id})
+    }
+    
+    async listByCode(code: string, args: pagination_args) {
+      const pgArgs = parsePagination(args)
+      const {limit, offset} = pgArgs
+      return await this.db.manyOrNone(sql.listByCode, {code_regex: `^${code} `, limit, offset})
     }
 }

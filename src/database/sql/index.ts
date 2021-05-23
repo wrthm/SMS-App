@@ -51,6 +51,7 @@ export const subjects = {
     add: sql('subjects/add.sql'),
     update: sql('subjects/update.sql'),
     delete: sql('subjects/delete.sql'),
+    listByCode: sql('subjects/listByCode.sql'),
 }
 
 export const enrollments = {
