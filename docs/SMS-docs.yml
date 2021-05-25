@@ -304,6 +304,7 @@ paths:
               example:
                 id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                 department_id: uuid here
+                code: CS
                 name: Bachelor of Science in Computer Science
                 is_hidden: false
                 created_at: "2020-02-27T10:24:24.466Z"
@@ -336,6 +337,7 @@ paths:
               $ref:  "#/components/schemas/course"
             example:
               department_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              code: CS
               name: "Bachelor of Science in Computer Science"
       responses:
         '201':
@@ -2314,6 +2316,8 @@ components:
         department_id:
           type: string
           format: uuid
+        code:
+          type: string
         name:
           type: string
         is_hidden:
