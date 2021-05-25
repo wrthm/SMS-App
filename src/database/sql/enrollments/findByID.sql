@@ -8,6 +8,7 @@ SELECT
     s.last_name AS student_last_name,
     e.course_schedule_id,
     c_s.name AS course_schedule_name,
+    c_s.year_level AS course_schedule_year_level,
     c.name AS course_name,
     e.status,
     e.is_revoked,
