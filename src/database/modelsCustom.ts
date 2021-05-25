@@ -25,6 +25,13 @@ export interface search_course_schedule_args {
     [index: string] : any
 }
 
+export interface courses_put {
+    "id": string 
+    "name": string | null
+    "department_id": string | null
+    "code": string | null 
+  }
+
 export interface schedules_external {
     "id"?: string 
     "professor_id": string 

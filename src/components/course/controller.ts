@@ -1,7 +1,8 @@
 import DatabaseService from '../../database'
-import { checkIfNull } from '../../utils/validationUtils'
+import { checkIfNull, propTrimOrNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
 import { courses as course } from '../../database/models'
+import { courses_put as course_put } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException } from '../../exceptions'
 
 const Controller = {
@@ -35,6 +36,7 @@ const Controller = {
     add: async (req: Request, res: Response, next: NextFunction) => {
         const data: course = req.body
         data.name = data.name.trim()
+        data.code = propTrimOrNull(data.code)
         try {
             let result = await DatabaseService.courses.add(data)
             res.statusCode = 201
@@ -46,8 +48,10 @@ const Controller = {
         
     },
     update: async (req: Request, res: Response, next: NextFunction) => {
-        const data: course = req.body
-        data.name = data.name.trim()
+        const data: course_put = req.body
+        data.department_id = propTrimOrNull(data.department_id)
+        data.name = propTrimOrNull(data.name)
+        data.code = propTrimOrNull(data.code)
         try {
             if ((await DatabaseService.courses.update(data)).rowCount !== 0) {
                 return res.send({"code": 200,"message": "Course updated successfully"})

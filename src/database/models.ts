@@ -59,6 +59,7 @@ export interface courses {
   "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
+  "code": string | null 
 }
 export interface departments {
   "id"?: string 

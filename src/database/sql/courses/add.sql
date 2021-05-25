@@ -1,4 +1,4 @@
-INSERT INTO courses (department_id, name)
-VALUES (${department_id}, ${name})
+INSERT INTO courses (department_id, name, code)
+VALUES (${department_id}, ${name}, ${code})
 RETURNING id
 ;

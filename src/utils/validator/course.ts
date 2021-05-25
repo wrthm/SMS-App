@@ -9,6 +9,25 @@ const postModel = {
                           .trim()
                           .max(60)
                           .required(),
+                 code: Joi.string()
+                          .trim()
+                          .max(30),
+    })
+}
+
+const putModel = {
+    body: Joi.object({
+                   id: Joi.string()
+                          .uuid()
+                          .required(),
+        department_id: Joi.string()
+                          .uuid(),
+                 name: Joi.string()
+                          .trim()
+                          .max(60),
+                 code: Joi.string()
+                          .trim()
+                          .max(30),
     })
 }
 
@@ -22,4 +41,4 @@ const model = {
 }
 
 
-export const CourseValidator = { postModel, model }
+export const CourseValidator = { postModel, putModel, model }

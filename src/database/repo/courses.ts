@@ -1,7 +1,7 @@
 import { IDatabase, IMain, QueryFile } from "pg-promise";
 import { parsePagination } from "../../utils/parsePagination";
 import { courses as Course } from '../models'
-import { pagination_args } from "../modelsCustom";
+import { pagination_args, courses_put as CoursePut } from "../modelsCustom";
 import { courses as sql } from '../sql'
 
 export class CoursesRepository {
@@ -29,7 +29,7 @@ export class CoursesRepository {
       return await this.db.one(sql.add, data)
     }
 
-    async update(data: Course) {
+    async update(data: CoursePut) {
       return await this.db.result(sql.update, data)
     }
 

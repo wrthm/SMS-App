@@ -9,7 +9,7 @@ CourseRouter.get('/course/:id', validate(CommonValidator.id), Controller.find)
             .get('/search/courses/:name', validate(CommonValidator.pagination), Controller.find)
             .get('/courses', validate(CommonValidator.pagination), Controller.findAll)
             .post('/course', validate(SchemaValidator.postModel), Controller.add)
-            .put('/course', validate(SchemaValidator.model), Controller.update)
+            .put('/course', validate(SchemaValidator.putModel), Controller.update)
             .delete('/course/:id', validate(CommonValidator.id), Controller.delete)
 
 module.exports = CourseRouter
