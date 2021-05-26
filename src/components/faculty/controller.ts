@@ -7,6 +7,7 @@ import { faculties_put as faculty_put, faculties_external as faculty_external } 
 import { hash } from 'bcrypt'
 import { AppServerConfig } from '../../config'
 import { facultyPrivilegeBits as fPrivilegeBits } from '../../utils/authConstants'
+import { decodePrivilege } from '../../utils/parseFaculty'
 
 const Controller = {
     find: async (req: Request, res: Response, next: NextFunction) => {
@@ -122,14 +123,6 @@ const encodePrivilege = (arr: string[]) => {
     return privilegeBit
 }
 
-const decodePrivilege = (bits: number) => {
-    let privilegeArr: string[] = []
-    for (const privilege in fPrivilegeBits) {
-        if ((fPrivilegeBits[privilege] & bits) !== 0) {
-            privilegeArr.push(privilege)
-        }
-    }
-    return privilegeArr
-}
+
 
 export { Controller as FacultyController }
