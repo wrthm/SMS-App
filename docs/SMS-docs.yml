@@ -1318,7 +1318,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/enrollment"
+                  $ref: "#/components/schemas/enrollment_get"
   /enrollments/{studentID}:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -1335,7 +1335,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/enrollment"
+                  $ref: "#/components/schemas/enrollment_get"
         '400':
           $ref: "#/components/responses/InvalidID"
         '404':
@@ -1353,7 +1353,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/enrollment"
+                $ref: "#/components/schemas/enrollment_get"
         '400':
           $ref: "#/components/responses/InvalidID"
         '404':
@@ -2562,6 +2562,33 @@ components:
         id:
           type: string
           format: uuid
+        academic_term_id:
+          type: string
+          format: uuid
+        student_id:
+          type: string
+          format: uuid
+        course_schedule_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+        is_revoked:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    enrollment_get:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        reg_num:
+          type: string
         academic_term_id:
           type: string
           format: uuid
