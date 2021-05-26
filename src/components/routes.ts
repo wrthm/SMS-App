@@ -22,6 +22,7 @@ export default function(app: Application) {
     app.options('*', cors())
     app.use(
         require('./auth/route'),
+        require('./attendance_b_scan/route'),
         authenticate,
         require('./course/route'),
         require('./department/route'),
@@ -39,7 +40,6 @@ export default function(app: Application) {
         require('./rfid/route'),
         require('./faculty/route'),
         require('./system_component_client/route'),
-        require('./attendance_b/route'),
     )
 
     // 404 error

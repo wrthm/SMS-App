@@ -17,6 +17,7 @@ import { SubjectValidator } from './subject'
 import { AuthLoginValidator } from './auth/login'
 import { AuthFacultyValidator } from './auth/faculty'
 import { AuthComponentClientValidator } from './auth/system_component_client'
+import { AttendanceBValidator } from './attendance_b'
 
 export {
     AcademicTermValidator, AttendanceValidator, CommonValidator,
@@ -25,4 +26,5 @@ export {
     GradeValidator, GuardianValidator, ProfessorValidator,
     RFIDValidator, ScheduleValidator, StudentValidator, SubjectValidator,
     AuthLoginValidator, AuthFacultyValidator, AuthComponentClientValidator,
+    AttendanceBValidator,
 }
