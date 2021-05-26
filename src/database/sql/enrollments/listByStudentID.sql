@@ -1,5 +1,6 @@
 SELECT
     e.id,
+    e.reg_num,
     e.academic_term_id,
     a_t.name AS academic_term_name,
     e.student_id,
@@ -14,7 +15,7 @@ SELECT
     e.is_revoked,
     e.created_at,
     e.updated_at
-FROM enrollments e
+FROM enrollments_view e
 INNER JOIN academic_terms a_t ON e.academic_term_id = a_t.id
 INNER JOIN students s ON e.student_id = s.id
 INNER JOIN course_schedules c_s ON e.course_schedule_id = c_s.id
