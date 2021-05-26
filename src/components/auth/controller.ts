@@ -3,7 +3,7 @@ import DatabaseService from '../../database/index'
 import { checkIfNull } from '../../utils/validationUtils'
 import { NextFunction, Request, Response } from 'express'
 import { students_credentials as student_credentials, sessions, faculties as faculty, faculties } from '../../database/modelsAuth'
-import { students_credentials_put as student_credential_put, update_password } from '../../database/modelsCustom'
+import { students_credentials_put as student_credential_put, update_password, faculties_external as faculty_external } from '../../database/modelsCustom'
 import { InvalidArgumentException, NotFoundException, NotImplementedException, UnauthorizedException } from '../../exceptions'
 import { systemComponentBits } from '../../utils/authConstants'
 import { hash, compare } from 'bcrypt'
@@ -11,6 +11,7 @@ import { AppServerConfig } from '../../config'
 import { DateTime } from 'luxon'
 import uid from 'uid-safe'
 import { FacultyGetPassword } from '../../database/repo/faculties'
+import { decodePrivilege } from '../../utils/parseFaculty'
 
 const loginStudent = async (req: Request, res: Response, next: NextFunction) => {
     const credential = req.body
@@ -104,11 +105,12 @@ const Controller = {
                     const student = await studentPromise
                     const username = await usernamePromise
                     return res.send({...student, username: username.username})
-                    break
                 case 'faculty':
-                    const faculty = await AuthService.faculties.findByID(req.sessionData.id)
+                    const faculty: faculty_external | null = await AuthService.faculties.findByID(req.sessionData.id)
+                    if (faculty) {
+                        faculty.privilege = decodePrivilege((faculty as faculty_external).privilege as number)
+                    }
                     return res.send(faculty)
-                    break
             }
 
             next(new UnauthorizedException())
