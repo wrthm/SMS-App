@@ -19,10 +19,15 @@ export class CoursesRepository {
       return await this.db.manyOrNone(sql.findByName, {name, limit, offset})
     }
     
-    async listAll(args: pagination_args): Promise<Course[]> {
+    async listAll(args: pagination_args, dept: string | undefined = undefined): Promise<Course[]> {
       const pgArgs = parsePagination(args)
       const { limit, offset } = pgArgs
-      return await this.db.manyOrNone(sql.listAll, {limit, offset})
+      if (dept) {
+        return await this.db.manyOrNone(sql.listAllByDeptID, {limit, offset, dept})
+      } else {
+        return await this.db.manyOrNone(sql.listAll, {limit, offset})
+      }
+      
     }
 
     async add(data: Course) {

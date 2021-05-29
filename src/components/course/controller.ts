@@ -26,7 +26,8 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result = await DatabaseService.courses.listAll(req.query)
+            let dept = req.query.dept
+            const result = await DatabaseService.courses.listAll(req.query, dept as string | undefined)
             return res.send(result)
         }
         catch (err) {

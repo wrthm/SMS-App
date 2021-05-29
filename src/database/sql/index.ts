@@ -13,6 +13,7 @@ export const courses = {
     findByID: sql('courses/findByID.sql'),
     findByName: sql('courses/findByName.sql'),
     listAll: sql('courses/listAll.sql'),
+    listAllByDeptID: sql('courses/listAllByDeptID.sql'),
     add: sql('courses/add.sql'),
     update: sql('courses/update.sql'),
     delete: sql('courses/delete.sql'),
