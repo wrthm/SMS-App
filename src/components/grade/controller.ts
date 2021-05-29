@@ -37,6 +37,9 @@ const Controller = {
     updateOrAdd: async (req: Request, res: Response, next: NextFunction) => {
         const data: grade = req.body
         try {
+            if (data.grade < 1) {
+                data.grade = Math.floor(data.grade)
+            }
             await DatabaseService.grades.updateOrAdd(data)
             res.statusCode = 200
             return res.send({"code": 200, "message": "Grade updated successfully"})

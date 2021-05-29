@@ -9,6 +9,8 @@ const postModel = {
                           .uuid()
                           .required(),
                 grade: Joi.number()
+                          .min(-2)
+                          .max(5)
                           .required(),
     })
 }
