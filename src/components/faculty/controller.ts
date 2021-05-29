@@ -60,6 +60,8 @@ const Controller = {
             trimData(data)
             if (data.privilege) {
                 data.privilege = encodePrivilege(data.privilege as string[])
+            } else {
+                data.privilege = null
             }
             if (data.password) {
                 data.password = await hash(data.password, AppServerConfig.BcryptSaltRounds)
