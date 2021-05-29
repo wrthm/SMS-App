@@ -63,8 +63,10 @@ const Controller = {
             } else {
                 data.privilege = null
             }
-            if (data.password) {
+            if (data.password && data.password !== '') {
                 data.password = await hash(data.password, AppServerConfig.BcryptSaltRounds)
+            } else {
+                data.password = null
             }
 
             if ((await AuthService.faculties.update(data)).rowCount !== 0) {

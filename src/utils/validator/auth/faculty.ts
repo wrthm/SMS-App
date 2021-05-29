@@ -36,6 +36,7 @@ const postModel = {
                          .max(64)
                          .regex(credRegex.pwRegex)
                          .required()
+                         .allow('', null)
                          .messages({
                              'string.pattern.base': 'Password did not meet the specified criteria',
                          }),
