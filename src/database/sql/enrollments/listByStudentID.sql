@@ -11,6 +11,8 @@ SELECT
     c_s.name AS course_schedule_name,
     c_s.year_level AS course_schedule_year_level,
     c.name AS course_name,
+    d.id AS department_id,
+    d.name AS department_name,
     e.status,
     e.is_revoked,
     e.created_at,
@@ -20,6 +22,7 @@ INNER JOIN academic_terms a_t ON e.academic_term_id = a_t.id
 INNER JOIN students s ON e.student_id = s.id
 INNER JOIN course_schedules c_s ON e.course_schedule_id = c_s.id
 INNER JOIN courses c ON c_s.course_id = c.id
+INNER JOIN departments d ON c.department_id = d.id
 WHERE e.student_id = ${student_id}
 ORDER BY e.created_at DESC
 ;
