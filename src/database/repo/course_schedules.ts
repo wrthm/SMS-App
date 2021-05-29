@@ -13,10 +13,14 @@ export class CourseSchedulesRepository {
       return await this.db.oneOrNone(sql.findByID, {id})
     }
 
-    async listAll(args: pagination_args): Promise<CourseSchedule[]> {
+    async listAll(args: pagination_args, course: string | undefined = undefined, term: string | undefined = undefined): Promise<CourseSchedule[]> {
       const pgArgs = parsePagination(args)
       const { limit, offset } = pgArgs
-      return await this.db.manyOrNone(sql.listAll, {limit, offset})
+      if (course && term) {
+        return await this.db.manyOrNone(sql.listAllByCourseAndAcademicTermID, {limit, offset, course, term})
+      } else {
+        return await this.db.manyOrNone(sql.listAll, {limit, offset})
+      }
     }
 
     async search(searchArgs: search_course_schedule_args, paginationArgs: pagination_args): Promise<CourseSchedule[]> {

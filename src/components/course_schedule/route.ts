@@ -7,7 +7,7 @@ const CourseScheduleRouter : Router = Router()
 
 CourseScheduleRouter.get('/course_schedule/:id', validate(CommonValidator.id), Controller.find)
                     .get('/search/course_schedules', validate(SchemaValidator.searchArgsModel), Controller.search)
-                    .get('/course_schedules', validate(CommonValidator.pagination), Controller.findAll)
+                    .get('/course_schedules', validate(SchemaValidator.listAllModel), Controller.findAll)
                     .post('/course_schedule', validate(SchemaValidator.postModel), Controller.add)
                     .put('/course_schedule', validate(SchemaValidator.putModel), Controller.update)
                     .delete('/course_schedule/:id', validate(CommonValidator.id), Controller.delete)

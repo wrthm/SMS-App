@@ -52,4 +52,11 @@ const searchArgsModel = {
     })
 }
 
-export const CourseScheduleValidator = { postModel, putModel, model, searchArgsModel }
+const listAllModel = {
+    query: CommonValidator.pagination.query.append({
+        course: Joi.string().uuid(),
+        term: Joi.string().uuid(),
+    })
+}
+
+export const CourseScheduleValidator = { postModel, putModel, model, searchArgsModel, listAllModel }

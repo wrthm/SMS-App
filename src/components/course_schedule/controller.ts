@@ -35,7 +35,8 @@ const Controller = {
     },
     findAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: course_schedule[] = await DatabaseService.course_schedules.listAll(req.query)
+            let { course, term } = req.query
+            const result: course_schedule[] = await DatabaseService.course_schedules.listAll(req.query, course as string | undefined, term as string | undefined)
             return res.send(result)
         }
         catch (err) {

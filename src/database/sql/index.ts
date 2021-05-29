@@ -120,6 +120,7 @@ export const config = {
 export const course_schedules = {
     findByID: sql('course_schedules/findByID.sql'),
     listAll: sql('course_schedules/listAll.sql'),
+    listAllByCourseAndAcademicTermID: sql('/course_schedules/listAllByCourseAndAcademicTermID.sql'),
     add: sql('course_schedules/add.sql'),
     delete: sql('course_schedules/delete.sql'),
     update: sql('course_schedules/update.sql'),
