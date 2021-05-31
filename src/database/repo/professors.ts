@@ -23,10 +23,13 @@ export class ProfessorsRepository {
       return await this.db.manyOrNone(sql.listByNameAND, {name, pgArgs})
     }
 
-    async listAll(args: pagination_args): Promise<Professor[]> {
+    async listAll(args: pagination_args, dept: string | null | undefined = undefined): Promise<Professor[]> {
       const pgArgs = parsePagination(args)
       const { limit, offset } = pgArgs
-      return await this.db.manyOrNone(sql.listAll, {limit, offset})
+      if (!dept) {
+        dept = null
+      }
+      return await this.db.manyOrNone(sql.listAll, {limit, offset, dept})
     }
     
     async add(data: Professor) {
