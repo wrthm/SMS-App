@@ -12,8 +12,8 @@
     "prod-dev-mode": "npm run build && cross-env NODE_ENV=development node ./dist/index.js",
     "start": "npm run prod",
     "docs-server": "node ./src/hostAPIDocs.js",
-    "db-init-auth": "cross-env NODE_ENV=production node ./dist/initAuth.js",
-    "db-generate-user": "cross-env NODE_ENV=production node ./dist/generateUser.js"
+    "db-init-auth": "cross-env NODE_ENV=production ts-node ./src/initAuth.ts",
+    "db-generate-user": "cross-env NODE_ENV=production ts-node ./src/generateUser.ts"
   },
   "author": "",
   "license": "ISC",
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@rmp135/sql-ts": "^1.8.2",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^1.1.6"
   }
 }
