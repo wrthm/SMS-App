@@ -15,22 +15,6 @@ export interface api_keys {
   "privilege": number 
   "is_revoked"?: boolean 
 }
-export interface attendances {
-  "id"?: string 
-  "device_id": string 
-  "academic_term_id": string 
-  "student_id": string 
-  "rfid_tag": string 
-  "login_time": any 
-  "logout_time": any | null 
-}
-export interface attendances_plan_b {
-  "id"?: string 
-  "enrollment_id": string 
-  "check_type": string 
-  "time": any 
-  "component_client_key": string 
-}
 export interface configuration {
   "key": string 
   "value": string | null 
@@ -120,21 +104,6 @@ export interface professors {
   "is_hidden"?: boolean 
   "created_at"?: any 
   "updated_at"?: any 
-}
-export interface rfid_readers {
-  "id"?: string 
-  "name": string 
-  "key": string 
-  "is_revoked"?: boolean 
-  "created_at"?: any 
-  "updated_at"?: any 
-  "ip_address": any 
-}
-export interface rfid_tags {
-  "student_id": string 
-  "rfid_tag"?: string 
-  "is_revoked"?: boolean 
-  "created_at"?: any 
 }
 export interface schedules {
   "id"?: string 

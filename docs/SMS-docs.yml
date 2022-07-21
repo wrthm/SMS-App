@@ -775,46 +775,6 @@ paths:
           $ref:  "#/components/responses/Success"
         '400':
           $ref: "#/components/responses/IncompleteInput"
-  /student/{studentID}/rfid/new:
-    parameters:
-      - $ref: "#/components/parameters/studentID"
-    get:
-      tags:
-        - Student
-      summary: Generates a new RFID tag identifier for the student.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  rfid_tag:
-                    type: string
-        '400':
-          description: RFID Tag is already generated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/response"
-              example:
-                code: 400
-                message: RFID Tag is already generated. Revoke RFID first if you wish to generate another RFID Tag identifier.
-        '404':
-          $ref: "#/components/responses/NotFound"
-  /student/{studentID}/rfid/revoke:
-    parameters:
-      - $ref: "#/components/parameters/studentID"
-    get:
-      tags:
-        - Student
-      summary: Revokes the RFID tag identifier currently assigned to the student.
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
-        '404':
-          $ref: "#/components/responses/NotFound"
   /student:
     post:
       tags:
@@ -1884,115 +1844,6 @@ paths:
         '404':
           $ref: "#/components/responses/NotFound"
 
-
-  ############ ATTENDANCES ############
-  /attendances:
-    get:
-      tags:
-       - Attendance
-      summary: Get list of every attendance. (50 entries per page by default)
-      parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref:  "#/components/parameters/limit"
-      responses:
-        '200':
-          description: Operation completed successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/attendance"
-  /attendances/{studentID}:
-    get:
-      summary: Get all the attendances of a student across academic terms.
-      tags:
-       - Attendance
-      parameters:
-        - $ref: "#/components/parameters/studentID"
-      responses:
-        '200':
-          description: Operation completed successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/attendance"
-        '400':
-          $ref: "#/components/responses/InvalidID"
-        '404':
-          $ref: "#/components/responses/NotFound"
-  /attendances/{studentID}/{academicTermID}:
-    get:
-      summary: Get all the attendances of a student within a specific academic term.
-      tags:
-       - Attendance
-      parameters:
-        - $ref: "#/components/parameters/studentID"
-        - $ref: "#/components/parameters/academicTermID"
-      responses:
-        '200':
-          description: Operation completed successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/attendance"
-        '400':
-          $ref: "#/components/responses/InvalidID"
-        '404':
-          $ref: "#/components/responses/NotFound"
-  /attendance/{attendanceID}:
-    parameters:
-      - $ref: "#/components/parameters/attendanceID"
-    get:
-      tags:
-        - Attendance
-      summary: Get an attendance from its ID.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/attendance"
-        '400':
-          $ref: "#/components/responses/InvalidID"
-        '404':
-          $ref: "#/components/responses/NotFound"
-    delete:
-      tags:
-        - Attendance
-      summary: Voids an attendance entry.
-      responses:
-        '200':
-          $ref: "#/components/responses/Success"
-        '400':
-          $ref: "#/components/responses/InvalidID"
-        '404':
-          $ref: "#/components/responses/NotFound"
-  # /attendance:
-  #   post:
-  #     tags:
-  #       - Attendance
-  #     summary: Checks in/out an attendance.
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref:  "#/components/schemas/attendance_swipe_card"
-  #           example:
-  #             device_id: 23c7dace-9da7-435f-9404-c2f23681b38d
-  #             rfid_tag: 0eaea5cd-16dc-47e1-ba0f-1bf57903d3e9
-  #     responses:
-  #       '201':
-  #         $ref: "#/components/responses/Success201"
-  #       '400':
-  #         $ref: "#/components/responses/IncompleteInput"
-
   ############ GUARDIANS ############
   /search/guardians/{name}:
     parameters:
@@ -2112,7 +1963,6 @@ paths:
         Valid faculty privilege values:
           - ManagementPanelRegistrar
           - ManagementPanelAdmin
-          - Attendance
           - StudentInformationSystem
       requestBody:
         description: The data of the faculty
@@ -2130,7 +1980,6 @@ paths:
               password: hunter2
               privilege:
                 - ManagementPanelRegistrar
-                - Attendance
       responses:
         '200':
           $ref:  "#/components/responses/Success201"
@@ -2147,7 +1996,6 @@ paths:
         Valid faculty privilege values:
           - ManagementPanelRegistrar
           - ManagementPanelAdmin
-          - Attendance
           - StudentInformationSystem
       requestBody:
         description: The updated data of a faculty
@@ -2166,7 +2014,6 @@ paths:
               password: hunter2
               privilege:
                 - ManagementPanelRegistrar
-                - Attendance
       responses:
         '200':
           $ref: "#/components/responses/Success"
@@ -2231,7 +2078,6 @@ paths:
         Valid Component type values:
           - StudentCenter
           - ManagementPanel
-          - AttendanceTracker
           - StudentInformationSystem
       requestBody:
         content:
@@ -2687,49 +2533,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    
-    attendance:
-      type: object
-      required:
-        - device_id
-        - academic_term_id
-        - student_id
-        - rfid_tag
-      properties:
-        id:
-          type: string
-          format: uuid
-        device_id:
-          type: string
-          format: uuid
-        academic_term_id:
-          type: string
-          format: uuid
-        student_id:
-          type: string
-          format: uuid
-        rfid_tag:
-          type: string
-          format: uuid
-        login_time:
-          type: string
-          format: date-time
-        logout_time:
-          type: string
-          format: date-time
-
-    # attendance_swipe_card:
-    #   type: object
-    #   required:
-    #     - device_id
-    #     - rfid_tag
-    #   properties:
-    #     device_id:
-    #       type: string
-    #       format: uuid
-    #     rfid_tag:
-    #       type: string
-    #       format: uuid
 
     guardian:
       type: object
@@ -2926,16 +2729,6 @@ components:
         format: uuid
       example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
 
-    attendanceID:
-      name: attendanceID
-      in: path
-      required: true
-      description: Unique identifier of an attendance
-      schema:
-        type: string
-        format: uuid
-      example: c083eaf3-bfa4-4eb3-a359-bc464fa55406
-
     facultyID:
       name: facultyID
       in: path
@@ -3050,7 +2843,6 @@ tags:
   - name: Course Schedule
   - name: Enrollment
   - name: Grades
-  - name: Attendance
   - name: Faculty
     description: Can only be accessed by admins
   - name: Component Client

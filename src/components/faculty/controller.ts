@@ -109,9 +109,6 @@ const encodePrivilege = (arr: string[]) => {
             case 'managementpaneladmin':
                 privilegeBit |= fPrivilegeBits.ManagementPanelAdmin
                 break
-            case 'attendance':
-                privilegeBit |= fPrivilegeBits.Attendance
-                break
             case 'studentinformationsystem':
                 privilegeBit |= fPrivilegeBits.StudentInformationSystem
                 break

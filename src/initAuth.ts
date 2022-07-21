@@ -20,7 +20,7 @@ async function initAuth() {
     await AuthService.component_clients.add({
         api_key,
         client_name,
-        component: compBits.AttendanceTracker | compBits.ManagementPanel | compBits.StudentCenter | compBits.StudentInformationSystem,
+        component: compBits.ManagementPanel | compBits.StudentCenter | compBits.StudentInformationSystem,
     })
     console.log('Component client initialized successfully!\n')
     console.log(`API key: ${api_key}\nClient Name: ${client_name}`)

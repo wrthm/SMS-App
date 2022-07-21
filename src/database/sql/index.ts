@@ -91,14 +91,6 @@ export const guardians = {
     update: sql('guardians/update.sql'),
 }
 
-export const attendances = {
-    add: sql('attendances/add.sql'),
-    delete: sql('attendances/delete.sql'),
-    listAll: sql('attendances/listAll.sql'),
-    listByStudentID: sql('attendances/listByStudentID.sql'),
-    listByStudentAcademicTermID: sql('attendances/listByStudentAcademicTermID.sql'),
-}
-
 export const schedules = {
     findByID: sql('schedules/findByID.sql'),
     listAll: sql('schedules/listAll.sql'),
@@ -169,13 +161,6 @@ export const faculties = {
     findByUsername: sql('auth/faculties/findByUsername.sql'),
     listAll: sql('auth/faculties/listAll.sql'),
     delete: sql('auth/faculties/delete.sql'),
-}
-
-export const attendances_plan_b = {
-    add: sql('attendances_plan_b/add.sql'),
-    delete: sql('attendances_plan_b/delete.sql'),
-    listByStudentAcademicTermID_DateRange: sql('attendances_plan_b/listByStudentAcademicTermID_DateRange.sql'),
-    listByStudentAcademicTermID: sql('attendances_plan_b/listByStudentAcademicTermID.sql'),
 }
 
 function sql(file: string): QueryFile {

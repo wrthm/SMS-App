@@ -32,14 +32,11 @@ export default function(app: Application) {
         require('./grade/route'),
         require('./professor/route'),
         require('./guardian/route'),
-        require('./attendance/route'),
         require('./schedule/route'),
         require('./course_schedule/route'),
         require('./course_schedule_content/route'),
-        require('./rfid/route'),
         require('./faculty/route'),
         require('./system_component_client/route'),
-        require('./attendance_b/route'),
     )
 
     // 404 error
