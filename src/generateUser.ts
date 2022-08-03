@@ -6,9 +6,6 @@ import { hash } from 'bcrypt'
 
 const chance = new Chance()
 
-// TODO: create init code in a separate file for replicating entire database's schema
-// TODO: include option to generate a student
-
 generateUser().then(() => process.exit(0))
               .catch(err => {
                 console.log(err); 
@@ -28,7 +25,7 @@ async function generateUser() {
         last_name: lname,
         address: chance.address(),
         phone_number: null,
-        privilege: facBits.Attendance | facBits.ManagementPanelAdmin | facBits.ManagementPanelRegistrar | facBits.StudentInformationSystem,
+        privilege: facBits.ManagementPanelAdmin | facBits.ManagementPanelRegistrar | facBits.StudentInformationSystem,
         username: username,
         password: await hash(password, AppServerConfig.BcryptSaltRounds)
     })

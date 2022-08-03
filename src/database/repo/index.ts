@@ -8,7 +8,6 @@ import { EnrollmentsRepository } from './enrollments'
 import { GradesRepository } from './grades'
 import { ProfessorsRepository } from './professors'
 import { GuardiansRepository } from './guardians'
-import { AttendancesRepository } from './attendances'
 import { SchedulesRepository } from './schedules'
 import { ConfigRepository } from './config'
 import { CourseSchedulesRepository } from './course_schedules'
@@ -17,7 +16,6 @@ import { SessionsRepository } from './auth/session'
 import { StudentsCredentialsRepository } from './auth/students_credentials'
 import { FacultiesRepository } from './faculties'
 import { SystemComponentsClientsRepository } from './auth/system_components_clients'
-import { AttendancesPlanBRepository } from './attendances_plan_b'
 
 interface IExtensions {
     common: CommonRepository,
@@ -30,12 +28,10 @@ interface IExtensions {
     grades: GradesRepository,
     professors: ProfessorsRepository,
     guardians: GuardiansRepository,
-    attendances: AttendancesRepository,
     schedules: SchedulesRepository,
     config: ConfigRepository,
     course_schedules: CourseSchedulesRepository,
     course_schedules_contents: CourseSchedulesContentsRepository,
-    attendances_plan_b: AttendancesPlanBRepository
 }
 
 interface IExtensionsAuth {
@@ -59,7 +55,6 @@ export {
     GradesRepository,
     ProfessorsRepository,
     GuardiansRepository,
-    AttendancesRepository,
     SchedulesRepository,
     ConfigRepository,
     CourseSchedulesRepository,
@@ -68,5 +63,4 @@ export {
     StudentsCredentialsRepository,
     FacultiesRepository,
     SystemComponentsClientsRepository,
-    AttendancesPlanBRepository,
 }

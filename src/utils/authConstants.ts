@@ -1,7 +1,6 @@
 type PB = {
     ManagementPanelRegistrar: number,
     ManagementPanelAdmin: number,
-    Attendance: number,
     StudentInformationSystem: number,
     [index: string]: number,
 }
@@ -9,7 +8,6 @@ type PB = {
 type CB = {
     StudentCenter: number,
     ManagementPanel: number,
-    AttendanceTracker: number,
     StudentInformationSystem: number,
     [index: string]: number,
 }
@@ -18,7 +16,6 @@ type CB = {
 const facultyPrivilegeBits: PB = {
     ManagementPanelRegistrar:   0b0000_0001,
     ManagementPanelAdmin:       0b0000_0010,
-    Attendance:                 0b0001_0000,
     StudentInformationSystem:   0b0010_0000,
 }
 
@@ -26,7 +23,6 @@ const facultyPrivilegeBits: PB = {
 const systemComponentBits: CB = {
     StudentCenter:              0b0000_0001,
     ManagementPanel:            0b0000_0010,
-    AttendanceTracker:          0b0000_0100,
     StudentInformationSystem:   0b0000_1000,
 }
 

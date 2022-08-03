@@ -5,8 +5,6 @@ import { systemComponentBits as compBits } from './utils/authConstants'
 
 const chance = new Chance()
 
-// TODO: create init code in a separate file for replicating entire database's schema
-
 initAuth().then(() => process.exit(0))
           .catch(err => {
               console.log(err); 
@@ -20,7 +18,7 @@ async function initAuth() {
     await AuthService.component_clients.add({
         api_key,
         client_name,
-        component: compBits.AttendanceTracker | compBits.ManagementPanel | compBits.StudentCenter | compBits.StudentInformationSystem,
+        component: compBits.ManagementPanel | compBits.StudentCenter | compBits.StudentInformationSystem,
     })
     console.log('Component client initialized successfully!\n')
     console.log(`API key: ${api_key}\nClient Name: ${client_name}`)

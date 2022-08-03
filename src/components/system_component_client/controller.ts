@@ -31,9 +31,6 @@ const Controller = {
                         case 'managementpanel':
                             componentBits |= systemComponentBits.ManagementPanel
                             break
-                        case 'attendancetracker':
-                            componentBits |= systemComponentBits.AttendanceTracker
-                            break
                         case 'studentinformationsystem':
                             componentBits |= systemComponentBits.StudentInformationSystem
                             break

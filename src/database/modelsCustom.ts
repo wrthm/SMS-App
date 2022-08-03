@@ -118,9 +118,3 @@ export interface update_password {
     "currentPassword": string
     "newPassword": string
 }
-
-export interface attendance_b_qr {
-    "i": string
-    "k": string
-    "s": string
-}

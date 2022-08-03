@@ -182,27 +182,11 @@ const Controller = {
             }
         }
         catch (err) {
-            if (err?.message.includes('unique_student_username')) {
+            if (err instanceof Error && err.message.includes('unique_student_username')) {
                 next(new InvalidArgumentException('Username already exists'))
             } else {
                 next(err)
             }
-        }
-        
-    },
-
-    registerFaculty: async (req: Request, res: Response, next: NextFunction) => {
-        const data: faculty = req.body
-        // trim fields here
-        // hash pw here
-
-        try {
-            let result = await AuthService.faculties.add(data)
-            res.statusCode = 201
-            return res.send({"code": 201, "message": "Entry added successfully", "id": result.id})
-        }
-        catch (err) {
-            next(err)
         }
     },
 }

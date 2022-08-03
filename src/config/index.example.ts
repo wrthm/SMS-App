@@ -1,5 +1,5 @@
 const AppServerConfig = {
-    APIPort: 80,
+    APIPort: 81,
     PaginationDefaultLimit: 50,
     BcryptSaltRounds: 12,
 }
@@ -7,18 +7,18 @@ const AppServerConfig = {
 const DatabaseConfig = {
     host: "127.0.0.1",
     port: 5432,
-    user: "db_user",
-    password: "db_password",
-    database: "db_name",
-    max: 64,
+    user: "sms_appserver",
+    password: "db_password",                // default password from initializing db
+    database: "studentmanagementsystem",
+    max: 64,                                // maximum simultaneous connections
 }
 
 const DatabaseAuthConfig = {
     host: "127.0.0.1",
     port: 5432,
-    user: "db_user",
+    user: "sms_appserver",
     password: "db_password",
-    database: "db_name",
+    database: "studentmanagementsystem_auth",
     max: 64,
 }
 
