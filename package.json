@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && copyfiles -u 1 src/**/*.sql dist/",
+    "build": "tsc && copyfiles -u 1 -e src/**/dbSchema.sql src/**/*.sql dist/",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/index.ts",
     "prod": "npm run build && cross-env NODE_ENV=production node ./dist/index.js",
     "prod-dev-mode": "npm run build && cross-env NODE_ENV=development node ./dist/index.js",

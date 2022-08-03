@@ -5,8 +5,6 @@ import { systemComponentBits as compBits } from './utils/authConstants'
 
 const chance = new Chance()
 
-// TODO: create init code in a separate file for replicating entire database's schema
-
 initAuth().then(() => process.exit(0))
           .catch(err => {
               console.log(err); 

@@ -6,9 +6,6 @@ import { hash } from 'bcrypt'
 
 const chance = new Chance()
 
-// TODO: create init code in a separate file for replicating entire database's schema
-// TODO: include option to generate a student
-
 generateUser().then(() => process.exit(0))
               .catch(err => {
                 console.log(err); 
